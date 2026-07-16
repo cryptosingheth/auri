@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <title>Auri concept 4 — Reserve Stack</title>
+  <!-- Reserve reduced to three strokes: bars 144/100/56 wide, 32 tall,
+       16 gaps, fully rounded ends, center-stacked into a quiet pyramid. -->
+  <g fill="#15161B">
+    <rect x="92" y="56" width="56" height="32" rx="16"/>
+    <rect x="70" y="104" width="100" height="32" rx="16"/>
+    <rect x="48" y="152" width="144" height="32" rx="16"/>
+  </g>
+</svg>

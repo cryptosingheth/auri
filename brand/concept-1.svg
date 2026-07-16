@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <title>Auri concept 1 — Dawn Disc</title>
+  <!-- Full gold disc (aurum) cresting the horizon. Circle r=60 at (120,112),
+       flat-cut on the chord y=148; horizon bar 144x16, r=8. Gap = 20. -->
+  <g fill="#15161B">
+    <path d="M72 148A60 60 0 1 1 168 148Z"/>
+    <rect x="48" y="168" width="144" height="16" rx="8"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Auri mark</title>
+  <!-- The Ingot A, production cut. Redrawn on a 32-grid, 0.5 snap.
+       Base 24, top 12, height 20; walls slope 3:10; legs 4.5 wide,
+       crossbar 5 — slightly heavier than display size, for 16px UI use. -->
+  <path fill="#15161B" fill-rule="evenodd" d="M4 26 L10 6 H22 L28 26 Z
+    M13 11 H19 L20.5 16 H11.5 Z
+    M10 21 H22 L23.5 26 H8.5 Z"/>
+</svg>

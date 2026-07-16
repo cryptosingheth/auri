@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Auri favicon</title>
+  <!-- Ink tile, gold mark: reads on light and dark browser chrome,
+       and the gold-on-ink pairing is the premium end of the palette. -->
+  <defs>
+    <linearGradient id="auri-gold-fav" x1="0" y1="0" x2="0.18" y2="1">
+      <stop offset="0" stop-color="#EAD9AE"/>
+      <stop offset="0.58" stop-color="#D3B575"/>
+      <stop offset="1" stop-color="#B98A2F"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#15161B"/>
+  <path transform="translate(4.5 4.5) scale(0.72)" fill="url(#auri-gold-fav)" fill-rule="evenodd"
+    d="M4 26 L10 6 H22 L28 26 Z
+    M13 11 H19 L20.5 16 H11.5 Z
+    M10 21 H22 L23.5 26 H8.5 Z"/>
+</svg>

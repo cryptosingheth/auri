@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122 40">
+  <title>Auri — mark and wordmark lockup</title>
+  <!-- Mark at 125% of cap height, optically centered on the type.
+       Wordmark is drawn, not set: a monoline geometric-humanist cut on
+       Geist proportions (cap 20, x-height 14.5, stroke 3.75, flat
+       terminals). Cap A carries a 1.8-unit flat apex — a quiet echo of
+       the ingot. Production type may be set in Geist Medium instead. -->
+  <g fill="#15161B">
+    <!-- mark -->
+    <path fill-rule="evenodd" transform="translate(3 0) scale(1.25)" d="M4 26 L10 6 H22 L28 26 Z
+      M13 11 H19 L20.5 16 H11.5 Z
+      M10 21 H22 L23.5 26 H8.5 Z"/>
+    <!-- A -->
+    <path fill-rule="evenodd" d="M50 30 L59.6 10 H61.4 L71 30 Z
+      M60.5 17 L57.8 22.5 H63.2 Z
+      M56.2 25.75 H64.8 L66.85 30 H54.15 Z"/>
+    <!-- i dot -->
+    <circle cx="111.5" cy="9.75" r="2.4"/>
+  </g>
+  <!-- u r i stems and bowls -->
+  <g fill="none" stroke="#15161B" stroke-width="3.75">
+    <path d="M76.5 15.5 v7.75 a6.75 6.75 0 0 0 13.5 0"/>
+    <path d="M90 15.5 V30"/>
+    <path d="M97.5 15.5 V30"/>
+    <path d="M97.5 23 a7.5 7.5 0 0 1 7.5 -7.5"/>
+    <path d="M111.5 15.5 V30"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <title>Auri concept 3 — Minted a</title>
+  <!-- Coin disc r=84 with a lowercase geometric "a" struck in negative,
+       stencil style. The void is ONE connected outline: bowl ring
+       (R44 at 110,126) merged with the stem pill (28 wide, x=145.2),
+       joined on the 3-4-5 chord points (dx 35.2, dy 26.4). The bowl's
+       island (r18) stays coin metal, like a die-struck counter. -->
+  <path fill="#15161B" fill-rule="evenodd" d="M204 120 A84 84 0 1 1 36 120 A84 84 0 1 1 204 120 Z
+    M145.2 99.6 A44 44 0 1 0 145.2 152.4 L145.2 156 A14 14 0 0 0 173.2 156 L173.2 96 A14 14 0 0 0 145.2 96 Z
+    M128 126 A18 18 0 1 1 92 126 A18 18 0 1 1 128 126 Z"/>
+</svg>
