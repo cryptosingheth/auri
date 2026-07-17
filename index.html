@@ -98,10 +98,6 @@ img,svg,video,canvas{display:block;max-width:100%}
 .nlinks a{white-space:nowrap;padding:6px 2px;opacity:.9}
 .nlinks a:hover{opacity:1}
 .nav-cta{margin-left:auto;display:flex;align-items:center;gap:14px}
-.theme-switch{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--cream);opacity:.82;padding:7px 12px;border:1px solid var(--wline2);border-radius:999px;transition:opacity .2s,border-color .2s,color .3s;white-space:nowrap}
-.theme-switch:hover{opacity:1;border-color:var(--plum-l)}
-.theme-switch svg{width:15px;height:15px}
-.nav.light .theme-switch{color:var(--ink2);border-color:var(--line2)}
 .goldtick{font-family:var(--mono);font-size:12px;color:rgba(242,233,212,.7);display:flex;gap:7px;align-items:center;white-space:nowrap;transition:color .3s}
 .nav.light .goldtick{color:var(--ink2)}
 .goldtick .gd{width:7px;height:7px;border-radius:50%;background:var(--gold-grad)}
@@ -199,50 +195,9 @@ img,svg,video,canvas{display:block;max-width:100%}
 .wake p .goldlit{background:linear-gradient(95deg,#F3E5BC,#D3B575);-webkit-background-clip:text;background-clip:text;color:transparent}
 .wake-meta{margin-top:34px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,233,212,.4)}
 
-/* ============ THE DAWN — night blooms into day (was: the pour) ============ */
-.dawn{position:relative;height:clamp(340px,54vh,600px);overflow:clip;isolation:isolate;
-  background:linear-gradient(180deg,
-    var(--night) 0%,
-    #150B12 26%,
-    #23101B 45%,
-    #4A2838 58%,
-    #8A5B6B 70%,
-    #D3B4AC 82%,
-    #EEE0D4 91%,
-    var(--bg) 100%)}
-
-/* the rising light — warm bloom swells + lifts from the horizon seam (transform+opacity only) */
-.dawn-bloom{position:absolute;left:50%;top:64%;width:150vw;height:150%;
-  transform:translate(-50%,-50%) scale(.72);transform-origin:50% 50%;opacity:0;
-  will-change:transform,opacity;pointer-events:none;
-  background:radial-gradient(56% 60% at 50% 50%,
-    rgba(248,238,206,.92),
-    rgba(234,217,174,.55) 24%,
-    rgba(201,120,150,.32) 46%,
-    rgba(133,33,82,.15) 64%,
-    transparent 80%)}
-.dawn.lit .dawn-bloom{transform:translate(-50%,-50%) scale(1);opacity:1;
-  transition:transform 1400ms cubic-bezier(.22,1,.36,1),opacity 1150ms cubic-bezier(.22,1,.36,1)}
-
-/* the wash — daylight floods the lower frame a beat behind the bloom (opacity only) */
-.dawn-wash{position:absolute;inset:0;opacity:0;pointer-events:none;will-change:opacity;
-  background:linear-gradient(180deg,transparent 44%,rgba(240,226,214,.5) 74%,rgba(246,245,248,.96) 100%)}
-.dawn.lit .dawn-wash{opacity:1;transition:opacity 1050ms cubic-bezier(.22,1,.36,1) 300ms}
-
-/* the horizon — the crisp gold seam the light crests (sanctioned gold: the pour lives on) */
-.dawn-horizon{position:absolute;left:0;right:0;top:64%;display:flex;justify-content:center}
-.dawn-horizon i{display:block;height:2px;width:0%;border-radius:999px;
-  background:linear-gradient(90deg,transparent,#C4699A 8%,#EAD9AE 28%,#F6ECC8 50%,#D3B575 72%,#A12C66 92%,transparent);
-  box-shadow:0 0 26px rgba(234,217,174,.7),0 0 72px rgba(196,105,154,.42);
-  transition:width 1200ms cubic-bezier(.22,1,.36,1) 140ms}
-.dawn.lit .dawn-horizon i{width:100%}
-
-@media (prefers-reduced-motion:reduce){
-  .dawn-bloom{opacity:1;transform:translate(-50%,-50%) scale(1)}
-  .dawn-wash{opacity:1}
-  .dawn-horizon i{width:100%}
-  .dawn-bloom,.dawn-wash,.dawn-horizon i{transition:none}
-}
+/* ============ THE DAWN — a short, smooth warm-neutral night→day fade ============ */
+.dawn{position:relative;height:clamp(120px,17vh,210px);
+  background:linear-gradient(180deg,#100A0E 0%,#181419 34%,#3a343c 56%,#8f8a92 76%,#dcd9de 90%,var(--bg) 100%)}
 
 /* ============ DAYBREAK — begins clean in daylight (dawn now owns the wash) ============ */
 .daybreak{background:var(--bg);position:relative}
@@ -256,58 +211,50 @@ img,svg,video,canvas{display:block;max-width:100%}
 .dtab .dt-t{display:block;font-size:17px;font-weight:620;letter-spacing:-.014em;color:var(--ink3);transition:color .25s}
 .dtab.on .dt-t{color:var(--ink)}
 .dtab .dt-d{display:block;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s cubic-bezier(.22,1,.36,1),opacity .3s;font-size:13.5px;color:var(--ink2)}
-.dtab.on .dt-d{max-height:64px;opacity:1;margin-top:6px}
-/* ============ Demo player v7 — dual-device stage ============ */
+.dtab.on .dt-d{max-height:150px;opacity:1;margin-top:6px}
+/* ============ Demo player v9 — one phone, ambient well, floating chips ============ */
+.demo-wrap{--e:cubic-bezier(.22,1,.36,1)}
 .demo-viewport{position:relative}
-.demo-stage{--e:cubic-bezier(.22,1,.36,1);position:relative;isolation:isolate;
-  min-height:480px;transition:min-height .42s var(--e)}
 
-/* ambient PLUM wash; intensifies in phone mode. GOLD demoted to a faint kiss (proof only) */
-.demo-stage::before{content:"";position:absolute;inset:-8% -6%;z-index:0;border-radius:30px;
-  opacity:.5;transition:opacity .42s var(--e);
-  background:
-    radial-gradient(120% 90% at 50% 14%, rgba(133,33,82,.16), rgba(133,33,82,0) 60%),
-    radial-gradient(80% 70% at 82% 92%, rgba(234,217,174,.08), rgba(234,217,174,0) 60%)}
-.demo-stage[data-mode="phone"]::before{opacity:1}
+/* the ambient WELL that grounds the phone (no more floating in a side-gap) */
+.demo-stage{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;
+  border-radius:28px;padding:clamp(24px,4vw,52px);overflow:hidden;
+  background:radial-gradient(70% 60% at 50% 20%,rgba(133,33,82,.06),transparent 60%),var(--well)}
 
-/* both shells share one center point; visibility follows data-mode */
-.demo-frame{position:absolute;left:50%;top:50%;z-index:1;opacity:0;visibility:hidden;
-  transform:translate(-50%,-50%) scale(.985);
-  transition:opacity .42s var(--e),transform .42s var(--e),visibility 0s .42s}
-.demo-stage[data-mode="web"]  .frame-web,
-.demo-stage[data-mode="phone"] .frame-phone{opacity:1;visibility:visible;
-  transform:translate(-50%,-50%) scale(1);transition-delay:0s,0s,0s}
+/* ONE premium, site-drawn phone frame — the hero */
+.demo-phone{position:relative;z-index:2;flex:none;padding:11px;border-radius:44px;background:#0E0D12;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),
+             0 30px 70px -30px rgba(20,18,60,.5),
+             0 50px 90px -42px rgba(133,33,82,.34)}
+.demo-screen{position:relative;height:min(62vh,520px);aspect-ratio:440/966;
+  border-radius:34px;overflow:hidden;background:#07060a}
+.demo-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transform:scale(1.015);filter:blur(6px);
+  transition:opacity .5s var(--e),transform .7s var(--e),filter .55s var(--e)}
+.demo-screen video.on{opacity:1;transform:scale(1);filter:blur(0)}
+.demo-island{position:absolute;z-index:3;top:10px;left:50%;transform:translateX(-50%);
+  width:34%;height:18px;border-radius:999px;background:#07060a}
 
-/* ---- BROWSER shell — inner crop target 1280:800 (16:10, matches current + re-record) ---- */
-.frame-web{box-sizing:border-box;width:100%;border-radius:14px;overflow:hidden;
-  border:1px solid var(--line2);box-shadow:var(--shadow-l);background:#fff}
-.fw-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;
-  border-bottom:1px solid var(--line);background:linear-gradient(#FBFAFC,#F4F3F7)}
-.fw-bar i{width:9px;height:9px;border-radius:50%;background:rgba(20,21,27,.13)}
-.fw-url{margin:0 auto;display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--sans);font-variant-numeric:tabular-nums;letter-spacing:-.01em;
-  font-size:11.5px;color:var(--ink3);background:rgba(20,21,27,.045);padding:4px 16px;border-radius:999px}
-.fw-url::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--gold-grad)}
-.fw-body{position:relative;aspect-ratio:1280/800;background:#F2F2F7}
-.fw-body video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;filter:blur(6px);transition:opacity .4s,filter .5s}
-.fw-body video.on{opacity:1;filter:blur(0)}
-
-/* ---- PHONE shell — inner screen 736:1616 (== existing .phone-screen, matches current 440:966) ---- */
-.frame-phone{--screen-h:min(58vh,486px);box-sizing:content-box;padding:10px;
-  border-radius:46px;background:#101116;
-  box-shadow:0 0 0 1px rgba(255,255,255,.07) inset,
-             0 44px 92px -34px rgba(133,33,82,.5), var(--shadow-l)}
-.fp-screen{position:relative;height:var(--screen-h);aspect-ratio:736/1616;
-  border-radius:37px;overflow:hidden;background:#0c0710}
-.fp-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;filter:blur(6px);transition:opacity .4s,filter .5s}
-.fp-screen video.on{opacity:1;filter:blur(0)}
-.fp-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);z-index:3;
-  width:32%;max-width:96px;height:20px;border-radius:999px;background:#07040a;
-  box-shadow:0 0 0 1px rgba(255,255,255,.05)}
-.frame-phone::after{content:"";position:absolute;right:-2px;top:26%;width:2px;height:52px;
-  border-radius:2px;background:linear-gradient(#2c1f27,#160d13)}
+/* floating annotation chips — 2 per demo, crossfade on tab change */
+.demo-chips{position:absolute;inset:0;z-index:3;pointer-events:none}
+.dchip{position:absolute;display:inline-flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--line2);border-radius:999px;padding:9px 14px;
+  font-size:12.5px;font-weight:600;letter-spacing:-.005em;color:var(--ink);
+  box-shadow:var(--shadow-raised);white-space:nowrap;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .45s var(--e),transform .45s var(--e)}
+.dchip .cdot{flex:none;width:8px;height:8px;border-radius:50%}
+.dchip .cdot.plum{background:var(--plum);box-shadow:0 0 0 3px rgba(133,33,82,.15)}
+.dchip .cdot.gold{background:var(--gold-grad);box-shadow:0 0 0 3px rgba(196,162,92,.18)}
+.dchip .cdot.green{background:var(--green);box-shadow:0 0 0 3px rgba(22,160,106,.15)}
+.dchip.tr{top:9%;right:0}
+.dchip.bl{bottom:11%;left:0}
+.demo-stage[data-demo="buy"]    .d-buy,
+.demo-stage[data-demo="borrow"] .d-borrow,
+.demo-stage[data-demo="gift"]   .d-gift,
+.demo-stage[data-demo="send"]   .d-send,
+.demo-stage[data-demo="invest"] .d-invest{opacity:1;transform:none}
 
 /* ---- slim PLUM progress bar under the stage ---- */
 .demo-progress{position:relative;height:2px;margin-top:22px;border-radius:2px;
@@ -316,20 +263,19 @@ img,svg,video,canvas{display:block;max-width:100%}
   background:var(--plum);border-radius:2px}
 .demo-progress.run::after{transform:scaleX(1);transition:transform var(--demolen,8s) linear}
 
-@media (max-width:1040px){.demo-wrap{grid-template-columns:1fr;gap:26px}}
-@media (max-width:560px){.frame-phone{--screen-h:min(64vh,430px)}}
+/* below ~900px: stack (tabs above, phone below), chips hide */
+@media (max-width:900px){
+  .demo-wrap{grid-template-columns:1fr;gap:26px}
+  .demo-chips{display:none}
+  .demo-stage{padding:22px}
+  .demo-screen{height:min(70vh,560px)}
+}
 @media (prefers-reduced-motion:reduce){
-  .demo-frame,.fw-body video,.fp-screen video{transition:opacity .2s}
-  .fw-body video,.fp-screen video{filter:none}
-  .demo-stage{transition:none}
+  .demo-screen video{transition:opacity .2s;filter:none;transform:none}
+  .dchip{transition:none}
   .demo-progress.run::after{transition:none;transform:scaleX(1)}}
 
-/* ===== Demos v8.1 — sliding marker, grouped rail, crop fix ===== */
-
-/* inherit the design-system easing across BOTH rail and stage */
-.demo-wrap{--e:cubic-bezier(.22,1,.36,1)}
-
-/* single sliding plum marker replaces the five per-tab .dt-bar elements */
+/* ===== sliding plum marker on the tab rail + reduced motion ===== */
 .demo-tabs{position:relative}
 .dtab-marker{position:absolute;left:0;top:0;width:2.5px;height:0;
   background:var(--well);border-radius:2px;pointer-events:none;
@@ -339,45 +285,14 @@ img,svg,video,canvas{display:block;max-width:100%}
   background:var(--plum);transform:scaleY(0);transform-origin:top}
 .demo-tabs.run .dtab-marker::after{transform:scaleY(1);
   transition:transform var(--demolen,8s) linear}
-/* amber wayfinding when a leverage tab is active (color law: amber = caution) */
-.demo-tabs.risk-on .dtab-marker::after{background:var(--amber)}
-
-/* BOOST tab gets a 5× risk chip, amber not gold */
-.dtab.risk .dt-t::after{content:"5×";margin-left:9px;font-size:11px;font-weight:660;
-  letter-spacing:.02em;color:var(--amber);
-  background:var(--amber-bg,rgba(168,116,19,.12));
-  padding:2px 7px;border-radius:999px;vertical-align:middle}
-
-/* Variant B: grouped rail headers */
-.demo-tabs.grouped .dtab-group{font-family:var(--sans);font-size:11px;font-weight:600;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);
-  margin:26px 0 2px;padding-left:20px}
-.demo-tabs.grouped .dtab-group:first-child{margin-top:0}
-
-/* smoother cross-dissolve: opacity + settle-scale + de-blur, one easing */
-.fw-body video,.fp-screen video{opacity:0;transform:scale(1.015);filter:blur(6px);
-  transition:opacity .5s var(--e),transform .7s var(--e),filter .55s var(--e)}
-.fw-body video.on,.fp-screen video.on{opacity:1;transform:scale(1);filter:blur(0)}
-
-/* ===== CROP FIX =====
-   Clips now include the app's own iOS status bar + real Dynamic Island.
-   The site's painted pill would double it, so drop the painted notch for
-   phone videos and let the single real island show through. */
-.demo-stage[data-mode="phone"] .fp-notch{display:none}
-.fp-screen::before{content:"";position:absolute;top:0;left:0;right:0;height:16%;z-index:2;
-  pointer-events:none;background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,0))}
-/* 440:966 clip == 736:1616 glass → object-fit:cover is a no-op (no distortion) */
-.fp-screen video{object-fit:cover}
 
 @media (prefers-reduced-motion:reduce){
-  .dtab-marker,.fw-body video,.fp-screen video{transition:opacity .2s}
-  .fw-body video,.fp-screen video{filter:none;transform:none}
+  .dtab-marker{transition:none}
   .demo-tabs.run .dtab-marker::after{transition:none;transform:scaleY(1)}}
 
 /* ============ DEMOS section shell (kept for #demos) ============ */
 .theatre{position:relative;padding:22vh 0 12vh}
 .theatre h2{font-size:clamp(34px,4.6vw,56px);letter-spacing:-.04em;line-height:1.04}
-#demos-b{padding-top:6vh}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);font-weight:600;margin-bottom:16px}
 .kicker::before{content:"";width:24px;height:2px;background:var(--gold-grad)}
 /* base type for consolidated day sections (section-scoped h2 rules out-specify this) */
@@ -729,7 +644,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="nav-in">
     <a class="brand" href="#top"><svg class="wm" viewBox="0 0 371 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
     <div class="nlinks">
-      <a href="#demos-a">Product</a>
+      <a href="#demos">Product</a>
       <a href="#business">Why Auri</a>
       <a href="#trust">Proof</a>
       <a href="#developers">Developers</a>
@@ -737,7 +652,6 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <a href="docs.html">Docs</a>
     </div>
     <div class="nav-cta">
-      <a class="theme-switch" href="light.html" aria-label="Switch to light theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></svg>Light</a>
       <span class="goldtick"><span class="gd"></span>GOLD <b class="num">≈CA$5,700/oz</b></span>
       <a class="btn btn-plum" href="#cta" data-magnet>Get started</a>
     </div>
@@ -767,7 +681,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <p class="hero-sub">Buy real gold in seconds — then actually use it. Spend it, send it home, or borrow against it without selling a gram. It stays yours, in your own custody — never a bank's vault.</p>
       <div class="hero-ctas">
         <a class="btn btn-plum btn-big" href="#cta" data-magnet>Wake your gold</a>
-        <a class="btn btn-line btn-big" href="#demos-a">Watch it work</a>
+        <a class="btn btn-line btn-big" href="#demos">Watch it work</a>
         <span class="gold-tick" aria-label="Gold price, July 2026">
           <span class="gd"></span>GOLD <b>CA$5,700&nbsp;/&nbsp;oz</b> <span class="live">Jul&nbsp;2026</span>
         </span>
@@ -800,18 +714,14 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   </div>
 </section>
 
-<!-- ================= THE DAWN — night blooms into day ================= -->
-<div class="dawn" id="dawn" aria-hidden="true">
-  <div class="dawn-bloom"></div>
-  <div class="dawn-wash"></div>
-  <div class="dawn-horizon"><i></i></div>
-</div>
+<!-- ================= THE DAWN — smooth night→day fade ================= -->
+<div class="dawn" id="dawn" aria-hidden="true"></div>
 
 <!-- ================= DAY ================= -->
 <div class="daybreak">
 
-<!-- ================= DEMOS — Variant A (all-mobile) ================= -->
-<section class="theatre" id="demos-a" data-demo-root>
+<!-- ================= DEMOS — single all-mobile stage ================= -->
+<section class="theatre" id="demos" data-demo-root>
   <div class="wrap">
     <span class="kicker rv">See it happen</span>
     <h2 class="rv d1">Gold that gets up and works.</h2>
@@ -820,106 +730,52 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 
   <div class="wrap demo-wrap">
     <div class="demo-tabs" role="tablist" aria-label="Product workflows">
-      <button class="dtab on" id="dtab-buy-a" role="tab" aria-selected="true" aria-controls="demoStage-a" data-vid="v-buy-mob-a">
+      <button class="dtab on" id="dtab-buy" role="tab" aria-selected="true" aria-controls="demoStage" data-key="buy" data-vid="v-buy">
         <span class="dt-t">Own real gold by the time the kettle boils</span>
         <span class="dt-d">Twenty bucks or two grand by Interac; seconds later it's real grams, attested and vaulted in Switzerland — in your name, never on our books.</span>
       </button>
-      <button class="dtab" id="dtab-borrow-a" role="tab" aria-selected="false" aria-controls="demoStage-a" data-vid="v-borrow-mob-a">
+      <button class="dtab" id="dtab-borrow" role="tab" aria-selected="false" aria-controls="demoStage" data-key="borrow" data-vid="v-borrow">
         <span class="dt-t">Borrow against your gold — keep every gram</span>
         <span class="dt-d">No credit check, no score, nothing sold. Cash hits your bank; repay whenever. Borrow conservatively — a steep drop in gold can trigger liquidation.</span>
       </button>
-      <button class="dtab" id="dtab-gift-a" role="tab" aria-selected="false" aria-controls="demoStage-a" data-vid="v-gift-mob-a">
+      <button class="dtab" id="dtab-gift" role="tab" aria-selected="false" aria-controls="demoStage" data-key="gift" data-vid="v-gift">
         <span class="dt-t">Send real gold, not another gift card</span>
         <span class="dt-d">Birthday, Diwali shagun, a new baby, or just because it's Tuesday — real grams by link, text or QR. No app needed to catch it.</span>
       </button>
-      <button class="dtab" id="dtab-send-a" role="tab" aria-selected="false" aria-controls="demoStage-a" data-vid="v-send-mob-a">
+      <button class="dtab" id="dtab-send" role="tab" aria-selected="false" aria-controls="demoStage" data-key="send" data-vid="v-send">
         <span class="dt-t">Send money home before you finish texting</span>
         <span class="dt-d">Gold out here, rupees in her account there — UPI or bank, mid-market rate, minutes not days.</span>
       </button>
-      <button class="dtab risk" id="dtab-boost-a" role="tab" aria-selected="false" aria-controls="demoStage-a" data-vid="v-boost-mob-a">
-        <span class="dt-t">Feeling bold? Amplify your gold, in one tap</span>
-        <span class="dt-d">Boost multiplies the upside — and the downside. Real leverage, real liquidation risk. Amber for a reason; pros only.</span>
+      <button class="dtab" id="dtab-invest" role="tab" aria-selected="false" aria-controls="demoStage" data-key="invest" data-vid="v-invest">
+        <span class="dt-t">Stack gold on autopilot.</span>
+        <span class="dt-d">Drip a little into gold every week or payday — dollar-cost averaging, no market-timing, fully automatic. Wake up with a bit more than yesterday.</span>
       </button>
       <span class="dtab-marker" aria-hidden="true"></span>
     </div>
 
     <div class="demo-viewport">
-      <div class="demo-stage" id="demoStage-a" role="tabpanel" aria-labelledby="dtab-buy-a" data-mode="phone">
-        <div class="demo-frame frame-phone">
-          <span class="fp-notch"></span>
-          <div class="fp-screen">
-            <video id="v-buy-mob-a"    class="demo-vid on" data-kind="phone" muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
-            <video id="v-borrow-mob-a" class="demo-vid"    data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
-            <video id="v-gift-mob-a"   class="demo-vid"    data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
-            <video id="v-send-mob-a"   class="demo-vid"    data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
-            <video id="v-boost-mob-a"  class="demo-vid"    data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-boost.webp"><source src="assets/demos/mob-boost.mp4" type="video/mp4"></video>
+      <div class="demo-stage" id="demoStage" role="tabpanel" aria-labelledby="dtab-buy" data-demo="buy">
+        <div class="demo-phone">
+          <span class="demo-island"></span>
+          <div class="demo-screen">
+            <video id="v-buy"    class="on" muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
+            <video id="v-borrow" muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
+            <video id="v-gift"   muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
+            <video id="v-send"   muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
+            <video id="v-invest" muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
           </div>
         </div>
-      </div>
-      <div class="demo-progress"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= DEMOS — Variant B (grouped web + phone) ================= -->
-<section class="theatre" id="demos-b" data-demo-root>
-  <div class="wrap">
-    <span class="kicker rv">Desk &amp; pocket</span>
-    <h2 class="rv d1">One tap, every screen.</h2>
-    <p class="sec-sub rv d2">The real app, screen-recorded — at your desk and in your hand. Tap any moment, or watch it run.</p>
-  </div>
-
-  <div class="wrap demo-wrap">
-    <div class="demo-tabs grouped" role="tablist" aria-label="Product workflows">
-
-      <p class="dtab-group">At your desk</p>
-      <button class="dtab on" id="dtab-buy-b" role="tab" aria-selected="true" aria-controls="demoStage-b" data-vid="v-buy-web-b">
-        <span class="dt-t">Own real gold by the time the kettle boils</span>
-        <span class="dt-d">Twenty bucks or two grand by Interac; seconds later it's real grams, attested and vaulted in Switzerland — in your name, never on our books.</span>
-      </button>
-      <button class="dtab" id="dtab-borrow-b" role="tab" aria-selected="false" aria-controls="demoStage-b" data-vid="v-borrow-web-b">
-        <span class="dt-t">Borrow against your gold — keep every gram</span>
-        <span class="dt-d">No credit check, no score. Rate, LTV and liquidation price up front. The cash hits your bank; the gold stays yours.</span>
-      </button>
-      <button class="dtab" id="dtab-automate-b" role="tab" aria-selected="false" aria-controls="demoStage-b" data-vid="v-automate-web-b">
-        <span class="dt-t">Run your whole vault from the command line</span>
-        <span class="dt-d">MCP, CLI and API keys — buy, borrow, set LTV guards, schedule Boosts in code. Your gold, scriptable.</span>
-      </button>
-
-      <p class="dtab-group">In your hand</p>
-      <button class="dtab" id="dtab-gift-b" role="tab" aria-selected="false" aria-controls="demoStage-b" data-vid="v-gift-mob-b">
-        <span class="dt-t">Send real gold, not another gift card</span>
-        <span class="dt-d">Birthday, Diwali shagun, a new baby, or just because it's Tuesday — real grams by link, text or QR. No app needed to catch it.</span>
-      </button>
-      <button class="dtab" id="dtab-send-b" role="tab" aria-selected="false" aria-controls="demoStage-b" data-vid="v-send-mob-b">
-        <span class="dt-t">Send money home before you finish texting</span>
-        <span class="dt-d">Gold out here, rupees in her account there — UPI or bank, mid-market rate, minutes not days.</span>
-      </button>
-      <button class="dtab risk" id="dtab-boost-b" role="tab" aria-selected="false" aria-controls="demoStage-b" data-vid="v-boost-mob-b">
-        <span class="dt-t">Feeling bold? Amplify your gold, in one tap</span>
-        <span class="dt-d">Boost multiplies the upside — and the downside. Real leverage, real liquidation risk. Amber for a reason; pros only.</span>
-      </button>
-
-      <span class="dtab-marker" aria-hidden="true"></span>
-    </div>
-
-    <div class="demo-viewport">
-      <div class="demo-stage" id="demoStage-b" role="tabpanel" aria-labelledby="dtab-buy-b" data-mode="web">
-        <div class="demo-frame frame-web">
-          <div class="fw-bar"><i></i><i></i><i></i><span class="fw-url">app.auri.ca</span></div>
-          <div class="fw-body">
-            <video id="v-buy-web-b"      class="demo-vid on" data-kind="web" muted playsinline preload="auto" poster="assets/demos/poster-web-buy.webp"><source src="assets/demos/web-buy.mp4" type="video/mp4"></video>
-            <video id="v-borrow-web-b"   class="demo-vid"    data-kind="web" muted playsinline preload="none" poster="assets/demos/poster-web-borrow.webp"><source src="assets/demos/web-borrow.mp4" type="video/mp4"></video>
-            <video id="v-automate-web-b" class="demo-vid"    data-kind="web" muted playsinline preload="none" poster="assets/demos/poster-web-automate.webp"><source src="assets/demos/web-automate.mp4" type="video/mp4"></video>
-          </div>
-        </div>
-        <div class="demo-frame frame-phone">
-          <span class="fp-notch"></span>
-          <div class="fp-screen">
-            <video id="v-gift-mob-b"  class="demo-vid" data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
-            <video id="v-send-mob-b"  class="demo-vid" data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
-            <video id="v-boost-mob-b" class="demo-vid" data-kind="phone" muted playsinline preload="none" poster="assets/demos/poster-mob-boost.webp"><source src="assets/demos/mob-boost.mp4" type="video/mp4"></video>
-          </div>
+        <div class="demo-chips" aria-hidden="true">
+          <span class="dchip d-buy tr"><i class="cdot gold"></i>Vaulted in Switzerland</span>
+          <span class="dchip d-buy bl"><i class="cdot plum"></i>Yours in ~30s</span>
+          <span class="dchip d-borrow tr"><i class="cdot plum"></i>No credit check</span>
+          <span class="dchip d-borrow bl"><i class="cdot green"></i>Cash to your bank</span>
+          <span class="dchip d-gift tr"><i class="cdot plum"></i>Link, text or QR</span>
+          <span class="dchip d-gift bl"><i class="cdot gold"></i>Real grams</span>
+          <span class="dchip d-send tr"><i class="cdot green"></i>Arrives in minutes</span>
+          <span class="dchip d-send bl"><i class="cdot plum"></i>Mid-market rate</span>
+          <span class="dchip d-invest tr"><i class="cdot plum"></i>Weekly · payday</span>
+          <span class="dchip d-invest bl"><i class="cdot green"></i>Set once, runs itself</span>
         </div>
       </div>
       <div class="demo-progress"></div>
@@ -1007,7 +863,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     <div class="wrap">
       <span class="kicker">Proof, not promises</span>
       <h2>1,792 bars.<br>Every one is checkable.</h2>
-      <p class="psub">Behind every gram in every Auri wallet sits allocated, London Good Delivery gold in Swiss vaults — roughly a one-metre cube of solid metal. This is the whole vault, one mark per bar.</p>
+      <p class="psub">Auri's gold is Tether Gold (XAUT) — every gram allocated, London Good Delivery, vaulted in Switzerland, attested quarterly by BDO Italia. This is the whole vault, one mark per bar.</p>
       <div class="barwall rv">
         <canvas id="barwall" aria-label="1,792 gold bars visualized, one mark per bar"></canvas>
         <span class="bw-cap">One mark per bar · the whole vault</span>
@@ -1016,7 +872,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 
       <!-- GROUP A — the gold -->
       <div class="pledger rv">
-        <div class="pl-head gold"><span class="dot"></span><span class="lbl">The gold</span><span class="tail">checkable to the bar</span></div>
+        <div class="pl-head gold"><span class="dot"></span><span class="lbl">Tether Gold (XAUT)</span><span class="tail">every gram allocated · checkable to the bar</span></div>
         <div class="pstats">
           <div class="pstat asset">
             <div class="pv"><span class="num" data-count="707747">707,747</span></div>
@@ -1039,20 +895,20 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </div>
       </div>
 
-      <!-- GROUP B — the rails & custody -->
+      <!-- GROUP B — the lending rails & custody -->
       <div class="pledger rv">
-        <div class="pl-head rails"><span class="dot"></span><span class="lbl">The rails</span><span class="tail">open, audited, yours</span></div>
+        <div class="pl-head rails"><span class="dot"></span><span class="lbl">The lending rails</span><span class="tail">loans on Morpho · custody yours</span></div>
         <div class="pstats">
           <div class="pstat">
             <div class="pv"><span class="pre">$</span><span class="num" data-count="10">10</span><span class="suf">B+</span></div>
             <div class="unit">deposited on Morpho</div>
-            <div class="mean">The open lending network Auri borrows on — the same rails major fintechs' loans run on.</div>
+            <div class="mean">DeFi's largest lending network — the rails Auri's loans run on, alongside major fintechs.</div>
             <a class="src" href="https://morpho.org" target="_blank" rel="noopener">Morpho <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat">
             <div class="pv"><span class="num" data-count="25">25</span><span class="suf">+</span></div>
             <div class="unit">independent security reviews</div>
-            <div class="mean">OpenZeppelin · Spearbit · ChainSecurity · Certora — on immutable markets.</div>
+            <div class="mean">Of Morpho's immutable markets — OpenZeppelin · Spearbit · ChainSecurity · Certora.</div>
             <a class="src" href="https://docs.morpho.org/get-started/resources/audits/" target="_blank" rel="noopener">Audits <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat">
@@ -1183,7 +1039,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </div>
         <div class="foot-col">
           <h4>Product</h4>
-          <a href="#demos-a">Buy &amp; sell</a><a href="#demos-a">Borrow</a><a href="#demos-a">Card</a><a href="#demos-a">Gift &amp; send</a><a href="#demos-a">Auto-invest</a><a href="#business">Why Auri</a><a href="#developers">For developers</a>
+          <a href="#demos">Buy &amp; sell</a><a href="#demos">Borrow</a><a href="#demos">Card</a><a href="#demos">Gift &amp; send</a><a href="#demos">Auto-invest</a><a href="#business">Why Auri</a><a href="#developers">For developers</a>
         </div>
         <div class="foot-col">
           <h4>Resources</h4>
@@ -1256,79 +1112,65 @@ addEventListener('scroll',navState,{passive:true});navState();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-/* ---------- the dawn: night blooms into day ---------- */
-const dawn=document.getElementById('dawn');
-if(dawn){
-  const dio=new IntersectionObserver(e=>{
-    if(e[0].isIntersecting){dawn.classList.add('lit');dio.disconnect();}
-  },{threshold:.35});
-  dio.observe(dawn);
-}
-
-/* ---------- demo player v8.1: per-root, sliding marker, autoplay-through, crossfade ---------- */
+/* ---------- demo player v9: single phone stage, sliding marker, chips crossfade ---------- */
 (function(){
-  const roots=document.querySelectorAll('[data-demo-root]');
-  roots.forEach(function(root){
-    const wrap   = root.querySelector('.demo-wrap');
-    const stage  = root.querySelector('.demo-stage');
-    const rail   = root.querySelector('.demo-tabs');
-    const prog   = root.querySelector('.demo-progress');
-    const marker = root.querySelector('.dtab-marker');
-    const tabs   = [...root.querySelectorAll('.dtab')];
-    const items  = tabs.map(t=>({tab:t, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
-    if(!stage||!items.length) return;
-    let cur=0, hold=false, holdT=0;
+  const root   = document.querySelector('[data-demo-root]');
+  if(!root) return;
+  const wrap   = root.querySelector('.demo-wrap');
+  const stage  = root.querySelector('.demo-stage');
+  const rail   = root.querySelector('.demo-tabs');
+  const prog   = root.querySelector('.demo-progress');
+  const marker = root.querySelector('.dtab-marker');
+  const tabs   = [...root.querySelectorAll('.dtab')];
+  const items  = tabs.map(t=>({tab:t, key:t.dataset.key, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
+  if(!stage||!items.length) return;
+  let cur=0, hold=false, holdT=0;
 
-    const setLen = s => wrap && wrap.style.setProperty('--demolen',(s||8)+'s');
-    function moveMarker(i){
-      if(!marker) return;
-      const t=items[i].tab;
-      marker.style.transform='translateY('+t.offsetTop+'px)';
-      marker.style.height=t.offsetHeight+'px';
-      rail.classList.toggle('risk-on', t.classList.contains('risk'));
-    }
-    function runbar(){
-      if(RM) return;
-      [prog, rail].forEach(el=>{ if(!el) return; el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); });
-    }
-    function fit(){
-      const kind=items[cur].vid.dataset.kind||'web';
-      const f=stage.querySelector(kind==='phone'?'.frame-phone':'.frame-web');
-      if(f) stage.style.minHeight=f.offsetHeight+'px';
-    }
-    function show(i, manual){
-      cur=i;
-      const v=items[i].vid, kind=v.dataset.kind||'web';
-      stage.dataset.mode=kind;
-      stage.setAttribute('aria-labelledby', items[i].tab.id);
-      tabs.forEach((t,j)=>{const on=j===i;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
-      items.forEach((x,j)=>{
-        const on=j===i; x.vid.classList.toggle('on',on);
-        if(on){ setLen(isFinite(v.duration)&&v.duration?v.duration:8); v.currentTime=0; if(!RM) v.play().catch(()=>{}); }
-        else x.vid.pause();
-      });
-      moveMarker(i); requestAnimationFrame(fit); runbar();
-      if(manual){ hold=true; clearTimeout(holdT); holdT=setTimeout(()=>hold=false,14000); }
-    }
-
-    items.forEach(({tab,vid},j)=>{
-      vid.addEventListener('loadedmetadata',()=>{ if(j===cur&&isFinite(vid.duration)){ setLen(vid.duration); runbar(); } });
-      vid.addEventListener('ended',()=>{ if(j!==cur) return;
-        setTimeout(()=>{ if(j!==cur) return;
-          if(hold){ vid.currentTime=0; if(!RM) vid.play().catch(()=>{}); }
-          else show((cur+1)%items.length); }, 620); });
-      vid.addEventListener('error',()=>{ if(j===cur&&!hold) show((cur+1)%items.length); });
-      tab.addEventListener('click',()=>show(j,true));
-      vid.load&&vid.load();
+  const setLen = s => wrap && wrap.style.setProperty('--demolen',(s||8)+'s');
+  function moveMarker(i){
+    if(!marker) return;
+    const t=items[i].tab;
+    marker.style.transform='translateY('+t.offsetTop+'px)';
+    marker.style.height=t.offsetHeight+'px';
+  }
+  function runbar(){
+    if(RM) return;
+    [prog, rail].forEach(el=>{ if(!el) return; el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); });
+  }
+  function show(i, manual){
+    cur=i;
+    const it=items[i], v=it.vid;
+    stage.dataset.demo=it.key;                       /* drives the chip crossfade */
+    stage.setAttribute('aria-labelledby', it.tab.id);
+    tabs.forEach((t,j)=>{const on=j===i;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
+    items.forEach((x,j)=>{
+      const on=j===i; x.vid.classList.toggle('on',on);
+      if(on){ setLen(isFinite(v.duration)&&v.duration?v.duration:8); v.currentTime=0; if(!RM) v.play().catch(()=>{}); }
+      else x.vid.pause();
     });
-    addEventListener('resize',()=>{ fit(); moveMarker(cur); },{passive:true});
+    moveMarker(i); runbar();
+    if(manual){ hold=true; clearTimeout(holdT); holdT=setTimeout(()=>hold=false,14000); }
+  }
 
-    const io=new IntersectionObserver(e=>{
-      if(e[0].isIntersecting){ show(cur); } else { items.forEach(x=>x.vid.pause()); }
-    },{threshold:.25});
-    io.observe(stage);
-    requestAnimationFrame(()=>moveMarker(0));
+  items.forEach(({tab,vid},j)=>{
+    vid.addEventListener('loadedmetadata',()=>{ if(j===cur&&isFinite(vid.duration)){ setLen(vid.duration); runbar(); } });
+    vid.addEventListener('ended',()=>{ if(j!==cur) return;
+      setTimeout(()=>{ if(j!==cur) return;
+        if(hold){ vid.currentTime=0; if(!RM) vid.play().catch(()=>{}); }
+        else show((cur+1)%items.length); }, 620); });
+    /* graceful fallback: a missing clip (e.g. mob-invest still in production) keeps its poster;
+       skip past it only during the auto-cycle, never when the user parked there */
+    vid.addEventListener('error',()=>{ if(j===cur&&!hold) show((cur+1)%items.length); });
+    tab.addEventListener('click',()=>show(j,true));
+    vid.load&&vid.load();
   });
+  addEventListener('resize',()=>moveMarker(cur),{passive:true});
+
+  const io=new IntersectionObserver(e=>{
+    if(e[0].isIntersecting){ show(cur); } else { items.forEach(x=>x.vid.pause()); }
+  },{threshold:.25});
+  io.observe(stage);
+  requestAnimationFrame(()=>{ stage.dataset.demo=items[0].key; moveMarker(0); });
 })();
 
 /* ---------- count-ups (textContent only) ---------- */
