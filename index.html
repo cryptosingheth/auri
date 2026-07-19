@@ -195,32 +195,33 @@ img,svg,video,canvas{display:block;max-width:100%}
 .wake p .goldlit{background:linear-gradient(95deg,#F3E5BC,#D3B575);-webkit-background-clip:text;background-clip:text;color:transparent}
 .wake-meta{margin-top:34px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,233,212,.4)}
 
-/* ============ THE DAWN — a tall, warm sunrise (mirror of the dusk into Night II) ============
-   Was a short, cold-grey band that read as a hard seam. Now a long night→plum→rose→day
-   wash with a low sunrise glow, so the day opens gradually and the demos title rises out of it. */
-.dawn{position:relative;height:clamp(220px,30vh,400px);
+/* ============ DAYBREAK — the dark→light "dawn" is this wrapper's OWN top gradient:
+   a long, subtle sunrise that mirrors the dusk into Night II (night→plum→rose→peach→day).
+   Integrated (not a separate band) and gradual, so the day opens naturally — the same
+   feel as the loved business→proof dusk, just reversed. Solid --bg below the wash. */
+.daybreak{position:relative;
   background:
-    radial-gradient(72% 42% at 50% 84%, rgba(233,183,193,.20), transparent 66%),
     linear-gradient(180deg,
-      #100A0E 0%, #160b12 14%, #2B1622 30%, #4a2839 42%, #6E4258 53%,
-      #935f77 63%, #C9A0AE 74%, #E0BFC4 83%, #EEDAD6 90%, #F5ECE9 96%, var(--bg) 100%)}
+      var(--night) 0,
+      #180d14 4vh,
+      #2B1622 8vh,
+      #452838 12vh,
+      #6E4258 16vh,
+      #9a7080 19vh,
+      #cfa9b5 22vh,
+      #e8d5d2 25vh,
+      var(--bg) 29vh) no-repeat,
+    var(--bg)}
 
-/* ============ DAYBREAK — begins clean in daylight (dawn now owns the wash) ============ */
-.daybreak{background:var(--bg);position:relative}
-
-/* ============ Demo theatre v11 — SCROLL-DRIVEN sticky stage, per-flow mood ============
-   The section is tall; an inner sticky pins the phone + rail for one viewport while you
-   scroll through the 5 flows. Each ~1/5 of the scroll advances one flow (JS); the active
-   video loops; the bar fills to show position. Below 940px it unpins into a normal
-   tap-to-switch section. */
+/* ============ Demo theatre v12 — a NORMAL section (auto-plays, tap to switch) ============
+   No scroll-hijack: the rail auto-advances and you can tap any flow, and you scroll past
+   the whole section freely. Two columns (copy+rail | phone); stacks below 940px. */
 @property --mood{syntax:'<color>';inherits:false;initial-value:rgba(133,33,82,.10)}
-.demo-scroll{position:relative;height:540vh}
-.demo-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
-.demo-wrap{--e:cubic-bezier(.22,1,.36,1);width:100%;
+.demo-wrap{--e:cubic-bezier(.22,1,.36,1);
   display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(26px,4vw,64px);align-items:center}
 .demo-lead{min-width:0}
 .demo-lead h2{font-size:clamp(29px,3.5vw,46px)}
-.demo-lead .sec-sub{margin:14px 0 clamp(16px,2.2vw,26px)}
+.demo-lead .sec-sub{margin:14px 0 clamp(18px,2.4vw,28px)}
 .demo-viewport{position:relative}
 
 /* ---- LEFT · the chapter rail (icon + expanding copy, sliding plum marker) ---- */
@@ -259,20 +260,20 @@ img,svg,video,canvas{display:block;max-width:100%}
 .demo-stage[data-demo="send"]  {--mood:rgba(22,150,100,.13)}
 .demo-stage[data-demo="invest"]{--mood:rgba(133,33,82,.12)}
 
-/* ONE premium, site-drawn phone frame — the hero */
-.demo-phone{position:relative;z-index:2;flex:none;padding:11px;border-radius:44px;background:#0E0D12;
+/* v12.1: the recording is the GLASS ONLY (app screen incl. its real 9:41 status bar +
+   Dynamic Island — kept visible during recording). The site draws just a thin black
+   bezel around it, so there is never any page-bg / showcase-chrome residue above the
+   phone. The recording already has the island, so the site draws none. */
+.demo-phone{position:relative;z-index:2;flex:none;padding:9px;border-radius:50px;background:#0E0D12;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),
-             0 30px 70px -30px rgba(20,18,60,.5),
-             0 50px 90px -42px rgba(133,33,82,.34)}
-.demo-screen{position:relative;height:min(62vh,520px);aspect-ratio:440/966;
-  border-radius:34px;overflow:hidden;background:#07060a}
+             0 24px 46px -22px rgba(20,18,60,.48),
+             0 44px 84px -38px rgba(133,33,82,.28)}
+.demo-screen{position:relative;height:min(64vh,566px);aspect-ratio:368/808;
+  border-radius:42px;overflow:hidden;background:#07060a}
 .demo-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;transform:scale(1.015);filter:blur(6px);
+  opacity:0;transform:scale(1.012);filter:blur(5px);
   transition:opacity .5s var(--e),transform .7s var(--e),filter .55s var(--e)}
-.demo-screen video.on{opacity:1;transform:scale(1);filter:blur(0)}
-/* v11: the recordings are FULL-GLASS (they include the app's own status bar +
-   island), so the site no longer draws its own island — that avoids a double
-   notch and lets the whole app screen sit naturally in the bezel. */
+.demo-screen video.on{opacity:1;transform:none;filter:none}
 .demo-island{display:none}
 
 /* floating annotation chips — 2 per demo, crossfade on tab change */
@@ -288,8 +289,8 @@ img,svg,video,canvas{display:block;max-width:100%}
 .dchip .cdot.plum{background:var(--plum);box-shadow:0 0 0 3px rgba(133,33,82,.15)}
 .dchip .cdot.gold{background:var(--gold-grad);box-shadow:0 0 0 3px rgba(196,162,92,.18)}
 .dchip .cdot.green{background:var(--green);box-shadow:0 0 0 3px rgba(22,160,106,.15)}
-.dchip.tr{top:9%;right:0}
-.dchip.bl{bottom:11%;left:0}
+.dchip.tr{top:13%;right:-2%}
+.dchip.bl{bottom:12%;left:-2%}
 .demo-stage[data-demo="buy"]    .d-buy,
 .demo-stage[data-demo="borrow"] .d-borrow,
 .demo-stage[data-demo="gift"]   .d-gift,
@@ -297,33 +298,32 @@ img,svg,video,canvas{display:block;max-width:100%}
 .demo-stage[data-demo="invest"] .d-invest{opacity:1;transform:none}
 
 /* ---- slim PLUM progress bar under the stage — fills with scroll position (--p) ---- */
+/* auto-advance progress — the active flow's bar fills over the clip's duration (JS-driven) */
 .demo-progress{position:relative;height:3px;margin-top:24px;border-radius:3px;
   background:var(--line);overflow:hidden;max-width:440px}
-.demo-progress i{display:block;height:100%;border-radius:3px;background:var(--plum);
-  width:calc(var(--p,0)*100%);transition:width .12s linear}
+.demo-progress i{display:block;height:100%;width:0;border-radius:3px;background:var(--plum)}
+.demo-progress.run i{width:100%;transition:width var(--demolen,8s) linear}
 
-/* below 940px: UNPIN into a normal stacked, tap-to-switch section (JS drops scroll mode) */
+/* below 940px: stack (rail above phone), hide floating chips */
 @media (max-width:940px){
-  .demo-scroll{height:auto}
-  .demo-sticky{position:static;height:auto;display:block;overflow:visible;padding:7vh 0}
   .demo-wrap{grid-template-columns:1fr;gap:26px}
   .demo-chips{display:none}
   .demo-stage{padding:22px}
   .demo-screen{height:min(72vh,560px)}
-  .demo-progress{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .demo-screen video{transition:opacity .2s;filter:none;transform:none}
   .dchip{transition:none}
-  .demo-progress i{transition:none}}
+  .demo-progress.run i{transition:none;width:100%}}
 
 /* v10: the sliding rail marker is retired — the active card (plum icon chip + tint)
    marks the current flow; the bar under the stage carries the timing. Kept in the
    DOM as a no-op so the player JS's moveMarker() stays harmless. */
 .dtab-marker{display:none}
 
-/* ============ DEMOS section shell (kept for #demos) ============ */
-.theatre{position:relative;background:var(--bg)}
+/* ============ DEMOS section shell (kept for #demos) ============
+   Big top padding = the demos title rises out of the daybreak sunrise onto clean day. */
+.theatre{position:relative;padding:22vh 0 13vh}
 .theatre h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.04em;line-height:1.05}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);font-weight:600;margin-bottom:16px}
 .kicker::before{content:"";width:24px;height:2px;background:var(--gold-grad)}
@@ -744,20 +744,16 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   </div>
 </section>
 
-<!-- ================= THE DAWN — smooth night→day fade ================= -->
-<div class="dawn" id="dawn" aria-hidden="true"></div>
-
-<!-- ================= DAY ================= -->
+<!-- ================= DAY — the dark→light dawn now lives in .daybreak's own top
+     gradient (a long, subtle mirror of the dusk into Night II), not a separate band. -->
 <div class="daybreak">
 
-<!-- ================= DEMOS — scroll-driven product theatre ================= -->
+<!-- ================= DEMOS — product theatre (auto-plays, tap to switch, scroll past freely) ================= -->
 <section class="theatre" id="demos" data-demo-root>
- <div class="demo-scroll">
-  <div class="demo-sticky">
    <div class="wrap demo-wrap">
     <div class="demo-lead">
       <h2 class="rv">Gold that gets up and works.</h2>
-      <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Scroll to step through each move.</p>
+      <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Tap a tab, or just watch it run.</p>
       <div class="demo-tabs" role="tablist" aria-label="Product workflows">
       <button class="dtab on" id="dtab-buy" role="tab" aria-selected="true" aria-controls="demoStage" data-key="buy" data-vid="v-buy">
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v9m0 0 3.3-3.3M12 12 8.7 8.7"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span>
@@ -802,11 +798,11 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <div class="demo-stage" id="demoStage" role="tabpanel" aria-labelledby="dtab-buy" data-demo="buy">
         <div class="demo-phone">
           <div class="demo-screen">
-            <video id="v-buy"    class="on" loop muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
-            <video id="v-borrow" loop muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
-            <video id="v-gift"   loop muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
-            <video id="v-send"   loop muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
-            <video id="v-invest" loop muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
+            <video id="v-buy"    class="on" muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
+            <video id="v-borrow" muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
+            <video id="v-gift"   muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
+            <video id="v-send"   muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
+            <video id="v-invest" muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
           </div>
         </div>
         <div class="demo-chips" aria-hidden="true">
@@ -825,8 +821,6 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <div class="demo-progress" aria-hidden="true"><i></i></div>
      </div>
     </div>
-   </div>
-  </div>
 </section>
 
 <!-- ================= THE AURI DIFFERENCE (Mercury device-in-card) ================= -->
@@ -1143,20 +1137,15 @@ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ticker loop */
 const tt=document.getElementById('tickertrack');
 tt.append(...[...tt.children].map(n=>n.cloneNode(true)));
-/* ---------- nav: dark over night, light over day (incl. the dawn's bright half) ---------- */
+/* ---------- nav: dark over night, light over day. The daybreak wrapper opens with its
+   own sunrise gradient (night→day over ~42vh); flip to light only once that resolves to
+   daylight under the nav, so the nav never shows dark text over the dark-plum sunrise. ---------- */
 const nav=document.getElementById('nav');
 const dayzone=document.querySelector('.daybreak');
-const dawnEl=document.getElementById('dawn');
 function navState(){
   const dr=dayzone.getBoundingClientRect();
-  let inDay=dr.top<66&&dr.bottom>66;
-  if(dawnEl){
-    const wr=dawnEl.getBoundingClientRect();
-    /* flip to light only once the sunrise has actually resolved to daylight under the nav
-       (the tall dawn stays dark-plum through its first ~80%) */
-    if(wr.top+wr.height*0.84<66&&wr.bottom>66) inDay=true;
-  }
-  nav.classList.toggle('light',inDay);
+  const flipAt=66-innerHeight*0.40;              /* the daylight part of the sunrise reaches the nav */
+  nav.classList.toggle('light', dr.top<flipAt && dr.bottom>66);
 }
 addEventListener('scroll',navState,{passive:true});navState();
 
@@ -1164,66 +1153,55 @@ addEventListener('scroll',navState,{passive:true});navState();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-/* ---------- demo player v11: SCROLL-DRIVEN sticky theatre ----------
-   Desktop (>940px): the tall .demo-scroll pins its .demo-sticky; scroll position maps
-   to the active flow (each ~1/5 advances one), the active video loops, the bar fills.
-   Mobile (<=940px): the section unpins; the rail chips tap-switch. */
+/* ---------- demo player v12: normal auto-advancing theatre ----------
+   Plays the active flow when the section is on screen; on end it advances to the next
+   (looping the 5). Tap any rail item to jump (holds there 15s, then resumes). No scroll
+   hijack — you scroll past the whole section freely. The bar fills over each clip. */
 (function(){
-  const root     = document.querySelector('[data-demo-root]');
+  const root  = document.querySelector('[data-demo-root]');
   if(!root) return;
-  const scroller = root.querySelector('.demo-scroll');
-  const stage    = root.querySelector('.demo-stage');
-  const progFill = root.querySelector('.demo-progress');
-  const tabs     = [...root.querySelectorAll('.dtab')];
-  const items    = tabs.map(t=>({tab:t, key:t.dataset.key, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
+  const stage = root.querySelector('.demo-stage');
+  const prog  = root.querySelector('.demo-progress');
+  const tabs  = [...root.querySelectorAll('.dtab')];
+  const items = tabs.map(t=>({tab:t, key:t.dataset.key, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
   if(!stage||!items.length) return;
-  const mq = matchMedia('(min-width:941px)');
-  let cur = -1;
+  let cur=-1, hold=false, holdT=0, inView=false;
 
-  function show(i){
-    if(i===cur) return;
+  const setLen = s => root.style.setProperty('--demolen',(s||7)+'s');
+  function runbar(){ if(RM||!prog) return; prog.classList.remove('run'); void prog.offsetWidth; prog.classList.add('run'); }
+  function show(i, manual){
+    if(i===cur && !manual) return;
     cur=i;
-    const it=items[i];
+    const it=items[i], v=it.vid;
     stage.dataset.demo=it.key;                        /* drives the mood glow + chips */
     stage.setAttribute('aria-labelledby', it.tab.id);
     tabs.forEach((t,j)=>{const on=j===i;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
     items.forEach((x,j)=>{
       const on=j===i; x.vid.classList.toggle('on',on);
-      if(on){ x.vid.currentTime=0; if(!RM) x.vid.play().catch(()=>{}); }
+      if(on){ setLen(isFinite(v.duration)&&v.duration?v.duration:7); v.currentTime=0; if(inView&&!RM) v.play().catch(()=>{}); }
       else x.vid.pause();
     });
+    runbar();
+    if(manual){ hold=true; clearTimeout(holdT); holdT=setTimeout(()=>hold=false,15000); }
   }
 
-  /* scroll → progress (0..1) → active index + bar fill (desktop only) */
-  let ticking=false;
-  function onScroll(){
-    ticking=false;
-    if(!mq.matches) return;
-    const total = scroller.offsetHeight - innerHeight;
-    const p = total>0 ? Math.min(1, Math.max(0, -scroller.getBoundingClientRect().top/total)) : 0;
-    if(progFill) progFill.style.setProperty('--p', p.toFixed(4));
-    show(Math.min(items.length-1, Math.max(0, Math.floor(p*items.length))));
-  }
-  addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
-  addEventListener('resize',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
+  items.forEach(({tab,vid},j)=>{
+    vid.addEventListener('loadedmetadata',()=>{ if(j===cur&&isFinite(vid.duration)){ setLen(vid.duration); runbar(); } });
+    vid.addEventListener('ended',()=>{ if(j!==cur) return;
+      setTimeout(()=>{ if(j!==cur) return;
+        if(hold){ vid.currentTime=0; if(inView&&!RM) vid.play().catch(()=>{}); }
+        else show((cur+1)%items.length); }, 480); });
+    vid.addEventListener('error',()=>{ if(j===cur&&!hold) show((cur+1)%items.length); });
+    tab.addEventListener('click',()=>show(j,true));
+    vid.load&&vid.load();
+  });
 
-  /* rail click → desktop: smooth-scroll to that flow's band · mobile: switch in place */
-  items.forEach(({tab},j)=>tab.addEventListener('click',()=>{
-    if(mq.matches){
-      const total = scroller.offsetHeight - innerHeight;
-      const absTop = scroller.getBoundingClientRect().top + scrollY;
-      scrollTo({top: absTop + ((j+0.5)/items.length)*total, behavior: RM?'auto':'smooth'});
-    } else show(j);
-  }));
-
-  /* pause when the whole section is off-screen; resume the active clip when back */
-  new IntersectionObserver(e=>{
-    if(e[0].isIntersecting){ if(cur>=0 && !RM) items[cur].vid.play().catch(()=>{}); }
+  const io=new IntersectionObserver(e=>{
+    inView=e[0].isIntersecting;
+    if(inView){ if(cur<0) show(0,true); else if(!RM){ items[cur].vid.play().catch(()=>{}); runbar(); } }
     else items.forEach(x=>x.vid.pause());
-  },{threshold:0}).observe(root);
-
-  show(0);
-  requestAnimationFrame(onScroll);
+  },{threshold:.3});
+  io.observe(stage);
 })();
 
 /* ---------- count-ups (textContent only) ---------- */
