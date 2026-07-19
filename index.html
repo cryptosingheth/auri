@@ -189,7 +189,7 @@ img,svg,video,canvas{display:block;max-width:100%}
 @keyframes tick{to{transform:translateX(-50%)}}
 
 /* ============ WAKE ============ */
-.wake{position:relative;background:var(--night);padding:15vh 0 14vh;overflow:clip}
+.wake{position:relative;background:var(--night);padding:12vh 0 8vh;overflow:clip}
 .wake p{font-size:clamp(28px,4.4vw,56px);line-height:1.14;letter-spacing:-.035em;font-weight:600;color:rgba(242,233,212,.3);max-width:1000px}
 .wake p .lit{color:var(--cream)}
 .wake p .goldlit{background:linear-gradient(95deg,#F3E5BC,#D3B575);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -198,7 +198,7 @@ img,svg,video,canvas{display:block;max-width:100%}
 /* ============ THE DAWN — a tall, warm sunrise (mirror of the dusk into Night II) ============
    Was a short, cold-grey band that read as a hard seam. Now a long night→plum→rose→day
    wash with a low sunrise glow, so the day opens gradually and the demos title rises out of it. */
-.dawn{position:relative;height:clamp(320px,44vh,560px);
+.dawn{position:relative;height:clamp(220px,30vh,400px);
   background:
     radial-gradient(72% 42% at 50% 84%, rgba(233,183,193,.20), transparent 66%),
     linear-gradient(180deg,
@@ -208,11 +208,19 @@ img,svg,video,canvas{display:block;max-width:100%}
 /* ============ DAYBREAK — begins clean in daylight (dawn now owns the wash) ============ */
 .daybreak{background:var(--bg);position:relative}
 
-/* ============ Demo theatre v10 — chapter rail + hero phone, per-flow mood ============ */
+/* ============ Demo theatre v11 — SCROLL-DRIVEN sticky stage, per-flow mood ============
+   The section is tall; an inner sticky pins the phone + rail for one viewport while you
+   scroll through the 5 flows. Each ~1/5 of the scroll advances one flow (JS); the active
+   video loops; the bar fills to show position. Below 940px it unpins into a normal
+   tap-to-switch section. */
 @property --mood{syntax:'<color>';inherits:false;initial-value:rgba(133,33,82,.10)}
-.demo-wrap{--e:cubic-bezier(.22,1,.36,1);
-  display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(26px,4vw,58px);
-  align-items:center;margin-top:clamp(36px,5vw,58px)}
+.demo-scroll{position:relative;height:540vh}
+.demo-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+.demo-wrap{--e:cubic-bezier(.22,1,.36,1);width:100%;
+  display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(26px,4vw,64px);align-items:center}
+.demo-lead{min-width:0}
+.demo-lead h2{font-size:clamp(29px,3.5vw,46px)}
+.demo-lead .sec-sub{margin:14px 0 clamp(16px,2.2vw,26px)}
 .demo-viewport{position:relative}
 
 /* ---- LEFT · the chapter rail (icon + expanding copy, sliding plum marker) ---- */
@@ -262,8 +270,10 @@ img,svg,video,canvas{display:block;max-width:100%}
   opacity:0;transform:scale(1.015);filter:blur(6px);
   transition:opacity .5s var(--e),transform .7s var(--e),filter .55s var(--e)}
 .demo-screen video.on{opacity:1;transform:scale(1);filter:blur(0)}
-.demo-island{position:absolute;z-index:3;top:10px;left:50%;transform:translateX(-50%);
-  width:34%;height:18px;border-radius:999px;background:#07060a}
+/* v11: the recordings are FULL-GLASS (they include the app's own status bar +
+   island), so the site no longer draws its own island — that avoids a double
+   notch and lets the whole app screen sit naturally in the bezel. */
+.demo-island{display:none}
 
 /* floating annotation chips — 2 per demo, crossfade on tab change */
 .demo-chips{position:absolute;inset:0;z-index:3;pointer-events:none}
@@ -286,24 +296,26 @@ img,svg,video,canvas{display:block;max-width:100%}
 .demo-stage[data-demo="send"]   .d-send,
 .demo-stage[data-demo="invest"] .d-invest{opacity:1;transform:none}
 
-/* ---- slim PLUM progress bar under the stage ---- */
-.demo-progress{position:relative;height:2px;margin-top:22px;border-radius:2px;
-  background:var(--line);overflow:hidden}
-.demo-progress::after{content:"";position:absolute;inset:0;transform:scaleX(0);transform-origin:left;
-  background:var(--plum);border-radius:2px}
-.demo-progress.run::after{transform:scaleX(1);transition:transform var(--demolen,8s) linear}
+/* ---- slim PLUM progress bar under the stage — fills with scroll position (--p) ---- */
+.demo-progress{position:relative;height:3px;margin-top:24px;border-radius:3px;
+  background:var(--line);overflow:hidden;max-width:440px}
+.demo-progress i{display:block;height:100%;border-radius:3px;background:var(--plum);
+  width:calc(var(--p,0)*100%);transition:width .12s linear}
 
-/* below ~900px: stack (tabs above, phone below), chips hide */
-@media (max-width:900px){
+/* below 940px: UNPIN into a normal stacked, tap-to-switch section (JS drops scroll mode) */
+@media (max-width:940px){
+  .demo-scroll{height:auto}
+  .demo-sticky{position:static;height:auto;display:block;overflow:visible;padding:7vh 0}
   .demo-wrap{grid-template-columns:1fr;gap:26px}
   .demo-chips{display:none}
   .demo-stage{padding:22px}
-  .demo-screen{height:min(70vh,560px)}
+  .demo-screen{height:min(72vh,560px)}
+  .demo-progress{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .demo-screen video{transition:opacity .2s;filter:none;transform:none}
   .dchip{transition:none}
-  .demo-progress.run::after{transition:none;transform:scaleX(1)}}
+  .demo-progress i{transition:none}}
 
 /* v10: the sliding rail marker is retired — the active card (plum icon chip + tint)
    marks the current flow; the bar under the stage carries the timing. Kept in the
@@ -311,8 +323,8 @@ img,svg,video,canvas{display:block;max-width:100%}
 .dtab-marker{display:none}
 
 /* ============ DEMOS section shell (kept for #demos) ============ */
-.theatre{position:relative;padding:9vh 0 12vh}
-.theatre h2{font-size:clamp(34px,4.6vw,56px);letter-spacing:-.04em;line-height:1.04}
+.theatre{position:relative;background:var(--bg)}
+.theatre h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.04em;line-height:1.05}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);font-weight:600;margin-bottom:16px}
 .kicker::before{content:"";width:24px;height:2px;background:var(--gold-grad)}
 /* base type for consolidated day sections (section-scoped h2 rules out-specify this) */
@@ -558,10 +570,11 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 @keyframes blink{50%{opacity:0}}
 
 /* ============ FAQ ============ */
-.faq{background:var(--night);padding:10vh 0;color:var(--cream)}
-.faq-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start}
-.faq h2{font-size:clamp(32px,4vw,50px);letter-spacing:-.04em;line-height:1.02;font-weight:620;color:var(--cream)}
-.faq .fsub{margin-top:16px;font-size:15px;color:rgba(242,233,212,.55);max-width:340px}
+.faq{background:var(--night);padding:11vh 0;color:var(--cream)}
+.faq-inner{max-width:800px;margin:0 auto}
+.faq-head{text-align:center;margin-bottom:clamp(30px,4.5vw,48px)}
+.faq h2{font-size:clamp(32px,4vw,50px);letter-spacing:-.04em;line-height:1.04;font-weight:620;color:var(--cream)}
+.faq .fsub{margin:14px auto 0;font-size:15px;color:rgba(242,233,212,.55);max-width:520px}
 .faq .fsub a{color:var(--gold-a);font-weight:600}
 details{border-bottom:1px solid var(--wline)}
 details:first-of-type{border-top:1px solid var(--wline)}
@@ -599,8 +612,6 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 @media (max-width:1040px){
   .nlinks{display:none}
   .goldtick{display:none}
-  .faq-grid{grid-template-columns:1fr}
-  .faq-grid{gap:40px}
   .foot-grid{grid-template-columns:1fr 1fr}
   .legal{columns:1}
 }
@@ -739,15 +750,15 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 <!-- ================= DAY ================= -->
 <div class="daybreak">
 
-<!-- ================= DEMOS — single all-mobile stage ================= -->
+<!-- ================= DEMOS — scroll-driven product theatre ================= -->
 <section class="theatre" id="demos" data-demo-root>
-  <div class="wrap">
-    <h2 class="rv">Gold that gets up and works.</h2>
-    <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Tap a moment, or just watch it run.</p>
-  </div>
-
-  <div class="wrap demo-wrap">
-    <div class="demo-tabs" role="tablist" aria-label="Product workflows">
+ <div class="demo-scroll">
+  <div class="demo-sticky">
+   <div class="wrap demo-wrap">
+    <div class="demo-lead">
+      <h2 class="rv">Gold that gets up and works.</h2>
+      <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Scroll to step through each move.</p>
+      <div class="demo-tabs" role="tablist" aria-label="Product workflows">
       <button class="dtab on" id="dtab-buy" role="tab" aria-selected="true" aria-controls="demoStage" data-key="buy" data-vid="v-buy">
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v9m0 0 3.3-3.3M12 12 8.7 8.7"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span>
         <span class="dt-body">
@@ -766,7 +777,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="9" width="17" height="11.5" rx="1.6"/><path d="M2.5 9h19M12 9v11.5"/><path d="M12 9s-1.4-4-3.6-3.1S12 9 12 9Z"/><path d="M12 9s1.4-4 3.6-3.1S12 9 12 9Z"/></svg></span>
         <span class="dt-body">
           <span class="dt-t">Send real gold, not another gift card</span>
-          <span class="dt-d">Birthday, Diwali shagun, a new baby, or just because it's Tuesday — real grams by contact, link or QR, with the occasion built in.</span>
+          <span class="dt-d">Birthday, a wedding, Diwali shagun, a new baby, or just because it's Tuesday — real grams by contact, link or QR, with the occasion built in.</span>
         </span>
       </button>
       <button class="dtab" id="dtab-send" role="tab" aria-selected="false" aria-controls="demoStage" data-key="send" data-vid="v-send">
@@ -780,22 +791,22 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 0 1 14.4-6.1"/><path d="M20.5 12a8.5 8.5 0 0 1-14.4 6.1"/><path d="M18.4 2.6V6h-3.4M5.6 21.4V18H9"/></svg></span>
         <span class="dt-body">
           <span class="dt-t">Stack gold on autopilot</span>
-          <span class="dt-d">Drip into gold every week or payday — dollar-cost averaging, no market-timing, fully automatic. Pause anytime, no fee.</span>
+          <span class="dt-d">Drip into gold every week, payday or month — dollar-cost averaging, no market-timing, fully automatic. Pause anytime, no fee.</span>
         </span>
       </button>
       <span class="dtab-marker" aria-hidden="true"></span>
+      </div>
     </div>
 
     <div class="demo-viewport">
       <div class="demo-stage" id="demoStage" role="tabpanel" aria-labelledby="dtab-buy" data-demo="buy">
         <div class="demo-phone">
-          <span class="demo-island"></span>
           <div class="demo-screen">
-            <video id="v-buy"    class="on" muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
-            <video id="v-borrow" muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
-            <video id="v-gift"   muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
-            <video id="v-send"   muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
-            <video id="v-invest" muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
+            <video id="v-buy"    class="on" loop muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
+            <video id="v-borrow" loop muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
+            <video id="v-gift"   loop muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
+            <video id="v-send"   loop muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
+            <video id="v-invest" loop muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
           </div>
         </div>
         <div class="demo-chips" aria-hidden="true">
@@ -811,8 +822,10 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <span class="dchip d-invest bl"><i class="cdot green"></i>Set once, runs itself</span>
         </div>
       </div>
-      <div class="demo-progress"></div>
+      <div class="demo-progress" aria-hidden="true"><i></i></div>
+     </div>
     </div>
+   </div>
   </div>
 </section>
 
@@ -1010,35 +1023,43 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 </section>
 
   <section class="faq" id="faq">
-    <div class="wrap faq-grid">
-      <div>
-        <h2 class="rv">Fair questions,<br>straight answers.</h2>
-        <p class="fsub rv d1">Six that matter most. The long tail — fees, taxes, regions, security — lives in the <a href="docs.html">docs</a>.</p>
+    <div class="wrap faq-inner">
+      <div class="faq-head rv">
+        <h2>Fair questions, straight answers.</h2>
+        <p class="fsub">Eight that matter most. The long tail — fees, taxes, regions, security — lives in the <a href="docs.html">docs</a>.</p>
       </div>
-      <div class="rv d1">
+      <div class="faq-list rv d1">
         <details open>
           <summary>Is my gold real?<span class="plus">+</span></summary>
-          <div class="ans">Yes — every unit is backed 1:1 by physical, investment-grade bars in Swiss vaults. Reserves are independently attested and published, and your holdings are verifiable on-chain, anytime.</div>
+          <div class="ans">Yes — every balance is Tether Gold (XAUT): real, allocated London Good Delivery bars in Swiss vaults, attested every quarter by BDO Italia. You can trace your holdings down to the individual numbered bar, anytime — it's gold you own, not an IOU or a price feed.</div>
         </details>
         <details>
           <summary>Does Auri hold my money?<span class="plus">+</span></summary>
-          <div class="ans">No. Your gold and cash sit in a wallet only you control, secured by passkeys. Auri is software — if anything ever happened to Auri, your gold would still be yours, on a public ledger.</div>
+          <div class="ans">No — Auri holds $0. Your gold and cash live in a wallet only you control, secured by passkeys. If Auri disappeared tomorrow, your gold would still be yours, provable on a public ledger.</div>
         </details>
         <details>
           <summary>I'm not into crypto. Is this complicated?<span class="plus">+</span></summary>
-          <div class="ans">You pay in Canadian dollars and see dollars, grams and ounces. No tokens, no addresses, no gas fees. The machinery stays under the hood — it's checkable if you're curious, invisible if you're not.</div>
+          <div class="ans">Not at all. You sign in with just an email, phone or passkey — no password, ever — fund by Interac, and pay in Canadian dollars. View everything in CAD, grams, ounces or XAUT; the machinery stays under the hood.</div>
         </details>
         <details>
           <summary>What's the catch with borrowing?<span class="plus">+</span></summary>
-          <div class="ans">Liquidation risk. If gold's value falls far enough against your loan, part of your gold can be sold to repay it. Borrow conservatively and watch your loan health — it's shown live, always.</div>
+          <div class="ans">Borrowing is instant with no credit check, at 3.75% APR — but it carries liquidation risk: if gold falls far enough against your loan, part of your gold can be sold to repay it. Your LTV and liquidation price are on screen live, so borrow conservatively and keep an eye on them.</div>
         </details>
         <details>
           <summary>Is Auri a bank? Is my money insured?<span class="plus">+</span></summary>
-          <div class="ans">No — Auri is a non-custodial software platform, not a bank. Balances aren't deposits and aren't CDIC-insured. What you get instead is custody: your funds never sit on our balance sheet at all.</div>
+          <div class="ans">No — Auri is a non-custodial software platform, not a bank, and balances aren't deposits or CDIC-insured. What you get instead is custody: your gold and cash never touch our balance sheet — they sit in your wallet.</div>
         </details>
         <details>
           <summary>What does it cost?<span class="plus">+</span></summary>
-          <div class="ans">The exact price, rate and any fee appear on the confirm screen before every action. No hidden spreads, no storage fees, no surprises. What you see is what you pay.</div>
+          <div class="ans">The exact price, rate and any fee appear on the confirm screen before every action — no hidden spreads, no storage fees, no surprises. Auto-Invest carries no fee, and you can pause it anytime.</div>
+        </details>
+        <details>
+          <summary>Can I spend, send and gift my gold?<span class="plus">+</span></summary>
+          <div class="ans">Yes. The Auri card spends straight from your gold — tap, chip or online, any day of the week. Send gold to a contact, @username or wallet, gift it for a birthday, wedding or Diwali with the occasion built in, or remit it abroad — all in minutes.</div>
+        </details>
+        <details>
+          <summary>What do I get for using Auri?<span class="plus">+</span></summary>
+          <div class="ans">Auto-Invest quietly stacks gold on your schedule — weekly, payday or monthly — averaging your price with no fee. You collect Auri Jewels as you go (redeem for gift cards, fee waivers and partner deals), and Refer &amp; earn pays you in real gold for every friend who joins.</div>
         </details>
       </div>
     </div>
@@ -1143,65 +1164,66 @@ addEventListener('scroll',navState,{passive:true});navState();
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-/* ---------- demo player v9: single phone stage, sliding marker, chips crossfade ---------- */
+/* ---------- demo player v11: SCROLL-DRIVEN sticky theatre ----------
+   Desktop (>940px): the tall .demo-scroll pins its .demo-sticky; scroll position maps
+   to the active flow (each ~1/5 advances one), the active video loops, the bar fills.
+   Mobile (<=940px): the section unpins; the rail chips tap-switch. */
 (function(){
-  const root   = document.querySelector('[data-demo-root]');
+  const root     = document.querySelector('[data-demo-root]');
   if(!root) return;
-  const wrap   = root.querySelector('.demo-wrap');
-  const stage  = root.querySelector('.demo-stage');
-  const rail   = root.querySelector('.demo-tabs');
-  const prog   = root.querySelector('.demo-progress');
-  const marker = root.querySelector('.dtab-marker');
-  const tabs   = [...root.querySelectorAll('.dtab')];
-  const items  = tabs.map(t=>({tab:t, key:t.dataset.key, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
+  const scroller = root.querySelector('.demo-scroll');
+  const stage    = root.querySelector('.demo-stage');
+  const progFill = root.querySelector('.demo-progress');
+  const tabs     = [...root.querySelectorAll('.dtab')];
+  const items    = tabs.map(t=>({tab:t, key:t.dataset.key, vid:root.querySelector('#'+t.dataset.vid)})).filter(x=>x.vid);
   if(!stage||!items.length) return;
-  let cur=0, hold=false, holdT=0;
+  const mq = matchMedia('(min-width:941px)');
+  let cur = -1;
 
-  const setLen = s => wrap && wrap.style.setProperty('--demolen',(s||8)+'s');
-  function moveMarker(i){
-    if(!marker) return;
-    const t=items[i].tab;
-    marker.style.transform='translateY('+t.offsetTop+'px)';
-    marker.style.height=t.offsetHeight+'px';
-  }
-  function runbar(){
-    if(RM) return;
-    [prog, rail].forEach(el=>{ if(!el) return; el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); });
-  }
-  function show(i, manual){
+  function show(i){
+    if(i===cur) return;
     cur=i;
-    const it=items[i], v=it.vid;
-    stage.dataset.demo=it.key;                       /* drives the chip crossfade */
+    const it=items[i];
+    stage.dataset.demo=it.key;                        /* drives the mood glow + chips */
     stage.setAttribute('aria-labelledby', it.tab.id);
     tabs.forEach((t,j)=>{const on=j===i;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
     items.forEach((x,j)=>{
       const on=j===i; x.vid.classList.toggle('on',on);
-      if(on){ setLen(isFinite(v.duration)&&v.duration?v.duration:8); v.currentTime=0; if(!RM) v.play().catch(()=>{}); }
+      if(on){ x.vid.currentTime=0; if(!RM) x.vid.play().catch(()=>{}); }
       else x.vid.pause();
     });
-    moveMarker(i); runbar();
-    if(manual){ hold=true; clearTimeout(holdT); holdT=setTimeout(()=>hold=false,14000); }
   }
 
-  items.forEach(({tab,vid},j)=>{
-    vid.addEventListener('loadedmetadata',()=>{ if(j===cur&&isFinite(vid.duration)){ setLen(vid.duration); runbar(); } });
-    vid.addEventListener('ended',()=>{ if(j!==cur) return;
-      setTimeout(()=>{ if(j!==cur) return;
-        if(hold){ vid.currentTime=0; if(!RM) vid.play().catch(()=>{}); }
-        else show((cur+1)%items.length); }, 620); });
-    /* graceful fallback: a missing clip (e.g. mob-invest still in production) keeps its poster;
-       skip past it only during the auto-cycle, never when the user parked there */
-    vid.addEventListener('error',()=>{ if(j===cur&&!hold) show((cur+1)%items.length); });
-    tab.addEventListener('click',()=>show(j,true));
-    vid.load&&vid.load();
-  });
-  addEventListener('resize',()=>moveMarker(cur),{passive:true});
+  /* scroll → progress (0..1) → active index + bar fill (desktop only) */
+  let ticking=false;
+  function onScroll(){
+    ticking=false;
+    if(!mq.matches) return;
+    const total = scroller.offsetHeight - innerHeight;
+    const p = total>0 ? Math.min(1, Math.max(0, -scroller.getBoundingClientRect().top/total)) : 0;
+    if(progFill) progFill.style.setProperty('--p', p.toFixed(4));
+    show(Math.min(items.length-1, Math.max(0, Math.floor(p*items.length))));
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
+  addEventListener('resize',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
 
-  const io=new IntersectionObserver(e=>{
-    if(e[0].isIntersecting){ show(cur); } else { items.forEach(x=>x.vid.pause()); }
-  },{threshold:.25});
-  io.observe(stage);
-  requestAnimationFrame(()=>{ stage.dataset.demo=items[0].key; moveMarker(0); });
+  /* rail click → desktop: smooth-scroll to that flow's band · mobile: switch in place */
+  items.forEach(({tab},j)=>tab.addEventListener('click',()=>{
+    if(mq.matches){
+      const total = scroller.offsetHeight - innerHeight;
+      const absTop = scroller.getBoundingClientRect().top + scrollY;
+      scrollTo({top: absTop + ((j+0.5)/items.length)*total, behavior: RM?'auto':'smooth'});
+    } else show(j);
+  }));
+
+  /* pause when the whole section is off-screen; resume the active clip when back */
+  new IntersectionObserver(e=>{
+    if(e[0].isIntersecting){ if(cur>=0 && !RM) items[cur].vid.play().catch(()=>{}); }
+    else items.forEach(x=>x.vid.pause());
+  },{threshold:0}).observe(root);
+
+  show(0);
+  requestAnimationFrame(onScroll);
 })();
 
 /* ---------- count-ups (textContent only) ---------- */
@@ -1299,7 +1321,7 @@ if(!RM&&matchMedia('(pointer:fine)').matches){
     ]},
     cli:{title:'auri&nbsp;·&nbsp;<b>vault.sh</b>',lines:[
       {k:'c',  s:[{t:'# a gold strategy you can version, diff and cron',c:'c'}]},
-      {k:'cmd',p:PS,s:[{t:'auri buy --amount 25 --cad --on "dip>1.5%"'}]},
+      {k:'cmd',p:PS,s:[{t:'auri buy --gold 50 --every week'}]},
       {k:'out',s:[{t:'✓ ',c:'ok'},{t:'rule live · buys '},{t:'CA$25',c:'au'},{t:' each time gold dips 1.5%',c:'dim'}]},
       {k:'cmd',p:PS,s:[{t:'auri boost --leverage 5x --confirm'}]},
       {k:'out',s:[{t:'✓ ',c:'ok'},{t:'position open · 5.0× exposure · auto-close guard armed',c:'dim'}]},
