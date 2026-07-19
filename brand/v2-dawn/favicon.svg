@@ -1,19 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
   <defs>
-    <linearGradient id="ai" x1="24" y1="2" x2="24" y2="46" gradientUnits="userSpaceOnUse">
+    <linearGradient id="ai" x1="24" y1="4" x2="24" y2="46" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#EFD9A3"/>
       <stop offset=".5" stop-color="#D8B366"/>
       <stop offset="1" stop-color="#B98A38"/>
     </linearGradient>
   </defs>
-  <!-- Auri "ai" lettermark, no tile. Big single-story 'a' whose right stem doubles as the 'i'
-       stem. The dawn mark matches the WORDMARK: a STRAIGHT horizontal line with the round sun
-       DOT (the "eye") at its right end, floating clearly above the head of the 'a'.
-       Expanded it reads Auri, contracted it reads ai. Counter is a transparent hole (evenodd). -->
+  <!-- Auri "ai" lettermark, no tile. Single-story 'a' whose right stem rises a little taller and
+       tapers to a SOFT POINT (a spire reaching up) toward the rising-sun DOT. The 'i' grows
+       taller and slims to a point so it reads naturally. Counter is a transparent hole (evenodd). -->
   <g fill="url(#ai)">
-    <path fill-rule="evenodd" d="M9 31a15 15 0 1 1 30 0a15 15 0 1 1 -30 0ZM16.5 31a7.5 7.5 0 1 1 15 0a7.5 7.5 0 1 1 -15 0Z"/>
-    <rect x="32" y="18.5" width="7" height="27.5"/>
-    <rect x="9" y="6" width="20" height="2.6" rx="1.3"/>
-    <circle cx="34" cy="7.3" r="4"/>
+    <path fill-rule="evenodd" d="M10.5 33a13 13 0 1 1 26 0a13 13 0 1 1 -26 0ZM17 33a6.5 6.5 0 1 1 13 0a6.5 6.5 0 1 1 -13 0Z"/>
+    <path d="M30 46L30 18L32.7 10.8Q33.25 10 33.8 10.8L36.5 18L36.5 46Z"/>
+    <circle cx="33.25" cy="6" r="3"/>
   </g>
 </svg>
