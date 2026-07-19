@@ -7,10 +7,12 @@
     </linearGradient>
   </defs>
   <!-- Auri "ai" lettermark, no tile: the single-story 'a' whose right stem doubles as the 'i'
-       stem, with the dawn dot as the 'i' tittle. Counter is a true transparent hole (evenodd). -->
+       stem. The 'i' tittle is the full dawn mark — the horizon LINE plus the rising sun DOT.
+       Counter is a true transparent hole (evenodd). -->
   <g fill="url(#ai)">
-    <path fill-rule="evenodd" d="M8.5 30a15 15 0 1 1 30 0a15 15 0 1 1 -30 0ZM16 30a7.5 7.5 0 1 1 15 0a7.5 7.5 0 1 1 -15 0Z"/>
-    <rect x="31" y="17" width="7.5" height="28"/>
-    <circle cx="34.75" cy="8" r="4.3"/>
+    <path fill-rule="evenodd" d="M10.5 31a12.5 12.5 0 1 1 25 0a12.5 12.5 0 1 1 -25 0ZM16.8 31a6.2 6.2 0 1 1 12.4 0a6.2 6.2 0 1 1 -12.4 0Z"/>
+    <rect x="29" y="20.5" width="6.5" height="23"/>
+    <rect x="11" y="11" width="17.5" height="2.8" rx="1.4"/>
+    <circle cx="33.5" cy="7.6" r="3.3"/>
   </g>
 </svg>
