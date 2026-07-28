@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auri — Gold, awake.</title>
+<title>Auri — Own real gold. Use it like money.</title>
 <link rel="canonical" href="index.html">
 <meta name="description" content="Real, attested gold you can spend, send, gift and borrow against — in your own custody. Auri wakes gold up. Live in Canada.">
-<meta property="og:title" content="Auri — Gold, awake.">
+<meta property="og:title" content="Auri — Own real gold. Use it like money.">
 <meta property="og:description" content="Real gold, finally usable as money. Buy in seconds, spend with a card, borrow without selling, send it home. Yours, always.">
 <meta name="theme-color" content="#0B0906">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
@@ -128,6 +128,13 @@ img,svg,video,canvas{display:block;max-width:100%}
 .hero-montage{position:absolute;inset:0;z-index:1;background:#100A0E center/cover url(clips/poster-montage.webp)}
 .hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
 .hero-vid.on{opacity:.92}
+/* On a phone this 16:9 montage is cropped to ~26% of its width. Its subjects (faces, hands,
+   the phone) all sit RIGHT of centre, so a centred crop slices through them — bias the crop
+   right so the person stays in frame. Poster matches so there's no jump before playback. */
+@media (max-width:760px){
+  .hero-vid{object-position:72% center}
+  .hero-montage{background-position:72% center}
+}
 .hero-scrim{position:absolute;inset:0;background:
   linear-gradient(180deg,rgba(16,10,14,.74) 0%,rgba(16,10,14,.30) 44%,rgba(16,10,14,.66) 76%,#100A0E 100%),
   radial-gradient(120% 90% at 50% 8%,transparent 38%,rgba(31,17,25,.55) 100%),
@@ -297,16 +304,29 @@ img,svg,video,canvas{display:block;max-width:100%}
 .demo-safe::after{content:"";width:32%;max-width:116px;height:5px;border-radius:3px;background:rgba(0,0,0,.32)}
 .demo-island{display:none}
 
-/* ---- mobile: each feature gets its OWN phone directly below it (JS-built — see dm builder).
+/* ---- mobile: an ACCORDION — tap a feature to expand its detail + its own phone demo, one at
+   a time, so the section stays short instead of stacking five full demos.
    Progressive: shown only after JS adds .dm-ready, so no-JS still gets the desktop rail. ---- */
-.demo-mobile{display:none;flex-direction:column;gap:52px;margin-top:30px}
-.dm-flow{display:flex;flex-direction:column}
-.dm-lead{display:flex;gap:14px;align-items:flex-start;margin:0 2px 16px}
-.dm-ic{flex:none;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  background:var(--plum);border:1px solid var(--plum);color:#fff;box-shadow:0 8px 18px -8px rgba(133,33,82,.55)}
-.dm-ic svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.dm-t{font-size:19px;font-weight:640;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
-.dm-d{margin-top:6px;font-size:14.5px;line-height:1.55;color:var(--ink2)}
+.demo-mobile{display:none;flex-direction:column;gap:10px;margin-top:26px}
+.dm-flow{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;
+  transition:border-color .3s var(--e),box-shadow .3s var(--e)}
+.dm-flow.open{border-color:rgba(133,33,82,.26);box-shadow:0 16px 36px -24px rgba(20,18,60,.42)}
+.dm-head{display:flex;align-items:center;gap:13px;width:100%;padding:14px 15px;
+  background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.dm-ic{flex:none;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  background:var(--well);border:1px solid var(--line);color:var(--ink3);
+  transition:background .3s var(--e),color .3s var(--e),border-color .3s var(--e),box-shadow .3s var(--e)}
+.dm-flow.open .dm-ic{background:var(--plum);border-color:var(--plum);color:#fff;
+  box-shadow:0 8px 18px -8px rgba(133,33,82,.55)}
+.dm-ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.dm-t{flex:1;min-width:0;font-size:16px;font-weight:640;letter-spacing:-.02em;color:var(--ink);line-height:1.3}
+.dm-chev{flex:none;width:18px;height:18px;color:var(--ink3);transition:transform .34s var(--e)}
+.dm-chev svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.dm-flow.open .dm-chev{transform:rotate(180deg)}
+.dm-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .40s var(--e)}
+.dm-flow.open .dm-body{grid-template-rows:1fr}
+.dm-body>.dm-inner{overflow:hidden;min-height:0}
+.dm-d{padding:0 16px 2px;font-size:14.5px;line-height:1.55;color:var(--ink2)}
 
 /* floating annotation chips — 2 per demo, crossfade on tab change */
 .demo-chips{position:absolute;inset:0;z-index:3;pointer-events:none}
@@ -784,7 +804,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
    <div class="wrap demo-wrap">
     <div class="demo-lead">
       <h2 class="rv">Gold that gets up and works.</h2>
-      <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Tap a tab, or just watch it run.</p>
+      <p class="sec-sub rv d1">Not renders — the real Auri app, screen-recorded. Tap a feature, or just watch it run.</p>
       <div class="demo-tabs" role="tablist" aria-label="Product workflows">
       <button class="dtab on" id="dtab-buy" role="tab" aria-selected="true" aria-controls="demoStage" data-key="buy" data-vid="v-buy">
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v9m0 0 3.3-3.3M12 12 8.7 8.7"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span>
@@ -1221,33 +1241,46 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   io.observe(stage);
 })();
 
-/* ---------- mobile demos: build one [feature + its OWN phone] block per flow, so on a
-   phone each demo screen sits directly under its feature — no tab-hunting / scroll up-down.
-   Each clip lazy-loads + autoplays (muted, looping) while its phone is in view. Built with
-   safe DOM nodes (no innerHTML); icon SVG is cloned from the desktop tab. ---------- */
+/* ---------- mobile demos: an ACCORDION of [feature -> its detail + its OWN phone]. Tapping a
+   feature opens it and closes the others, so the section stays short on a phone instead of
+   stacking five full demos. The open clip lazy-loads + autoplays (muted, looping) while it is
+   on screen. Built with safe DOM nodes (no innerHTML); icon SVG is cloned from the desktop
+   tab. ---------- */
 (function(){
   const root=document.querySelector('[data-demo-root]');
   const host=root&&root.querySelector('.demo-mobile');
   if(!host) return;
   const RMm=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const mk=(tag,cls)=>{const e=document.createElement(tag);if(cls)e.className=cls;return e;};
+  const SVGNS='http://www.w3.org/2000/svg';
+  const flows=[];
+
   root.querySelectorAll('.dtab').forEach(tab=>{
     const vidEl=root.querySelector('#'+tab.dataset.vid);
     const srcEl=vidEl&&vidEl.querySelector('source');
     if(!srcEl) return;
-    const f=mk('article','dm-flow');
+    const key=tab.dataset.key, bodyId='dm-body-'+key;
+    const el=mk('article','dm-flow');
 
-    const lead=mk('div','dm-lead');
+    /* header — the tap target */
+    const head=mk('button','dm-head'); head.type='button';
+    head.setAttribute('aria-expanded','false'); head.setAttribute('aria-controls',bodyId);
     const ic=mk('span','dm-ic');
     const icSvg=tab.querySelector('.dt-ic svg');
     if(icSvg) ic.appendChild(icSvg.cloneNode(true));
-    const txt=mk('div');
-    const tt=mk('div','dm-t'); tt.textContent=tab.querySelector('.dt-t').textContent;
-    const dd=mk('div','dm-d'); dd.textContent=tab.querySelector('.dt-d').textContent;
-    txt.appendChild(tt); txt.appendChild(dd);
-    lead.appendChild(ic); lead.appendChild(txt);
+    const tt=mk('span','dm-t'); tt.textContent=tab.querySelector('.dt-t').textContent;
+    const chev=mk('span','dm-chev'); chev.setAttribute('aria-hidden','true');
+    const cs=document.createElementNS(SVGNS,'svg'); cs.setAttribute('viewBox','0 0 24 24');
+    const cp=document.createElementNS(SVGNS,'path'); cp.setAttribute('d','M6 9l6 6 6-6');
+    cs.appendChild(cp); chev.appendChild(cs);
+    head.appendChild(ic); head.appendChild(tt); head.appendChild(chev);
 
-    const stage=mk('div','demo-stage'); stage.dataset.demo=tab.dataset.key;
+    /* body — detail + the flow's own phone */
+    const body=mk('div','dm-body'); body.id=bodyId;
+    const inner=mk('div','dm-inner');
+    const dd=mk('div','dm-d'); dd.textContent=tab.querySelector('.dt-d').textContent;
+
+    const stage=mk('div','demo-stage'); stage.dataset.demo=key;
     const vwrap=mk('div','demo-video');
     const v=mk('video','on'); v.muted=true; v.loop=true; v.preload='none';
     v.setAttribute('playsinline',''); v.setAttribute('muted','');
@@ -1259,16 +1292,42 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
     const phone=mk('div','demo-phone'); phone.appendChild(screen);
     stage.appendChild(phone);
 
-    f.appendChild(lead); f.appendChild(stage);
-    host.appendChild(f);
+    inner.appendChild(dd); inner.appendChild(stage);
+    body.appendChild(inner);
+    el.appendChild(head); el.appendChild(body);
+    host.appendChild(el);
+
+    const idx=flows.length;
+    flows.push({el,head,v});
+    head.addEventListener('click',()=>toggle(idx));
   });
+  if(!flows.length) return;
+
+  function toggle(i){
+    const close=flows[i].el.classList.contains('open');   /* tap the open one to collapse it */
+    flows.forEach((f,j)=>{
+      const on=(j===i)&&!close;
+      f.el.classList.toggle('open',on);
+      f.head.setAttribute('aria-expanded',on?'true':'false');
+      if(on){ if(f.v.preload==='none'){f.v.preload='auto';f.v.load();} if(!RMm) f.v.play().catch(()=>{}); }
+      else f.v.pause();
+    });
+  }
+
+  /* first feature starts open, so the section still shows a live demo at a glance */
+  flows[0].el.classList.add('open');
+  flows[0].head.setAttribute('aria-expanded','true');
   root.classList.add('dm-ready');
+
+  /* only the open demo plays, and only while it is on screen */
   const mio=new IntersectionObserver(es=>{es.forEach(e=>{
-    const v=e.target.querySelector('video'); if(!v) return;
-    if(e.isIntersecting&&!RMm){ if(v.preload==='none'){v.preload='auto';v.load();} v.play().catch(()=>{}); }
-    else v.pause();
-  });},{threshold:.45});
-  host.querySelectorAll('.dm-flow').forEach(f=>mio.observe(f));
+    const f=flows.find(x=>x.el===e.target); if(!f) return;
+    if(e.isIntersecting&&f.el.classList.contains('open')&&!RMm){
+      if(f.v.preload==='none'){f.v.preload='auto';f.v.load();}
+      f.v.play().catch(()=>{});
+    } else f.v.pause();
+  });},{threshold:.3});
+  flows.forEach(f=>mio.observe(f.el));
 })();
 
 /* ---------- count-ups (textContent only) ---------- */
