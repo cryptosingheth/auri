@@ -575,6 +575,11 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   letter-spacing:.1em;text-transform:uppercase;color:var(--green-b)}
 .drail.on .live{display:inline-flex}
 .drail .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green-b);animation:pgls 1.6s infinite}
+/* MCP / CLI / API are not live yet — a hollow (unlit) dot on every rail, not just the active one */
+.drail .soon{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(242,233,212,.55);white-space:nowrap}
+.drail .soon::before{content:"";width:6px;height:6px;border-radius:50%;
+  border:1.5px solid rgba(242,233,212,.42)}
 @keyframes pgls{0%{box-shadow:0 0 0 0 rgba(74,222,158,.45)}70%{box-shadow:0 0 0 6px rgba(74,222,158,0)}100%{box-shadow:0 0 0 0 rgba(74,222,158,0)}}
 .drail .rt{display:block;margin-top:8px;font-size:16px;font-weight:620;letter-spacing:-.015em;color:var(--cream)}
 .drail .rd{display:block;font-size:13px;line-height:1.5;color:rgba(242,233,212,.6);
@@ -844,14 +849,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="9" width="17" height="11.5" rx="1.6"/><path d="M2.5 9h19M12 9v11.5"/><path d="M12 9s-1.4-4-3.6-3.1S12 9 12 9Z"/><path d="M12 9s1.4-4 3.6-3.1S12 9 12 9Z"/></svg></span>
         <span class="dt-body">
           <span class="dt-t">Send real gold, not another gift card</span>
-          <span class="dt-d">Birthday, a wedding, Diwali shagun, a new baby, or just because it's Tuesday — real grams by contact, link or QR, with the occasion built in.</span>
-        </span>
-      </button>
-      <button class="dtab" id="dtab-send" role="tab" aria-selected="false" aria-controls="demoStage" data-key="send" data-vid="v-send">
-        <span class="dt-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m21 3-9.6 9.6"/><path d="M21 3 14.5 21l-3.4-8-8-3.4L21 3Z"/></svg></span>
-        <span class="dt-body">
-          <span class="dt-t">Send gold to anyone in seconds</span>
-          <span class="dt-d">To a contact, an @username, or a wallet — they claim it as real gold, or it lands right where you say. Minutes, not days.</span>
+          <span class="dt-d">Birthday, a wedding, Diwali shagun, a new baby — or just because it's Tuesday. Real grams to a contact, an @username, a link or a wallet, with the occasion built in when you want one. Minutes, not days.</span>
         </span>
       </button>
       <button class="dtab" id="dtab-invest" role="tab" aria-selected="false" aria-controls="demoStage" data-key="invest" data-vid="v-invest">
@@ -873,7 +871,6 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
               <video id="v-buy"    class="on" muted playsinline preload="auto" poster="assets/demos/poster-mob-buy.webp"><source src="assets/demos/mob-buy.mp4" type="video/mp4"></video>
               <video id="v-borrow" muted playsinline preload="none" poster="assets/demos/poster-mob-borrow.webp"><source src="assets/demos/mob-borrow.mp4" type="video/mp4"></video>
               <video id="v-gift"   muted playsinline preload="none" poster="assets/demos/poster-mob-gift.webp"><source src="assets/demos/mob-gift.mp4" type="video/mp4"></video>
-              <video id="v-send"   muted playsinline preload="none" poster="assets/demos/poster-mob-send.webp"><source src="assets/demos/mob-send.mp4" type="video/mp4"></video>
               <video id="v-invest" muted playsinline preload="none" poster="assets/demos/poster-mob-invest.webp"><source src="assets/demos/mob-invest.mp4" type="video/mp4"></video>
             </div>
             <span class="demo-safe" aria-hidden="true"></span>
@@ -1036,26 +1033,26 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap">
     <div class="devx-head">
       <h2 class="rv">Gold your code<br>can talk to.</h2>
-      <p class="sub rv d1">The same attested, self-custodied gold — handed to an AI agent, scripted from your shell, or wired into your own product. Watch it run.</p>
+      <p class="sub rv d1">The same attested, self-custodied gold — handed to an AI agent, scripted from your shell, or wired into your own product. MCP, CLI and API are launching soon; here's what they'll do.</p>
     </div>
 
     <div class="devx-panel rv d1">
       <div class="devx-in">
         <div class="rails" role="tablist" aria-label="Ways to build on Auri">
           <button class="drail on" type="button" role="tab" aria-selected="true" aria-controls="devterm">
-            <span class="rhead"><span class="rk">MCP</span><span class="live">live</span></span>
+            <span class="rhead"><span class="rk">MCP</span><span class="soon">coming soon</span></span>
             <span class="rt">Give your agent a gold account</span>
             <span class="rd">Point Claude, Codex or any agent at Auri. It buys, borrows, sends and holds your rules — in plain English.</span>
             <span class="rbar"></span>
           </button>
           <button class="drail" type="button" role="tab" aria-selected="false" aria-controls="devterm">
-            <span class="rhead"><span class="rk">CLI</span><span class="live">live</span></span>
+            <span class="rhead"><span class="rk">CLI</span><span class="soon">coming soon</span></span>
             <span class="rt">Your gold strategy, as code</span>
             <span class="rd">Version a buy-the-dip rule, automate repayments, open a 5× Boost — from your shell, repeatable and diffable.</span>
             <span class="rbar"></span>
           </button>
           <button class="drail" type="button" role="tab" aria-selected="false" aria-controls="devterm">
-            <span class="rhead"><span class="rk">API</span><span class="live">live</span></span>
+            <span class="rhead"><span class="rk">API</span><span class="soon">coming soon</span></span>
             <span class="rt">Put gold inside your own product</span>
             <span class="rd">One API lets your fintech offer buy, hold, borrow, spend and send in gold. Webhooks, sandbox to prod.</span>
             <span class="rbar"></span>
@@ -1071,7 +1068,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 
 
     <div class="devx-foot">
-      <a class="btn btn-plum btn-big" href="docs.html#api" data-magnet>Get API keys</a>
+      <a class="btn btn-plum btn-big" href="docs.html#api" data-magnet>Get early access</a>
       <a class="btn btn-ghost btn-big" href="docs.html">Read the docs</a>
     </div>
   </div>
