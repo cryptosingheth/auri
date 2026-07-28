@@ -676,7 +676,12 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   .hero h1{font-size:clamp(48px,14.5vw,80px)}
   .hero-meta{display:none}
   .hero-foot{margin-top:6vh}
-  .foot-grid{grid-template-columns:1fr}
+  /* keep the three link categories SIDE BY SIDE (brand sits full-width above them) —
+     stacking them one per row made the footer needlessly long on a phone. */
+  .foot-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 14px}
+  .foot-brand{grid-column:1/-1}
+  .foot-col h4{margin-bottom:10px}
+  .foot-col a{font-size:13px;padding:3.5px 0}
 }
 
 /* ===================================================================
