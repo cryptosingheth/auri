@@ -525,6 +525,11 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
   color:#8A5E0F;background:rgba(168,116,19,.12);
   border:1px solid rgba(168,116,19,.30);border-radius:999px;padding:3px 8px;white-space:nowrap}
+/* not-yet-live features (card, cross-border remittance) — same shape as the risk tag, plum */
+.soon-tag{display:inline-block;margin-left:8px;transform:translateY(-2px);
+  font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--plum);background:rgba(133,33,82,.09);
+  border:1px solid rgba(133,33,82,.26);border-radius:999px;padding:3px 8px;white-space:nowrap}
 
 .bcard .cap{padding:20px 4px 4px}
 .bcard .cap .t{display:block;font-size:19px;font-weight:640;letter-spacing:-.02em;color:var(--ink)}
@@ -671,6 +676,16 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   .goldtick{display:none}
   .foot-grid{grid-template-columns:1fr 1fr}
   .legal{columns:1}
+}
+/* mobile: the closing stretch (FAQ -> CTA -> footer) carried desktop-sized padding, which on a
+   phone reads as a lot of dead space at the end of the page. Tighten it so the page finishes
+   right after the content. */
+@media (max-width:760px){
+  .faq{padding:7vh 0 5vh}
+  .cta{padding:2vh 0 4vh}
+  .cta-panel{min-height:0;padding:44px 22px}
+  .cta-panel .hero-ctas{margin-top:26px}
+  footer{padding:40px 0 26px}
 }
 @media (max-width:560px){
   .hero h1{font-size:clamp(48px,14.5vw,80px)}
@@ -926,8 +941,8 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <span class="bpill green p2" style="right:22px;top:70px"><span class="d"></span>Open 24/7 · 365</span>
           <img class="shot" src="assets/shots/b-card.webp" alt="Auri app — spend gold directly with the Auri card, any day" loading="lazy" onerror="this.style.display='none'">
         </div>
-        <div class="cap"><span class="t">Gold that never closes — and taps like a card.</span>
-          <span class="p">The Auri card spends straight from your gold — Sunday groceries, a 2 a.m. flight, whatever comes up. Markets shut on weekends; your money doesn't.</span></div>
+        <div class="cap"><span class="t">Gold that never closes — and taps like a card.<span class="soon-tag">Coming soon</span></span>
+          <span class="p">The Auri card will spend straight from your gold — Sunday groceries, a 2 a.m. flight, whatever comes up. Markets shut on weekends; your money doesn't. Card and cross-border remittance are launching soon.</span></div>
       </div>
     </div>
 
@@ -1095,7 +1110,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </details>
         <details>
           <summary>Can I spend, send and gift my gold?<span class="plus">+</span></summary>
-          <div class="ans">Yes. The Auri card spends straight from your gold — tap, chip or online, any day of the week. Send gold to a contact, @username or wallet, gift it for a birthday, wedding or Diwali with the occasion built in, or remit it abroad — all in minutes.</div>
+          <div class="ans">Yes. Send gold to a contact, @username or wallet, or gift it for a birthday, wedding or Diwali with the occasion built in — all in minutes. The Auri card (tap, chip or online, any day of the week) and cross-border remittance are coming soon.</div>
         </details>
         <details>
           <summary>What do I get for using Auri?<span class="plus">+</span></summary>
