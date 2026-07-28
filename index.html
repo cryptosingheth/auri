@@ -575,11 +575,9 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   letter-spacing:.1em;text-transform:uppercase;color:var(--green-b)}
 .drail.on .live{display:inline-flex}
 .drail .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green-b);animation:pgls 1.6s infinite}
-/* MCP / CLI / API are not live yet — a hollow (unlit) dot on every rail, not just the active one */
-.drail .soon{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;
+/* MCP / CLI / API are not live yet — plain label on every rail, not just the active one */
+.drail .soon{display:inline-flex;align-items:center;font-size:10px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;color:rgba(242,233,212,.55);white-space:nowrap}
-.drail .soon::before{content:"";width:6px;height:6px;border-radius:50%;
-  border:1.5px solid rgba(242,233,212,.42)}
 @keyframes pgls{0%{box-shadow:0 0 0 0 rgba(74,222,158,.45)}70%{box-shadow:0 0 0 6px rgba(74,222,158,0)}100%{box-shadow:0 0 0 0 rgba(74,222,158,0)}}
 .drail .rt{display:block;margin-top:8px;font-size:16px;font-weight:620;letter-spacing:-.015em;color:var(--cream)}
 .drail .rd{display:block;font-size:13px;line-height:1.5;color:rgba(242,233,212,.6);
