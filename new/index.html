@@ -548,34 +548,64 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 }
 
 /* ---------- (A2) CALCULATORS — light band inside .daybreak ----------
-   Live gold price + live borrow APR drive both cards (see the market-data module in JS).
-   Numbers are tabular so they don't jitter as the user drags a slider. */
+   Both cards are driven by the live market module (window.AURI): the gold price, the borrow
+   rate and the FX table are all read from public sources, never typed in here. The LTV bands
+   and their labels are the SAME bands the product itself uses (Safe / Conservative / Balanced
+   / Risky) so the site and the app never disagree. */
 .calc{padding:11vh 0 12vh;background:var(--bg);color:var(--ink)}
-.calc-head{max-width:660px;margin-bottom:46px}
+.calc-head{max-width:680px;margin-bottom:34px}
 .calc-head h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.04em;line-height:1.05}
-.calc-head .sub{margin-top:16px;font-size:17px;line-height:1.6;color:var(--ink2);max-width:600px}
-.calc-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:22px;align-items:start}
-.ccard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 22px 22px;
-  box-shadow:0 1px 2px rgba(20,18,60,.04),0 20px 44px -28px rgba(20,18,60,.20)}
-.ctop{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
-.ckicker{font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--ink)}
-.cfeed{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
-.cfeed b{color:var(--ink);font-variant-numeric:tabular-nums}
-.cfeed.stale b{color:var(--ink3)}
+.calc-head .sub{margin-top:16px;font-size:17px;line-height:1.6;color:var(--ink2);max-width:620px}
 
-.cfield{display:block;margin-bottom:12px}
+/* live feed bar — the blinking dot is the signal that this is real, moving data */
+.feedbar{display:flex;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.feed{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);font-size:13px;color:var(--ink2);
+  transition:border-color .2s,box-shadow .2s}
+.feed:hover{border-color:var(--line2);box-shadow:0 6px 18px -12px rgba(20,18,60,.3);text-decoration:none}
+.feed .fl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.feed b{font-size:15px;font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.feed .fu{font-size:11.5px;color:var(--ink3)}
+.feed .fchg{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.feed .fchg.up{color:#0F7A50}.feed .fchg.down{color:#B23131}
+.pulse{position:relative;flex:none;width:8px;height:8px;border-radius:50%;background:var(--green)}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green);
+  animation:pulsering 1.8s ease-out infinite}
+@keyframes pulsering{0%{transform:scale(1);opacity:.55}70%{transform:scale(3.2);opacity:0}100%{opacity:0}}
+.feed.stale .pulse{background:var(--ink3)}
+.feed.stale .pulse::after{animation:none}
+.feed-note{font-size:12px;color:var(--ink3)}
+/* a fresh value briefly lifts, so you can see it tick */
+@keyframes tick{0%{background:rgba(22,160,106,.16)}100%{background:transparent}}
+.ticked{animation:tick 1.1s ease-out;border-radius:5px}
+
+.calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:22px;align-items:start}
+.ccard{min-width:0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 22px 22px;
+  box-shadow:0 1px 2px rgba(20,18,60,.04),0 20px 44px -28px rgba(20,18,60,.20)}
+.ctop{display:flex;align-items:baseline;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.ckicker{font-size:15px;font-weight:650;letter-spacing:-.015em;color:var(--ink)}
+.csub{font-size:13px;color:var(--ink3)}
+
+.cfield{display:block;margin-bottom:12px;min-width:0}
 .clabel{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:7px}
-.cinput{display:flex;align-items:center;gap:2px;border:1px solid var(--line2);border-radius:12px;
-  background:var(--bg);padding:0 13px;transition:border-color .2s,box-shadow .2s}
+.cinput{min-width:0;display:flex;align-items:stretch;border:1px solid var(--line2);border-radius:12px;
+  background:var(--bg);overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .cinput:focus-within{border-color:rgba(133,33,82,.45);box-shadow:0 0 0 3px rgba(133,33,82,.10)}
-.cpre{font-size:16px;font-weight:600;color:var(--ink3)}
-.cinput input{width:100%;border:0;background:none;outline:none;padding:12px 0;
+.cinput input{flex:1;min-width:0;width:100%;size:1;border:0;background:none;outline:none;padding:12px 13px;
   font:inherit;font-size:19px;font-weight:640;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
 .cinput input::-webkit-outer-spin-button,.cinput input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .cinput input[type=number]{-moz-appearance:textfield}
-.cpair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cselect{flex:none;border:0;border-left:1px solid var(--line);background:#fff;padding:0 30px 0 12px;
+  font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer;outline:none;
+  -webkit-appearance:none;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink3) 50%),linear-gradient(135deg,var(--ink3) 50%,transparent 50%);
+  background-position:calc(100% - 17px) 51%,calc(100% - 12px) 51%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.cselect:focus-visible{box-shadow:inset 0 0 0 2px rgba(133,33,82,.4)}
+.cunit{flex:none;display:flex;align-items:center;padding:0 13px;border-left:1px solid var(--line);
+  background:#fff;font-size:13px;font-weight:600;color:var(--ink3);font-family:var(--mono)}
+.cpair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;min-width:0}
 
-.crange{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:none;margin:6px 0 18px;cursor:pointer}
+.crange{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:none;margin:6px 0 16px;cursor:pointer}
 .crange::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--well)}
 .crange::-moz-range-track{height:5px;border-radius:3px;background:var(--well)}
 .crange::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
@@ -584,34 +614,80 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   background:var(--plum);box-shadow:0 2px 8px -2px rgba(133,33,82,.55)}
 .crange:focus-visible{outline:2px solid rgba(133,33,82,.5);outline-offset:4px;border-radius:4px}
 
-.cout{border-top:1px solid var(--line);padding-top:16px;margin-top:4px}
-.crow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:7px 0;font-size:14px;color:var(--ink2)}
-.crow b{font-size:15.5px;font-weight:640;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
-.crow.big b{font-size:26px;letter-spacing:-.025em}
-.crow.big b i{font-size:14px;font-weight:600;font-style:normal;color:var(--ink2);letter-spacing:0}
-.cout.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.cstat{display:flex;flex-direction:column;gap:3px}
-.cstat span{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--ink3)}
-.cstat b{font-size:21px;font-weight:640;letter-spacing:-.025em;color:var(--ink);font-variant-numeric:tabular-nums}
-.cstat b i{font-size:12.5px;font-weight:600;font-style:normal;color:var(--ink3)}
-.cstat em{font-size:11.5px;font-style:normal;line-height:1.4;color:var(--ink3)}
+/* unit segmented control — one unit at a time, never a jumble */
+.cseg{display:inline-flex;background:var(--well);border-radius:11px;padding:3px;gap:2px;margin:2px 0 18px}
+.segb{border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--ink2);
+  padding:7px 15px;border-radius:9px;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.segb.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(20,18,60,.10)}
+.segb:focus-visible{outline:2px solid rgba(133,33,82,.45);outline-offset:1px}
 
-/* LTV meter — green (safe) -> amber (caution) -> red (at the cap) */
-.cltv{margin:4px 0 20px}
-.cltv-bar{position:relative;height:8px;border-radius:5px;background:var(--well);overflow:hidden}
-.cltv-bar i{display:block;height:100%;width:0;border-radius:5px;background:var(--green);
-  transition:width .18s linear,background .25s var(--e)}
-.cltv-bar .cltv-max{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(194,59,59,.55);border-radius:2px}
-.cltv[data-zone="warn"] .cltv-bar i{background:var(--amber)}
-.cltv[data-zone="danger"] .cltv-bar i{background:#C23B3B}
-.cltv-legend{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;
-  font-size:12.5px;color:var(--ink2)}
-.cltv-legend b{color:var(--ink);font-variant-numeric:tabular-nums}
-.cltv-tag{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  border-radius:999px;padding:3px 9px;background:rgba(22,160,106,.12);color:#0F7A50;border:1px solid rgba(22,160,106,.28)}
-.cltv[data-zone="warn"] .cltv-tag{background:rgba(168,116,19,.12);color:#8A5E0F;border-color:rgba(168,116,19,.30)}
-.cltv[data-zone="danger"] .cltv-tag{background:rgba(194,59,59,.10);color:#B23131;border-color:rgba(194,59,59,.30)}
-.cltv-cap{margin-left:auto;color:var(--ink3);font-size:12px}
+.cbig{display:flex;align-items:baseline;gap:9px;padding:4px 0 2px}
+.cbig b{font-size:clamp(34px,4.4vw,44px);font-weight:650;letter-spacing:-.035em;color:var(--ink);
+  font-variant-numeric:tabular-nums;line-height:1}
+.cbig-u{font-size:15px;font-weight:600;color:var(--ink2)}
+
+.crows{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:2px}
+.crows>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0}
+.crows dt{font-size:13.5px;color:var(--ink2)}
+.crows dd{margin:0;font-size:14px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.crows dd em{font-style:normal;font-weight:500;color:var(--ink3);font-size:12px}
+
+/* ---- LTV against the product's four bands ---- */
+.bands{margin:2px 0 20px}
+.bands-track{position:relative;display:flex;height:34px;border-radius:9px;overflow:hidden;
+  border:1px solid var(--line)}
+.band{position:relative;display:flex;align-items:center;justify-content:center}
+.band i{font-style:normal;font-size:10.5px;font-weight:650;letter-spacing:.02em;white-space:nowrap;opacity:.9}
+.band.b1{flex:20;background:#DCF2E7;color:#0F7A50}
+.band.b2{flex:15;background:#EAF3DE;color:#3B6D11}
+.band.b3{flex:20;background:#FBEEDA;color:#8A5E0F}
+.band.b4{flex:22;background:#FAE3E3;color:#B23131}
+.band.b4 i{margin-right:6px}
+.bands-cap{position:absolute;top:-3px;bottom:-3px;right:0;width:2.5px;background:#C23B3B;border-radius:2px}
+.bands-cap-note{margin-left:auto;font-size:11.5px;color:var(--ink3);white-space:nowrap}
+.bands-cap-note b{color:#B23131;font-weight:650;font-variant-numeric:tabular-nums}
+.bands-pin{position:absolute;top:-5px;bottom:-5px;width:3px;border-radius:2px;background:var(--ink);
+  box-shadow:0 0 0 2px #fff;transition:left .16s linear}
+.bands-read{display:flex;align-items:center;gap:10px;margin-top:11px;font-size:13px;color:var(--ink2)}
+.bands-ltv b{color:var(--ink);font-variant-numeric:tabular-nums;font-size:14.5px;font-weight:650}
+.bands-tag{font-size:10.5px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:999px;padding:3px 10px}
+.bands[data-zone="safe"] .bands-tag{background:rgba(22,160,106,.12);color:#0F7A50;border:1px solid rgba(22,160,106,.28)}
+.bands[data-zone="conservative"] .bands-tag{background:rgba(99,153,34,.12);color:#3B6D11;border:1px solid rgba(99,153,34,.28)}
+.bands[data-zone="balanced"] .bands-tag{background:rgba(168,116,19,.12);color:#8A5E0F;border:1px solid rgba(168,116,19,.30)}
+.bands[data-zone="risky"] .bands-tag{background:rgba(194,59,59,.10);color:#B23131;border:1px solid rgba(194,59,59,.30)}
+
+/* ---- impact panel (mirrors the app's own) ---- */
+.impact{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:16px}
+.impact-h{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);font-weight:600;margin-bottom:12px}
+.impact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;min-width:0}
+.im{display:flex;flex-direction:column;gap:2px;min-width:0}
+.im span{font-size:11.5px;font-weight:600;color:var(--ink3)}
+.im b{font-size:20px;font-weight:650;letter-spacing:-.025em;color:var(--ink);font-variant-numeric:tabular-nums}
+.im b.ok{color:#0F7A50}
+.im b.warn{color:#8A5E0F}
+.im b.bad{color:#B23131}
+.im em{font-size:11px;font-style:normal;line-height:1.35;color:var(--ink3)}
+
+/* ---- falling-gold scenario table ---- */
+.scen{margin-bottom:16px;min-width:0}
+.scen-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scen-h{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);font-weight:600;margin-bottom:8px}
+.scen-t{width:100%;border-collapse:collapse;font-size:13.5px}
+.scen-t th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
+  font-weight:650;padding:6px 8px;border-bottom:1px solid var(--line)}
+.scen-t td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink2);font-variant-numeric:tabular-nums}
+.scen-t tr:last-child td{border-bottom:0}
+.scen-t td:first-child{color:var(--ink);font-weight:600}
+.scen-t .st{font-size:10.5px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;
+  border-radius:999px;padding:2px 8px;white-space:nowrap}
+.scen-t .st.safe{background:rgba(22,160,106,.12);color:#0F7A50}
+.scen-t .st.conservative{background:rgba(99,153,34,.12);color:#3B6D11}
+.scen-t .st.balanced{background:rgba(168,116,19,.12);color:#8A5E0F}
+.scen-t .st.risky{background:rgba(194,59,59,.10);color:#B23131}
+.scen-t .st.liq{background:#C23B3B;color:#fff}
 
 .cnote{margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink3)}
 .cnote.risk{border-left:2px solid rgba(194,59,59,.35);padding-left:12px;color:var(--ink2)}
@@ -619,17 +695,25 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .cacts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
 .calc .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line2)}
 .calc .btn-ghost:hover{border-color:rgba(20,21,27,.3);background:#fff}
-.calc-foot{margin-top:26px;font-size:12.5px;line-height:1.6;color:var(--ink3);max-width:760px}
+.calc-foot{margin-top:26px;font-size:12.5px;line-height:1.6;color:var(--ink3);max-width:780px}
 
 @media (max-width:1040px){
-  .calc-grid{grid-template-columns:1fr}
-  .cout.cols{grid-template-columns:1fr 1fr}
+  .calc-grid{grid-template-columns:minmax(0,1fr)}
+  .impact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
 @media (max-width:560px){
   .calc{padding:7vh 0 8vh}
-  .cpair{grid-template-columns:1fr}
-  .cout.cols{grid-template-columns:1fr;gap:16px}
-  .cltv-cap{margin-left:0;width:100%}
+  .cpair{grid-template-columns:minmax(0,1fr)}
+  .impact-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .band i{font-size:9px}
+  .band.b2 i,.band.b3 i{display:none}
+  .bands-cap-note{margin-left:0;width:100%}
+  .cbig b{font-size:34px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pulse::after{animation:none}
+  .ticked{animation:none}
+  .bands-pin{transition:none}
 }
 
 /* ---------- (B) DEVELOPER — the one dark surface (nightwrap) ---------- */
@@ -1042,66 +1126,125 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap">
     <div class="calc-head">
       <h2 class="rv">Run your own numbers.</h2>
-      <p class="sub rv d1">Live gold price, live borrow rate. Move the sliders — nothing here is a quote, but the maths is the same maths we use.</p>
+      <p class="sub rv d1">Everything below moves with the real market — the gold price and the borrow rate are read
+        live, not typed in by us. Pick your currency and your unit.</p>
+      <div class="feedbar rv d1">
+        <a class="feed" data-feed-src="gold" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="fl">Gold</span>
+          <b data-gold-price>—</b><span class="fu">/oz</span>
+          <span class="fchg" data-gold-change></span>
+        </a>
+        <a class="feed" data-feed-src="apr" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="fl">Borrow rate</span>
+          <b data-apr>—</b><span class="fu">APR</span>
+        </a>
+        <span class="feed-note" data-market-note>reading live market data…</span>
+      </div>
     </div>
 
     <div class="calc-grid">
-      <!-- ---------- BUY ---------- -->
+      <!-- ---------------- BUY ---------------- -->
       <div class="ccard rv" data-calc="buy">
         <div class="ctop">
-          <span class="ckicker">If you bought today</span>
-          <span class="cfeed" data-feed="gold">gold <b data-gold-price>—</b>/oz</span>
+          <span class="ckicker">Buy gold</span>
+          <span class="csub">what you'd own today</span>
         </div>
 
         <label class="cfield">
           <span class="clabel">You spend</span>
-          <span class="cinput"><span class="cpre">$</span><input type="number" id="buyAmt" min="10" max="1000000" step="10" value="1000" inputmode="decimal" aria-label="Amount to spend in US dollars"></span>
+          <span class="cinput">
+            <input type="number" id="buyAmt" min="1" step="10" value="1000" inputmode="decimal" aria-label="Amount to spend">
+            <select id="buyCur" class="cselect" aria-label="Spending currency"></select>
+          </span>
         </label>
         <input class="crange" type="range" id="buyRange" min="10" max="25000" step="10" value="1000" aria-label="Amount to spend">
 
-        <div class="cout">
-          <div class="crow big"><span>You own</span><b><span data-buy-grams>—</span> <i>g of gold</i></b></div>
-          <div class="crow"><span>In troy ounces</span><b data-buy-oz>—</b></div>
-          <div class="crow"><span>Held as</span><b>XAUT · Swiss vault, your name</b></div>
+        <div class="cseg" role="group" aria-label="Gold unit">
+          <button type="button" class="segb on" data-unit="g">Grams</button>
+          <button type="button" class="segb" data-unit="oz">Troy ounces</button>
         </div>
-        <p class="cnote">Real allocated gold, not a price feed. Whole-gram minimums don't apply — you can own a fraction.</p>
+
+        <div class="cbig">
+          <b data-buy-amount>—</b>
+          <span class="cbig-u" data-buy-unit>g of gold</span>
+        </div>
+
+        <dl class="crows">
+          <div><dt>Gold price used</dt><dd><span data-buy-price>—</span> <em>per <span data-buy-unit-short>g</span></em></dd></div>
+          <div><dt>Auri fee · 0.49%</dt><dd data-buy-fee>—</dd></div>
+          <div><dt>Held as</dt><dd>XAUT · your own vault</dd></div>
+        </dl>
+        <p class="cnote">Real allocated gold, not a price feed — and you can own a fraction of a gram.
+          <a href="docs/buy.html">How buying works</a></p>
       </div>
 
-      <!-- ---------- BORROW (the main event) ---------- -->
+      <!-- ---------------- BORROW ---------------- -->
       <div class="ccard wide rv d1" data-calc="borrow">
         <div class="ctop">
-          <span class="ckicker">If you borrowed against it</span>
-          <span class="cfeed" data-feed="apr">rate <b data-apr>—</b> APR</span>
+          <span class="ckicker">Borrow against it</span>
+          <span class="csub">cash without selling a gram</span>
         </div>
 
         <div class="cpair">
           <label class="cfield">
             <span class="clabel">Gold you hold</span>
-            <span class="cinput"><span class="cpre">$</span><input type="number" id="colAmt" min="100" max="5000000" step="100" value="10000" inputmode="decimal" aria-label="Value of gold you hold in US dollars"></span>
+            <span class="cinput">
+              <input type="number" id="colAmt" min="100" step="100" value="10000" inputmode="decimal" aria-label="Value of gold you hold">
+              <span class="cunit" data-cur-code>USD</span>
+            </span>
           </label>
           <label class="cfield">
             <span class="clabel">You borrow</span>
-            <span class="cinput"><span class="cpre">$</span><input type="number" id="borAmt" min="0" step="100" value="3000" inputmode="decimal" aria-label="Amount to borrow in US dollars"></span>
+            <span class="cinput">
+              <input type="number" id="borAmt" min="0" step="100" value="2000" inputmode="decimal" aria-label="Amount to borrow">
+              <span class="cunit" data-cur-code>USD</span>
+            </span>
           </label>
         </div>
-        <input class="crange" type="range" id="borRange" min="0" max="100" step="1" value="30" aria-label="Loan to value percentage">
+        <input class="crange" type="range" id="borRange" min="0" max="77" step="1" value="20" aria-label="Loan to value percentage">
 
-        <div class="cltv">
-          <div class="cltv-bar"><i data-ltv-fill></i><span class="cltv-max" data-ltv-max-mark></span></div>
-          <div class="cltv-legend">
-            <span>LTV <b data-ltv>—</b></span>
-            <span class="cltv-tag" data-ltv-tag>—</span>
-            <span class="cltv-cap">liquidation at <b data-lltv>—</b></span>
+        <!-- LTV against the product's own risk bands -->
+        <div class="bands" data-zone="safe">
+          <div class="bands-track">
+            <span class="band b1"><i>Safe</i></span>
+            <span class="band b2"><i>Conservative</i></span>
+            <span class="band b3"><i>Balanced</i></span>
+            <span class="band b4"><i>Risky</i></span>
+            <span class="bands-cap" aria-hidden="true"></span>
+            <span class="bands-pin" data-ltv-pin></span>
+          </div>
+          <div class="bands-read">
+            <span class="bands-ltv">LTV <b data-ltv>—</b></span>
+            <span class="bands-tag" data-ltv-tag>—</span>
+            <span class="bands-cap-note">liquidation at <b data-lltv>77%</b></span>
           </div>
         </div>
 
-        <div class="cout cols">
-          <div class="cstat"><span>Interest</span><b>$<span data-int-mo>—</span><i>/mo</i></b><em>$<span data-int-yr>—</span> a year</em></div>
-          <div class="cstat"><span>Gold sold</span><b>$0</b><em>nothing is sold to fund the loan</em></div>
-          <div class="cstat"><span>Liquidation price</span><b>$<span data-liq>—</span></b><em data-liq-drop>—</em></div>
+        <!-- mirrors the app's own "impact on your position" panel -->
+        <div class="impact">
+          <span class="impact-h">Impact on your position</span>
+          <div class="impact-grid">
+            <div class="im"><span>Health factor</span><b data-health>—</b><em data-health-note>—</em></div>
+            <div class="im"><span>Liquidation price</span><b data-liq>—</b><em data-liq-drop>—</em></div>
+            <div class="im"><span>Interest</span><b data-int-mo>—</b><em>per month · <span data-int-yr>—</span> a year</em></div>
+            <div class="im"><span>Gold sold</span><b class="ok">None</b><em>your ounces don't change</em></div>
+          </div>
         </div>
 
-        <p class="cnote risk"><b>This is the risk:</b> if gold falls to the liquidation price, part of your gold is sold to repay the loan. Borrow well under the cap and you keep a wide buffer. Rates float — the live rate above comes straight from the lending market you can <a href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">inspect on Morpho</a>.</p>
+        <!-- what a falling gold price does to this position -->
+        <div class="scen">
+          <span class="scen-h">If gold falls from here</span>
+          <div class="scen-wrap"><table class="scen-t">
+            <thead><tr><th>Gold</th><th>Your LTV</th><th>Health</th><th></th></tr></thead>
+            <tbody data-scenarios></tbody>
+          </table></div>
+        </div>
+
+        <p class="cnote risk"><b>The risk, plainly:</b> if gold falls to the liquidation price, part of your gold is
+          sold to clear the loan. Borrow in the Safe or Conservative band and you keep a wide buffer. The rate floats —
+          it is read live from the market you can open yourself.</p>
         <div class="cacts">
           <a class="btn btn-plum" href="#cta" data-magnet>Open a credit line</a>
           <a class="btn btn-ghost" href="docs/borrow.html#borrow-strategies">Borrowing strategies</a>
@@ -1109,7 +1252,9 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       </div>
     </div>
 
-    <p class="calc-foot rv">Illustration only — not an offer of credit, not investment advice. Live figures refresh from public market data; your actual rate, limits and eligibility are shown in the app before you confirm anything.</p>
+    <p class="calc-foot rv">Illustration only — not an offer of credit and not investment advice. Live figures come
+      from public market data and refresh while this page is open; your actual rate, limits and eligibility are shown
+      in the app before you confirm anything.</p>
   </div>
 </section>
 
@@ -1689,7 +1834,12 @@ window.AURI = (function(){
   const CHAIN_ID   = 42161;
 
   /* last-resort values — kept close to reality but always shown as indicative */
-  const state = {goldUsd:4054, borrowApy:0.0348, lltv:0.77, change24h:null, live:false, source:'indicative'};
+  const state = {goldUsd:4054, borrowApy:0.0348, lltv:0.77, change24h:null,
+                 live:false, source:'indicative', at:null};
+  /* fiat rates per 1 USD, so the calculators can price in the visitor's own currency */
+  const FX_API = 'https://open.er-api.com/v6/latest/USD';
+  const fxRates = {USD:1};
+  const fx = code => (typeof fxRates[code] === 'number' ? fxRates[code] : 1);
 
   const usd = (n,dp=0)=>n.toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp});
   const pct = n => (n*100).toFixed(2)+'%';
@@ -1698,15 +1848,36 @@ window.AURI = (function(){
   const onUpdate = fn => { subs.push(fn); fn(state); };
   const publish = () => subs.forEach(fn=>{ try{ fn(state); }catch(e){} });
 
+  /* briefly highlight a value that just changed, so a live tick is visible */
+  function bump(el, next){
+    if(el.textContent === next) return;
+    el.textContent = next;
+    el.classList.remove('ticked');
+    void el.offsetWidth;
+    el.classList.add('ticked');
+  }
+
   function paint(){
-    document.querySelectorAll('[data-gold-price]').forEach(el=>el.textContent = '$'+usd(state.goldUsd));
-    document.querySelectorAll('[data-apr]').forEach(el=>el.textContent = pct(state.borrowApy));
+    document.querySelectorAll('[data-gold-price]').forEach(el=>bump(el, '$'+usd(state.goldUsd)));
+    document.querySelectorAll('[data-apr]').forEach(el=>bump(el, pct(state.borrowApy)));
     document.querySelectorAll('[data-lltv]').forEach(el=>el.textContent = Math.round(state.lltv*100)+'%');
+    document.querySelectorAll('[data-gold-change]').forEach(el=>{
+      if(typeof state.change24h !== 'number'){ el.textContent = ''; return; }
+      const up = state.change24h >= 0;
+      el.textContent = (up?'▲':'▼') + Math.abs(state.change24h*100).toFixed(2) + '%';
+      el.classList.toggle('up', up); el.classList.toggle('down', !up);
+    });
     document.querySelectorAll('[data-market-state]').forEach(el=>{
       el.textContent = state.live ? 'live' : 'indicative';
       el.classList.toggle('is-live', state.live);
     });
+    document.querySelectorAll('.feed').forEach(el=>el.classList.toggle('stale', !state.live));
     document.querySelectorAll('[data-feed]').forEach(el=>el.classList.toggle('stale', !state.live));
+    document.querySelectorAll('[data-market-note]').forEach(el=>{
+      el.textContent = state.live
+        ? 'live · updated ' + (state.at ? state.at.toLocaleTimeString() : 'just now') + ' · tap a chip for the source'
+        : 'indicative figures — live market data unavailable right now';
+    });
     publish();
   }
 
@@ -1746,11 +1917,19 @@ window.AURI = (function(){
      to the API's CORS allow-list and extend this test. */
   const firstPartyOk = /(^|\.)auri\.money$/i.test(location.hostname);
 
+  async function fetchFx(){
+    try{
+      const r = await timeout(fetch(FX_API,{mode:'cors'}),6000);
+      const d = await r.json();
+      if(d && d.rates) Object.assign(fxRates, d.rates, {USD:1});
+    }catch(e){ /* currency selector falls back to USD-only */ }
+  }
+
   async function refresh(){
     for(const fn of (firstPartyOk ? [fromAuri, fromPublic] : [fromPublic])){
       try{
         const d = await fn();
-        Object.assign(state, d, {live:true});
+        Object.assign(state, d, {live:true, at:new Date()});
         paint();
         return;
       }catch(e){ /* try the next source */ }
@@ -1759,80 +1938,167 @@ window.AURI = (function(){
   }
 
   paint();
+  fetchFx();
   refresh();
   setInterval(refresh, 120000);          /* every 2 min; endpoints cache for 15s anyway */
   addEventListener('visibilitychange', ()=>{ if(!document.hidden) refresh(); });
 
-  return {state, onUpdate, usd, pct, refresh};
+  return {state, onUpdate, usd, pct, refresh, fx};
 })();
 
-/* ---------- calculators: buy + borrow, driven by the live feed above ---------- */
+/* ---------- calculators: buy + borrow, driven by the live feed above ----------
+   Risk bands and their names are the product's own borrow-sizing bands, so the site and the
+   app never label the same LTV differently:  Safe <=20%  Conservative <=35%  Balanced <=55%
+   Risky >55%, with liquidation at the market's LLTV. Health factor = LLTV / LTV, matching the
+   app's "above 1.0" convention. */
 (function(){
-  const $ = s => document.querySelector(s);
-  const calc = $('#calculator'); if(!calc) return;
-  const GRAMS_PER_OZ = 31.1034768;
-  const usd = window.AURI.usd;
-  const set = (sel,val)=>{const e=calc.querySelector(sel); if(e) e.textContent=val;};
-  const clampNum = (v,min,max)=>Math.min(max,Math.max(min,isFinite(v)?v:min));
+  const A = window.AURI, calc = document.querySelector('#calculator');
+  if(!calc || !A) return;
+  const OZ_G = 31.1034768;
+  const $ = s => calc.querySelector(s);
+  const all = s => calc.querySelectorAll(s);
+  const set = (s,v) => all(s).forEach(e => { e.textContent = v; });
+  const clamp = (v,lo,hi) => Math.min(hi, Math.max(lo, isFinite(v) ? v : lo));
 
-  const buyAmt=$('#buyAmt'), buyRange=$('#buyRange');
+  const CURRENCIES = ['USD','CAD','EUR','GBP','INR','AED','AUD','SGD','CHF','JPY','PHP','MXN','BRL','NGN','ZAR','SAR','HKD','NZD'];
+  let cur = 'USD', unit = 'g';
+
+  const buyAmt=$('#buyAmt'), buyRange=$('#buyRange'), buyCur=$('#buyCur');
   const colAmt=$('#colAmt'), borAmt=$('#borAmt'), borRange=$('#borRange');
 
+  CURRENCIES.forEach(c => {
+    const o = document.createElement('option'); o.value = c; o.textContent = c; buyCur.appendChild(o);
+  });
+  buyCur.value = 'USD';
+
+  /* ---- band helpers: the product's own labels ---- */
+  function band(ltv){
+    if(ltv <= 0.20) return 'safe';
+    if(ltv <= 0.35) return 'conservative';
+    if(ltv <= 0.55) return 'balanced';
+    return 'risky';
+  }
+  const money = (n, code) => {
+    try{
+      return n.toLocaleString(undefined, {style:'currency', currency:code,
+        minimumFractionDigits: n < 100 ? 2 : 0, maximumFractionDigits: n < 100 ? 2 : 0});
+    }catch(e){ return code + ' ' + A.usd(n, n < 100 ? 2 : 0); }
+  };
+
+  /* ---- BUY ---- */
   function renderBuy(){
-    const p = window.AURI.state.goldUsd;
-    const amt = clampNum(parseFloat(buyAmt.value),0,100000000);
-    const oz = amt/p, g = oz*GRAMS_PER_OZ;
-    set('[data-buy-grams]', g.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}));
-    set('[data-buy-oz]', oz.toFixed(4)+' oz');
+    const st = A.state;
+    const rate = A.fx(cur);                        /* units of `cur` per 1 USD */
+    const priceCur = st.goldUsd * rate;            /* gold price per oz in the chosen currency */
+    const spend = clamp(parseFloat(buyAmt.value), 0, 1e12);
+    const net = spend * (1 - 0.0049);              /* Auri fee 0.49% */
+    const oz = priceCur > 0 ? net / priceCur : 0;
+    const amount = unit === 'g' ? oz * OZ_G : oz;
+
+    set('[data-buy-amount]', amount.toLocaleString(undefined,
+        {minimumFractionDigits: unit === 'g' ? 2 : 4, maximumFractionDigits: unit === 'g' ? 2 : 4}));
+    set('[data-buy-unit]', unit === 'g' ? 'g of gold' : 'troy oz of gold');
+    set('[data-buy-unit-short]', unit === 'g' ? 'g' : 'oz');
+    set('[data-buy-price]', money(unit === 'g' ? priceCur / OZ_G : priceCur, cur));
+    set('[data-buy-fee]', money(spend * 0.0049, cur));
   }
 
+  /* ---- BORROW ---- */
   function renderBorrow(){
-    const {goldUsd:p, borrowApy:apr, lltv} = window.AURI.state;
-    const C = clampNum(parseFloat(colAmt.value),0,1000000000);
-    const capB = C*lltv;                                  /* borrowing at the cap = instant liquidation */
-    let B = clampNum(parseFloat(borAmt.value),0,capB);
-    const ltv = C>0 ? B/C : 0;
-    const ratio = lltv>0 ? ltv/lltv : 0;                  /* how close to the liquidation cap */
+    const st = A.state, lltv = st.lltv, apr = st.borrowApy;
+    const rate = A.fx(cur);
+    const C = clamp(parseFloat(colAmt.value), 0, 1e12);
+    const cap = C * lltv;
+    let B = clamp(parseFloat(borAmt.value), 0, cap);
+    if(parseFloat(borAmt.value) > cap) borAmt.value = Math.floor(cap);
+    const ltv = C > 0 ? B / C : 0;
 
-    borRange.max = (lltv*100).toFixed(0);
-    borRange.value = (ltv*100).toFixed(0);
-    if(parseFloat(borAmt.value) > capB) borAmt.value = Math.floor(capB);
+    borRange.max = Math.round(lltv * 100);
+    borRange.value = Math.round(ltv * 100);
+    set('[data-lltv]', Math.round(lltv * 100) + '%');
+    set('[data-ltv]', (ltv * 100).toFixed(1) + '%');
 
-    set('[data-ltv]', (ltv*100).toFixed(1)+'%');
-    const fill = calc.querySelector('[data-ltv-fill]');
-    if(fill) fill.style.width = Math.min(100, ratio*100)+'%';
-    const mark = calc.querySelector('[data-ltv-max-mark]');
-    if(mark) mark.style.left = '100%';
+    const z = band(ltv);
+    const bands = $('.bands');
+    bands.dataset.zone = z;
+    set('[data-ltv-tag]', z);
+    const pin = $('[data-ltv-pin]');
+    if(pin) pin.style.left = Math.min(100, (ltv / lltv) * 100) + '%';
 
-    const zone = ratio<0.5 ? 'safe' : ratio<0.8 ? 'warn' : 'danger';
-    const wrap = calc.querySelector('.cltv');
-    if(wrap) wrap.dataset.zone = zone;
-    set('[data-ltv-tag]', zone==='safe' ? 'comfortable' : zone==='warn' ? 'watch it' : 'close to the cap');
+    /* health factor, as the app shows it: above 1.0 is not yet liquidatable */
+    const hf = ltv > 0 ? lltv / ltv : Infinity;
+    const hEl = $('[data-health]');
+    if(hEl){
+      hEl.textContent = B > 0 ? (hf > 99 ? '99+' : hf.toFixed(2)) : '—';
+      hEl.className = B === 0 ? '' : hf >= 2 ? 'ok' : hf >= 1.3 ? 'warn' : 'bad';
+    }
+    set('[data-health-note]', B > 0
+      ? (hf >= 2 ? 'comfortable — above 2.0' : hf >= 1.3 ? 'thinner — watch it' : 'close to liquidation')
+      : 'no loan, no risk');
 
-    const yr = B*apr;
-    set('[data-int-mo]', usd(yr/12, yr/12<100?2:0));
-    set('[data-int-yr]', usd(yr, yr<100?2:0));
+    /* you hold C/price ounces; liquidation when loan / (oz x price) = lltv */
+    const liqCur = C > 0 && B > 0 ? (B * (st.goldUsd * rate)) / (C * lltv) : 0;
+    set('[data-liq]', B > 0 ? money(liqCur, cur) + ' /oz' : '—');
+    const drop = B > 0 ? (1 - (ltv / lltv)) : 0;
+    set('[data-liq-drop]', B > 0 ? 'gold can fall ' + (drop * 100).toFixed(0) + '% first' : 'nothing to liquidate');
 
-    /* you hold C/p ounces; liquidation when the loan hits lltv of the collateral value */
-    const liq = C>0 && B>0 ? (B*p)/(C*lltv) : 0;
-    set('[data-liq]', B>0 ? usd(liq) : '—');
-    const drop = p>0 && liq>0 ? (p-liq)/p : 0;
-    set('[data-liq-drop]', B>0 ? 'gold would have to fall '+(drop*100).toFixed(0)+'%' : 'borrow nothing, risk nothing');
+    const yr = B * apr;
+    set('[data-int-mo]', money(yr / 12, cur));
+    set('[data-int-yr]', money(yr, cur));
+
+    /* what a falling gold price does: LTV rises as collateral value falls */
+    const tb = $('[data-scenarios]');
+    if(tb){
+      const rows = [0.10, 0.20, 0.30, 0.40].map(d => {
+        const newLtv = C > 0 && B > 0 ? B / (C * (1 - d)) : 0;
+        const liquidated = newLtv >= lltv;
+        const nz = liquidated ? 'liq' : band(newLtv);
+        const nhf = newLtv > 0 ? lltv / newLtv : Infinity;
+        const tr = document.createElement('tr');
+
+        const td1 = document.createElement('td');
+        td1.textContent = '−' + (d * 100).toFixed(0) + '%';
+        const td2 = document.createElement('td');
+        td2.textContent = B > 0 ? (Math.min(newLtv, 9.99) * 100).toFixed(1) + '%' : '—';
+        const td3 = document.createElement('td');
+        td3.textContent = B > 0 ? (liquidated ? '<1.00' : nhf.toFixed(2)) : '—';
+        const td4 = document.createElement('td');
+        const tag = document.createElement('span');
+        tag.className = 'st ' + nz;
+        tag.textContent = liquidated ? 'liquidated' : nz;
+        td4.appendChild(tag);
+
+        tr.append(td1, td2, td3, td4);
+        return tr;
+      });
+      tb.replaceChildren(...rows);
+    }
   }
 
-  const renderAll = ()=>{ renderBuy(); renderBorrow(); };
+  const renderAll = () => { renderBuy(); renderBorrow(); };
 
-  buyAmt.addEventListener('input', ()=>{ buyRange.value = clampNum(parseFloat(buyAmt.value),10,25000); renderBuy(); });
+  /* ---- wiring ---- */
+  buyAmt.addEventListener('input', ()=>{ buyRange.value = clamp(parseFloat(buyAmt.value),10,25000); renderBuy(); });
   buyRange.addEventListener('input', ()=>{ buyAmt.value = buyRange.value; renderBuy(); });
+  buyCur.addEventListener('change', ()=>{
+    cur = buyCur.value;
+    all('[data-cur-code]').forEach(e => { e.textContent = cur; });
+    renderAll();
+  });
+  all('.segb').forEach(b => b.addEventListener('click', ()=>{
+    unit = b.dataset.unit;
+    all('.segb').forEach(x => x.classList.toggle('on', x === b));
+    renderBuy();
+  }));
   colAmt.addEventListener('input', renderBorrow);
   borAmt.addEventListener('input', renderBorrow);
   borRange.addEventListener('input', ()=>{
-    const C = clampNum(parseFloat(colAmt.value),0,1000000000);
-    borAmt.value = Math.round(C*(parseFloat(borRange.value)/100));
+    const C = clamp(parseFloat(colAmt.value),0,1e12);
+    borAmt.value = Math.round(C * (parseFloat(borRange.value)/100));
     renderBorrow();
   });
 
-  window.AURI.onUpdate(renderAll);        /* re-run whenever a fresh price/rate lands */
+  A.onUpdate(renderAll);
 })();
 </script>
 </body>
