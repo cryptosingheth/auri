@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risks — Auri docs</title>
+<meta name="description" content="A standalone, unhedged enumeration of every risk in using Auri — gold price, liquidation, Boost, smart-contract and oracle, cross-chain, stablecoin, custody, regulatory and third-party dependency — with what each would feel like and what limits it.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#15161B;--ink2:#42454E;--ink3:#8A8F9C;--bg:#F6F5F8;--card:#fff;
+ --line:rgba(20,21,27,.09);--line2:rgba(20,21,27,.15);--plum:#852152;--plum-l:#A12C66;--gold:#B08A3E;
+ --mono:"Geist Mono",ui-monospace,monospace;--e:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
+img,svg{max-width:100%;display:block}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+ padding:12px 22px;background:rgba(246,245,248,.92);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line)}
+.top .wm{height:22px;width:auto;color:var(--ink)}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);
+ border-radius:9px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;
+ max-width:1240px;margin:0 auto;padding:34px 22px 90px}
+.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;
+ font-size:14px;padding-right:8px}
+.side h4{margin:20px 0 7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);font-weight:600}
+.side a{display:block;padding:5px 10px;margin-left:-10px;border-radius:8px;color:var(--ink2)}
+.side a:hover{background:#fff;text-decoration:none}
+.side a[aria-current=page]{background:#fff;color:var(--plum);font-weight:600;
+ box-shadow:inset 0 0 0 1px var(--line)}
+main{min-width:0}
+main h1{font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.035em;margin:0 0 6px}
+.lead{font-size:18.5px;line-height:1.6;color:var(--ink2);margin:0 0 30px}
+main h2{font-size:24px;letter-spacing:-.02em;margin:44px 0 12px;padding-top:10px}
+main h3{font-size:18px;letter-spacing:-.015em;margin:28px 0 8px}
+main p,main li{color:var(--ink2)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.88em;background:#fff;border:1px solid var(--line);
+ border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+ border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+ display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;
+ width:1.5px;background:var(--line2)}
+.callout{margin:20px 0;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+ background:#fff;border-left:3px solid var(--ink3)}
+.callout p{margin:0;font-size:14.5px}
+.callout.info{border-left-color:var(--plum-l);background:#fff}
+.callout.warn{border-left-color:#C08A16;background:#FFFCF5}
+.callout.risk{border-left-color:#C23B3B;background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+table.kv{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.kv th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--ink3);font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+.strategy{margin:40px 0;padding:24px 24px 8px;background:#fff;border:1px solid var(--line);
+ border-radius:16px}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10.5px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:rgba(133,33,82,.08);
+ border:1px solid rgba(133,33,82,.2);border-radius:999px;padding:3px 9px;margin-bottom:12px}
+figure{margin:26px 0}
+figure.shot img{border-radius:18px;border:1px solid var(--line);
+ box-shadow:0 18px 40px -26px rgba(20,18,60,.3);max-width:288px}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+figcaption{margin-top:9px;font-size:13px;line-height:1.5;color:var(--ink3)}
+.toc{margin:0 0 30px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.toc b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.toc ul{margin:0;padding-left:18px;font-size:14px}
+.toc li{margin:3px 0}
+.pager{display:flex;gap:12px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+ font-size:14.5px;flex-wrap:wrap}
+.pager a{padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.docfoot{margin-top:34px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr;gap:0;padding:20px 18px 70px}
+ .side{position:static;max-height:none;display:none;margin-bottom:22px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 14px}
+ .side.open{display:block}
+ .top nav{display:none}
+ .burger{display:block}
+ main h1{font-size:28px}.lead{font-size:17px}
+ figure.shot img{max-width:100%}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 371 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="index.html">Docs home</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Contents</button>
+</header>
+<div class="shell">
+  <aside class="side" id="sidenav"><h4>Start</h4>
+<a href="index.html">Overview</a>
+<a href="start.html">Start here</a>
+<h4>Everyday</h4>
+<a href="buy.html">Buying gold</a>
+<a href="cash.html">Cash in and out</a>
+<a href="gift-send.html">Gift, send, remit</a>
+<a href="auto-invest.html">Auto-invest</a>
+<h4>Borrowing</h4>
+<a href="borrow.html">Borrow against gold</a>
+<a href="repay.html">Repay and unlock</a>
+<h4>Advanced</h4>
+<a href="boost.html">Boost (leverage)</a>
+<h4>Trust & safety</h4>
+<a href="trust.html">How gold is held</a>
+<a href="risks.html" aria-current="page">Risks</a>
+<h4>Reference</h4>
+<a href="reference.html">Fees, limits, parameters</a></aside>
+  <main>
+    <h1>Risks</h1>
+    <div class="toc"><b>On this page</b><ul><li><a href="#summary">Every risk on one screen</a></li><li><a href="#gold-price">Gold price risk</a></li><li><a href="#liquidation">Liquidation risk when you borrow</a></li><li><a href="#boost">Boost makes all of that much sharper</a></li><li><a href="#rate-and-liquidity">Interest-rate and liquidity risk</a></li><li><a href="#smart-contract">Smart-contract and oracle risk</a></li><li><a href="#bridge">Cross-chain and token-representation risk</a></li><li><a href="#stablecoin">Stablecoin risk on your cash balance</a></li><li><a href="#not-a-deposit">None of this is a bank deposit</a></li><li><a href="#custody">Custody and key-loss risk</a></li><li><a href="#availability">Regulatory and regional availability risk</a></li><li><a href="#third-parties">Third-party dependency risk</a></li><li><a href="#unknowns">What we can't tell you yet</a></li><li><a href="#when-not-to">When not to use this</a></li><li><a href="#getting-out">How you get out</a></li><li><a href="#disclosure">Disclosure</a></li></ul></div>
+<p class="lead">This page lists every way we know of that you can lose money, lose access to your gold, or be unable to act when you want to. It is its own page rather than a footnote, and it is meant to be read before your first purchase and again before you borrow. Nothing here is financial, tax or legal advice.</p>
+
+<h2 id="summary">Every risk on one screen</h2>
+
+<table class="kv">
+<thead><tr><th>Risk</th><th>What it would feel like</th><th>What limits it</th></tr></thead>
+<tbody>
+<tr><td>Gold price falls</td><td>Worth less than you paid, for months or years</td><td>Nothing. Only your position size.</td></tr>
+<tr><td>Liquidation while borrowing</td><td>Your gold sold to repay your loan, at a price you didn't choose</td><td>Borrowing far below the maximum; watching your liquidation price</td></tr>
+<tr><td>Liquidation with Boost</td><td>The same, triggered by a much smaller move in gold</td><td>Low multipliers only. High ones have little or no buffer.</td></tr>
+<tr><td>Borrow rate rises</td><td>Interest grows without you doing anything</td><td>Live rate shown before you borrow; repay any time</td></tr>
+<tr><td>Thin market liquidity</td><td><strong>Max</strong> is far lower than you expected</td><td>Available liquidity is public and checkable</td></tr>
+<tr><td>Contract or oracle failure</td><td>Funds stuck, or a position priced off a wrong number</td><td>Public, widely used contracts. Not zero risk.</td></tr>
+<tr><td>Cross-chain representation breaks</td><td>Your gold token stops tracking the underlying</td><td>1:1 lock-and-mint, inspectable on-chain</td></tr>
+<tr><td>Stablecoin loses its peg</td><td>Your &ldquo;cash&rdquo; is worth less than a dollar; your loan isn't</td><td>Hold less idle cash; read the issuer's reserve reports</td></tr>
+<tr><td>No deposit insurance</td><td>If something fails, no scheme reimburses you</td><td>Self-custody and public reserves. Not a guarantee.</td></tr>
+<tr><td>You lose your sign-in factors</td><td>Locked out of a vault that is yours</td><td>Two-factor enrolment, saved recovery codes, a second passkey</td></tr>
+</tbody>
+</table>
+
+<h2 id="gold-price">Gold price risk</h2>
+
+<p><strong>What it is.</strong> Gold pays no dividend, no interest and produces no earnings. Only what the next buyer will pay moves its value, so it can fall and stay below your purchase price for a long time.</p>
+
+<p><strong>What it feels like.</strong> You bought at a number you remember, the app shows a smaller one, and there is nothing to do but wait or sell at a loss. If you borrowed, the same fall pushes you toward <a href="risks.html#liquidation">liquidation</a>.</p>
+
+<p><strong>What limits it.</strong> Nothing limits the price &mdash; only your position size relative to your savings limits the damage, which is why Auri does not tell you what share of your savings to hold in gold. Two costs compound it: a round trip is about 1% (0.49% to buy, 0.49% to sell), and your order executes when your money lands, not when you tap &mdash; instant rails take minutes, a bank transfer one to two business days, and gold moves in that gap. See <a href="reference.html">Reference</a>.</p>
+
+<div class="callout warn"><p>The projection calculator in <a href="auto-invest.html">Auto-Invest</a> assumes a constant 8.5% a year and excludes fees and taxes. That is an assumption hard-coded so the tool can draw a line. It is not a forecast.</p></div>
+
+<h2 id="liquidation">Liquidation risk when you borrow</h2>
+
+<p><strong>What it is.</strong> Borrowing pledges your gold rather than selling it: it is posted as collateral on a lending market and you receive stablecoins against it. If the collateral falls far enough relative to what you owe, anyone can repay part of your loan and take your collateral in exchange. That is liquidation &mdash; automatic, permissionless, and it does not wait for you to answer a phone call.</p>
+
+<p><strong>What it feels like.</strong> Gold falls over a weekend while you are not watching. Your gold is sold at roughly the worst price of the cycle, you keep the cash you borrowed, and the gold plus every dollar of recovery it would have earned you is gone. A liquidator is paid an incentive to do it, so you end up with less than a voluntary sale at the same price would have left you.</p>
+
+<p><strong>What limits it.</strong> How far below the maximum you borrow, and how closely you watch. The market Auri uses on Arbitrum has a liquidation loan-to-value of 77%, published on-chain and inspectable by anyone at the <a href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc">XAUt0/USDC market page</a>. Treat 77% as a line to stay well clear of, not a target. Your own liquidation price and health factor are shown live on the loan screen; those are the numbers to act on.</p>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 132" width="760" height="132" role="img"><rect x="20.0" y="42" width="280.5" height="30" fill="#DCF2E7"/><text x="160.3" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#0F7A50">Safe</text><text x="300.5" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">30%</text><rect x="300.5" y="42" width="233.8" height="30" fill="#FBEEDA"/><text x="417.4" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#8A5E0F">Balanced</text><text x="534.3" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">55%</text><rect x="534.3" y="42" width="205.7" height="30" fill="#FAE3E3"/><text x="637.1" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#B23131">At risk</text><text x="740.0" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">77%</text><line x1="740" y1="34" x2="740" y2="80" stroke="#C23B3B" stroke-width="2.5"/><text x="740" y="28" text-anchor="end" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#C23B3B">liquidation 77%</text><text x="20" y="122" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">Your loan-to-value rises when you borrow more OR when gold falls.</text></svg>
+<figcaption>The gap between your loan-to-value and 77% is your entire buffer &mdash; and it collapses as you borrow more.</figcaption></figure>
+
+<h3>Two loans, same gold, very different outcomes</h3>
+
+<p>Illustrative, at a round US$4,000/oz with 2 oz of collateral worth US$8,000:</p>
+
+<ul>
+<li><strong>Borrow US$3,000</strong> &mdash; loan-to-value 37.5%. Gold must fall to about US$1,948/oz, roughly 51%, before liquidation.</li>
+<li><strong>Borrow US$6,000</strong> &mdash; loan-to-value 75%. Gold must fall to about US$3,896/oz, roughly 2.6%. Gold routinely moves that much in a day.</li>
+</ul>
+
+<p>Same collateral, same market; the only variable is how much you took. This is why the maximum available is never the right answer, and why Auri's own borrow screen labels anything above roughly 55% loan-to-value as risky rather than balanced. The mechanics, including how to size a loan, are in <a href="borrow.html">Borrow against your gold</a>.</p>
+
+<div class="callout risk"><p>Borrowing also makes your gold unspendable. Collateralised gold is locked &mdash; you cannot sell, gift, send or remit it until you repay. If you need the gold itself rather than cash, borrowing is the wrong tool. See <a href="borrow.html#unlock">Unlock collateral</a>.</p></div>
+
+<h2 id="boost">Boost makes all of that much sharper</h2>
+
+<p><strong>What it is.</strong> Boost borrows against gold you hold, immediately buys more gold with the borrowed stablecoins, pledges that too, and repeats to your chosen multiplier. The multiplier sets your loan-to-value directly: 2&times; is 50%, 3&times; about 67%, 4&times; 75%, 5&times; 80%.</p>
+
+<p><strong>What it feels like.</strong> Commit US$2,000 of gold at 3&times; and you hold US$6,000 of exposure with US$4,000 borrowed. Gold up 10% gains about US$600 &mdash; 30% on what you committed. Gold down 10% loses about US$600, and a fall of roughly 13% liquidates the position, so the committed gold is gone entirely rather than merely reduced. In a flat market you still pay interest, so doing nothing costs money.</p>
+
+<p><strong>What limits it.</strong> Only your multiplier, honestly. At 4&times; the modelled 75% loan-to-value sits about 2.6% below the 77% liquidation level; at 5&times; it is 80%, above it. The app refuses positions at 82% and higher, but that guard sits above the level at which the underlying market liquidates, so the guard is not what protects you. The liquidation price on the review screen is. If it is within a few percent of today's gold price, do not confirm.</p>
+
+
+
+<div class="callout risk"><p>Boost sits behind a Pro mode toggle, and you cannot hold a Boost position and a standard loan at once. If you cannot state your liquidation price as a dollar gold price, and cannot afford to lose everything you commit, do not turn Pro mode on. See <a href="boost.html">Boost</a>.</p></div>
+
+<h2 id="rate-and-liquidity">Interest-rate and liquidity risk</h2>
+
+<p><strong>What it is.</strong> The borrow rate is not fixed &mdash; the lending market sets it, and it moves with how much of the supplied stablecoin is being borrowed. Available liquidity is finite too, because third parties supply it and can withdraw.</p>
+
+<p><strong>What it feels like.</strong> Your interest line grows without you having done anything, or <strong>Max</strong> is a fraction of what you expected because little stablecoin is free that day.</p>
+
+<p><strong>What limits it.</strong> Visibility, and the right to repay any time with no penalty. Two readings of this market an hour apart in July 2026 gave 3.48% and 3.70%; at that same moment, other gold-collateral markets on the same protocol ranged from 0.27% to 9.47%. A rate you can afford today can double.</p>
+
+<h2 id="smart-contract">Smart-contract and oracle risk</h2>
+
+<p><strong>What it is.</strong> Your loan lives in software, and two things can fail: the lending contracts, and the oracle that tells them what gold is worth. An oracle reporting too low a price triggers liquidations that were not economically justified; too high, and loans grow past the point of being safely collateralised.</p>
+
+<p><strong>What it feels like.</strong> In the bad version the loss is sudden, total for the affected position, and has no appeals process &mdash; no chargeback, no ombudsman, no insurer behind the contract.</p>
+
+<p><strong>What limits it.</strong> Auri does not run its own lending protocol. It uses Morpho on Arbitrum One, whose per-market contracts are public and immutable and hold third-party funds far beyond Auri's, with market parameters and the oracle address public too. That lowers the risk materially; it does not remove it, and no amount of prior review proves the absence of a bug.</p>
+
+<h2 id="bridge">Cross-chain and token-representation risk</h2>
+
+<p><strong>What it is.</strong> Auri's gold is Tether Gold. Native XAUt exists only on Ethereum mainnet; on Arbitrum the asset is XAUt0, the LayerZero OFT version at <code>0x40461291347e1eCbb09499F3371D3f17f10d7159</code>. Native XAUt is locked in an adapter on Ethereum and an equal amount of XAUt0 is minted on Arbitrum, so the backing chain is: your XAUt0 &rarr; locked XAUt &rarr; one troy ounce of vaulted physical gold per token. Every link is a dependency.</p>
+
+<p><strong>What it feels like.</strong> If the adapter or the cross-chain messaging layer were compromised, XAUt0 could stop being reliably redeemable for the underlying and its price could detach from gold while metal still sits in a vault. You would watch gold rise and the thing you hold not follow.</p>
+
+<p><strong>What limits it.</strong> It is burn-and-mint against a locked reserve rather than a custodial wrapper, and both contracts are public. But the Arbitrum representation is small &mdash; on-chain supply was about 160.7 XAUt0 when we checked in July 2026 &mdash; and a thin market means large orders can move the price more than a small quoted impact suggests. Read the price impact on your review screen. More on backing in <a href="trust.html">Reserves and proof</a>.</p>
+
+<h2 id="stablecoin">Stablecoin risk on your cash balance</h2>
+
+<p><strong>What it is.</strong> Your cash balance is not currency in a bank account. It is USDC, issued by Circle on Arbitrum and displayed in your chosen currency; loans are denominated in it too. A stablecoin holds value because its issuer holds reserves and honours redemptions &mdash; an undertaking, not a law of nature.</p>
+
+<p><strong>What it feels like.</strong> A depeg is quiet and fast: your balance reads the same number while that number buys less, and the loan you owe does not shrink to match. Mid-borrow, you are squeezed from both sides at once.</p>
+
+<p><strong>What limits it.</strong> Circle publishes reserve disclosures and independent attestations on its own site &mdash; read them there rather than taking our word for it. Practically: if you are saving, hold gold; if you need dollars soon, withdraw them. A cash balance is a transit account.</p>
+
+<h2 id="not-a-deposit">None of this is a bank deposit</h2>
+
+<p>Auri is a non-custodial software platform. It is not a bank, credit union, trust company or deposit-taking institution, and your balances are not deposits.</p>
+
+<div class="callout risk"><p>Tokenised gold and stablecoins are <strong>not covered by any government or private deposit-insurance, investor-compensation or guarantee scheme, in any jurisdiction</strong>. By way of example only: not by the Canada Deposit Insurance Corporation (CDIC) or the Canadian Investor Protection Fund (CIPF) in Canada, and not by the Federal Deposit Insurance Corporation (FDIC), the National Credit Union Administration (NCUA) or the Securities Investor Protection Corporation (SIPC) in the United States. Naming those schemes illustrates protections that do <em>not</em> apply; it does not imply an equivalent applies elsewhere. You can lose money, up to the entire value of your holdings.</p></div>
+
+<p>What you get instead is custody and verifiability: assets in a wallet you control, a named custodian for the metal, public reserve attestations, and a loan book anyone can read. That is a different kind of protection &mdash; and note that a reserves attestation is a point-in-time report on specified procedures, not a full audit of the company, and it is silent on any other liabilities the business may have.</p>
+
+<h2 id="custody">Custody and key-loss risk</h2>
+
+<p><strong>What it is.</strong> Self-custody cuts both ways. There is no password to reset because there is no password: access runs through your email or phone, a passkey, an authenticator app and, on mobile, biometrics. On-chain sends cannot be reversed by anyone, Auri included.</p>
+
+<p><strong>What it feels like.</strong> Two versions, both bad. You change phone and email in the same month, never enrolled a second passkey, never saved your recovery codes &mdash; and you are looking at gold you own and cannot reach. Or you paste a wrong address into a withdrawal, confirm, and the funds are simply gone.</p>
+
+<p><strong>What limits it.</strong> Mostly things you do yourself, before you hold a meaningful amount: enrol two-factor authentication and write the recovery codes somewhere that is not your phone, register more than one passkey on more than one device, keep the biometric lock on, and test any new address with a small amount. Auri also requires step-up authentication before outbound transactions &mdash; always for gift, send and remit, and for sales or withdrawals to an external wallet &mdash; and restricts bank and instant-rail withdrawals to an account in your own name.</p>
+
+<h2 id="availability">Regulatory and regional availability risk</h2>
+
+<p><strong>What it is.</strong> Auri operates only where it is lawful to do so, and the rules differ by country and, in the United States, by state. Identity verification, fiat rails, currency conversion and card issuance are performed by licensed third parties whose coverage is regional. Regulators can also change their position on tokenised commodities, and on leveraged products in particular.</p>
+
+<p><strong>What it feels like.</strong> A feature you read about is missing in your region, a rail you relied on stops being offered, or a product you already use becomes unavailable and you unwind a position on someone else's schedule rather than your own.</p>
+
+<p><strong>What limits it.</strong> Knowing which parts are region-specific before you build a habit on them. Funding rails are not global: Interac e-Transfer is Canada-only, bank transfer is the US equivalent, and the identity check is triggered by the fiat rail you choose &mdash; crypto deposits do not require one. Coverage is listed in <a href="reference.html">Reference</a>.</p>
+
+<div class="callout soon"><p><strong>Not live yet.</strong> The Auri card is a waitlist, not a product &mdash; you can join it and see your position, and that is all. Cross-border remittance, the MCP server, the CLI and the public API are also not live. Do not plan around any of them.</p></div>
+
+<h2 id="third-parties">Third-party dependency risk</h2>
+
+<p><strong>What it is.</strong> Auri is an interface over other people's infrastructure:</p>
+
+<ul>
+<li><strong>Tether</strong> issues XAUt and publishes its reserve data. If issuance or redemption stopped, the token's link to metal would be at issue.</li>
+<li><strong>The vault operator and custodian</strong> hold the bars; Auri's app names Brink's in Switzerland. A custody failure puts the backing behind every token in question.</li>
+<li><strong>The attestation firm</strong> checks reserves; Auri's app names BDO Italia. Without a current report, &ldquo;fully backed&rdquo; is an assertion rather than a finding.</li>
+<li><strong>LayerZero / USDT0</strong> run the adapter that makes XAUt0 exist on Arbitrum.</li>
+<li><strong>Morpho</strong> is the lending market, and its capacity currently comes from a very small number of supplying vaults &mdash; when we checked, one. If it withdrew, borrowing capacity would shrink sharply.</li>
+<li><strong>Circle</strong> issues the USDC your cash balance and your loan are denominated in.</li>
+<li><strong>Arbitrum One</strong> settles everything; a prolonged outage stalls borrowing, repaying and withdrawing exactly when you most want to act.</li>
+<li><strong>Exchange liquidity</strong> converts stablecoins to gold and back on every buy and sell; thin liquidity shows up as price impact.</li>
+<li><strong>Licensed fiat and identity partners</strong> move money in and out and verify you. Their outages are your outages.</li>
+</ul>
+
+<p><strong>What it feels like.</strong> Almost always the same symptom whatever the cause: a flow that worked last week returns an error, and the fix is not in Auri's hands.</p>
+
+<p><strong>What limits it.</strong> These counterparties are named, public and independently verifiable, and every transaction's on-chain legs are traceable from your activity receipt. That lets you diagnose a problem. It does not make you whole if a counterparty fails.</p>
+
+<h2 id="unknowns">What we can't tell you yet</h2>
+
+<p>Publishing an unfinished answer beats implying there is no question. These will be filled in here as each is confirmed:</p>
+
+<ul>
+<li>Whether customer gold is insured, by which underwriter, against which perils, to what limit &mdash; UNKNOWN.</li>
+<li>The legal ownership structure of the metal, and what happens to your claim if a party in the chain fails &mdash; UNKNOWN.</li>
+<li>Which standard the reserve attestation is performed under, and whether the report is published on the attesting firm's own domain &mdash; UNKNOWN.</li>
+<li>Whether physical redemption is offered, and if so the minimum, fee and lead time &mdash; UNKNOWN.</li>
+<li>The exact liquidation incentive a liquidator earns on this market &mdash; UNKNOWN.</li>
+<li>What recovery is possible if you lose every authentication factor at once &mdash; UNKNOWN.</li>
+</ul>
+
+<section class="strategy">
+
+<h2 id="when-not-to">When not to use this</h2>
+
+<ul>
+<li><strong>Do not buy gold</strong> with money you need within twelve months, with money that would otherwise clear high-interest debt, or because the price just went up.</li>
+<li><strong>Do not borrow</strong> if the loan funds something you cannot repay out of income, if you will not check the position at least weekly, or if a forced sale at a bad price would genuinely hurt you. Borrowing bridges a timing gap; it does not fund consumption.</li>
+<li><strong>Do not use Boost</strong> if you cannot state your liquidation price as a dollar gold price, if you would not accept losing everything you commit, if you are also running a recurring buy plan (steady accumulation and leverage work against each other), or if you are trying to recover a previous loss.</li>
+<li><strong>Do not gift or send</strong> to someone who cannot complete recipient onboarding &mdash; unclaimed gold sits in escrow until claimed or cancelled. See <a href="gift-send.html">Gift and send</a>.</li>
+</ul>
+
+<h2 id="getting-out">How you get out</h2>
+
+<p>To reduce a loan you repay from cash, sell part of the free collateral, or add collateral &mdash; three routes, available any time, no early-repayment penalty. To close a Boost position you unwind 25%, 50%, 75% or all of it, which repays the loan and frees the matching gold. To leave entirely: repay, unlock your gold, then either sell to cash and withdraw or move the tokens to a wallet you control. Selling costs 0.49% and a bank payout typically takes one to two business days, so plan a full exit before you need it, not during a drawdown.</p>
+
+</section>
+
+<h2 id="disclosure">Disclosure</h2>
+
+<p>Auri is a non-custodial software platform and is not a bank, broker, dealer or investment adviser. Nothing here is financial, investment, tax or legal advice, or a recommendation, solicitation or offer to buy or sell any asset. Example figures are illustrative and current as at the date noted; borrow rates are variable, prices move constantly, and the actual rate, price, fees and liquidation level for your transaction are the ones shown in the app before you confirm. Tax treatment depends on your circumstances and jurisdiction, and you can export your full transaction history. Features and regions described here may not be available to you. New to Auri? Start at <a href="start.html">Start here</a>.</p>
+    <div class="pager"><a href="trust.html">&larr; How gold is held</a><a href="reference.html">Fees, limits, parameters &rarr;</a></div>
+    <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or legal
+    advice. Digital assets are not bank deposits and are not covered by any deposit-insurance scheme. Figures shown in
+    screenshots are from a demo build and will differ from live values.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.burger'), s=document.getElementById('sidenav');
+  b&&b.addEventListener('click',function(){
+    var open=s.classList.toggle('open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+</script>
+</body>
+</html>

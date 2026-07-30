@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adding and withdrawing cash — Auri docs</title>
+<meta name="description" content="Every rail into and out of your Auri cash balance — fees, settlement times and regional availability — plus what a cash balance actually is: a stablecoin you hold, not an insured bank deposit.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#15161B;--ink2:#42454E;--ink3:#8A8F9C;--bg:#F6F5F8;--card:#fff;
+ --line:rgba(20,21,27,.09);--line2:rgba(20,21,27,.15);--plum:#852152;--plum-l:#A12C66;--gold:#B08A3E;
+ --mono:"Geist Mono",ui-monospace,monospace;--e:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
+img,svg{max-width:100%;display:block}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+ padding:12px 22px;background:rgba(246,245,248,.92);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line)}
+.top .wm{height:22px;width:auto;color:var(--ink)}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);
+ border-radius:9px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;
+ max-width:1240px;margin:0 auto;padding:34px 22px 90px}
+.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;
+ font-size:14px;padding-right:8px}
+.side h4{margin:20px 0 7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);font-weight:600}
+.side a{display:block;padding:5px 10px;margin-left:-10px;border-radius:8px;color:var(--ink2)}
+.side a:hover{background:#fff;text-decoration:none}
+.side a[aria-current=page]{background:#fff;color:var(--plum);font-weight:600;
+ box-shadow:inset 0 0 0 1px var(--line)}
+main{min-width:0}
+main h1{font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.035em;margin:0 0 6px}
+.lead{font-size:18.5px;line-height:1.6;color:var(--ink2);margin:0 0 30px}
+main h2{font-size:24px;letter-spacing:-.02em;margin:44px 0 12px;padding-top:10px}
+main h3{font-size:18px;letter-spacing:-.015em;margin:28px 0 8px}
+main p,main li{color:var(--ink2)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.88em;background:#fff;border:1px solid var(--line);
+ border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+ border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+ display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;
+ width:1.5px;background:var(--line2)}
+.callout{margin:20px 0;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+ background:#fff;border-left:3px solid var(--ink3)}
+.callout p{margin:0;font-size:14.5px}
+.callout.info{border-left-color:var(--plum-l);background:#fff}
+.callout.warn{border-left-color:#C08A16;background:#FFFCF5}
+.callout.risk{border-left-color:#C23B3B;background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+table.kv{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.kv th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--ink3);font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+.strategy{margin:40px 0;padding:24px 24px 8px;background:#fff;border:1px solid var(--line);
+ border-radius:16px}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10.5px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:rgba(133,33,82,.08);
+ border:1px solid rgba(133,33,82,.2);border-radius:999px;padding:3px 9px;margin-bottom:12px}
+figure{margin:26px 0}
+figure.shot img{border-radius:18px;border:1px solid var(--line);
+ box-shadow:0 18px 40px -26px rgba(20,18,60,.3);max-width:288px}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+figcaption{margin-top:9px;font-size:13px;line-height:1.5;color:var(--ink3)}
+.toc{margin:0 0 30px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.toc b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.toc ul{margin:0;padding-left:18px;font-size:14px}
+.toc li{margin:3px 0}
+.pager{display:flex;gap:12px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+ font-size:14.5px;flex-wrap:wrap}
+.pager a{padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.docfoot{margin-top:34px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr;gap:0;padding:20px 18px 70px}
+ .side{position:static;max-height:none;display:none;margin-bottom:22px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 14px}
+ .side.open{display:block}
+ .top nav{display:none}
+ .burger{display:block}
+ main h1{font-size:28px}.lead{font-size:17px}
+ figure.shot img{max-width:100%}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 371 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="index.html">Docs home</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Contents</button>
+</header>
+<div class="shell">
+  <aside class="side" id="sidenav"><h4>Start</h4>
+<a href="index.html">Overview</a>
+<a href="start.html">Start here</a>
+<h4>Everyday</h4>
+<a href="buy.html">Buying gold</a>
+<a href="cash.html" aria-current="page">Cash in and out</a>
+<a href="gift-send.html">Gift, send, remit</a>
+<a href="auto-invest.html">Auto-invest</a>
+<h4>Borrowing</h4>
+<a href="borrow.html">Borrow against gold</a>
+<a href="repay.html">Repay and unlock</a>
+<h4>Advanced</h4>
+<a href="boost.html">Boost (leverage)</a>
+<h4>Trust & safety</h4>
+<a href="trust.html">How gold is held</a>
+<a href="risks.html">Risks</a>
+<h4>Reference</h4>
+<a href="reference.html">Fees, limits, parameters</a></aside>
+  <main>
+    <h1>Adding and withdrawing cash</h1>
+    <div class="toc"><b>On this page</b><ul><li><a href="#why-hold-cash">Why people keep a cash balance</a></li><li><a href="#what-a-cash-balance-is">What a cash balance actually is</a></li><li><a href="#rails">Which rails you can use, and where</a></li><li><a href="#before-you-start">Before you start</a></li><li><a href="#add-cash">Add cash from Interac, a bank or a card</a></li><li><a href="#usdc-deposits">Deposit USDC from your own wallet</a></li><li><a href="#withdraw-cash">Withdraw cash</a></li><li><a href="#timing">Timing, and what happens underneath</a></li><li><a href="#when-to-hold-cash">When a cash balance makes sense — and when it doesn't</a></li><li><a href="#what-can-go-wrong">What can go wrong</a></li><li><a href="#related">Related</a></li></ul></div>
+<p class="lead">Your cash balance is the dollar side of your Auri account — what you buy gold with, repay a loan with, and pull back out to your bank. This page covers every rail in and out, what each costs, how long it takes, and what you actually hold while the money sits there.</p>
+
+<h2 id="why-hold-cash">Why people keep a cash balance</h2>
+<p>Three reasons. A buy funded from cash is the fastest route into gold, because it skips the funding leg entirely. Repayments and collateral unlocks on a <a href="borrow.html">loan</a> are paid out of cash. And <a href="auto-invest.html">Auto-Invest</a> can auto-debit it on schedule. If you only make one-off bank-funded buys, you can ignore cash completely.</p>
+
+<h2 id="what-a-cash-balance-is">What a cash balance actually is</h2>
+<p>It is not dollars in a bank account with your name on it. Your local currency is received on regulated payment rails, converted, and held as <strong>USDC</strong> — a US-dollar stablecoin — on Arbitrum, ready to buy gold or repay a loan. The asset is native USDC on Arbitrum One, contract <code>0xaf88d065e77c8cC2239327C5EDb3A432268e5831</code>, the same dollar you borrow against your gold.</p>
+<ul>
+<li><strong>Not a deposit, not insured.</strong> Auri is not a bank. Deposit-insurance and investor-protection schemes cover bank deposits and brokerage accounts, not stablecoins: CDIC and CIPF in Canada, FDIC, NCUA and SIPC in the US, and equivalents elsewhere, do not apply here. They are named to show what does <em>not</em> cover you.</li>
+<li><strong>A stablecoin targets one dollar; it does not guarantee one.</strong> USDC is an obligation of its issuer, redeemable on that issuer's terms. The peg is backed by reserves, not by a government.</li>
+<li><strong>Your display currency is not what you hold.</strong> Auri offers 28 display currencies, but that setting only changes the number on screen. The unit underneath is US-dollar-referenced, so a balance shown in Canadian dollars, rupees or pounds moves whenever that currency moves against the dollar — including on days you do nothing.</li>
+</ul>
+<div class="callout risk"><p>Cash carries currency risk if you do not think in US dollars, issuer risk no insurance absorbs, and it pays you nothing — no interest accrues on cash anywhere in the app. It is a staging area, not a savings account.</p></div>
+<p>One honest ambiguity: the app calls your gold vault self-custody and shows its address, while a sell receipt labels the matching cash credit as an internal USDC ledger entry. Whether cash sits in a wallet you control is <code>UNKNOWN</code>. See <a href="trust.html">proof and custody</a>.</p>
+
+<h2 id="rails">Which rails you can use, and where</h2>
+<p><strong>The rails you see depend on your country of residence.</strong> Interac e-Transfer is a Canadian domestic rail and exists nowhere else; in the US the equivalent is a bank transfer. Auri's profile offers 45 countries, but that governs display and eligibility, not rails — the deposit-method screen shows only what you can use. Anything unstated is marked <code>UNKNOWN</code>.</p>
+<table class="kv">
+<thead><tr><th>Rail</th><th>Where it works</th><th>Direction</th><th>Fee</th><th>Timing shown in the app</th><th>ID check</th></tr></thead>
+<tbody>
+<tr><td>Interac e-Transfer</td><td>Canada only</td><td>In and out</td><td>Deposit: no fee. Withdrawal: CA$1.50</td><td>Instant both ways</td><td>Required</td></tr>
+<tr><td>Bank transfer (EFT in Canada)</td><td>Canada confirmed; US and elsewhere <code>UNKNOWN</code></td><td>In and out</td><td>No fee stated</td><td>Deposit: available in 1–2 hours, settlement completing behind it. Withdrawal: 1–2 business days</td><td>Required</td></tr>
+<tr><td>Debit card</td><td>Canada confirmed; elsewhere <code>UNKNOWN</code></td><td>Deposit only</td><td>1% of the amount</td><td>Instant</td><td>Required</td></tr>
+<tr><td>USDC on Arbitrum</td><td>Anywhere you can hold a wallet</td><td>In and out (shown as "Crypto wallet" outbound)</td><td>No Auri fee stated; you pay the Arbitrum network fee from the sending wallet</td><td>Deposit: credited when the transfer confirms, no time quoted. Withdrawal: minutes</td><td>Not required — tagged "No ID"; step-up approval outbound</td></tr>
+</tbody>
+</table>
+<p>Auri's 0.49% fee applies when you <a href="buy.html">buy</a> or sell gold, not when you move cash. The only cash fees are the 1% debit-card deposit and the CA$1.50 Interac withdrawal. Minimum and maximum amounts are <code>UNKNOWN</code> — none appear on any screen. Full list on the <a href="reference.html">reference page</a>.</p>
+<div class="callout soon"><p>Card top-ups and cross-border remittance are <strong>not live</strong>. The card is at waitlist stage and remittance has not launched, so neither is a way to spend cash today.</p></div>
+
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+<li>An Auri account — see <a href="start.html">getting started</a>.</li>
+<li><strong>Interac, bank or debit:</strong> a one-time identity check. Method rows are tagged "ID required" or "ID verified" before you pick.</li>
+<li><strong>Bank and Interac withdrawals:</strong> a destination account in your own name.</li>
+<li><strong>USDC either way:</strong> a wallet that supports Arbitrum.</li>
+<li><strong>Withdrawing to an external wallet:</strong> a passkey, or an authenticator app plus access to your email.</li>
+</ul>
+<p>The check fires only on a buy, add-cash or withdrawal using Interac, a bank or a debit card, and only the first time: legal name and date of birth, a photo of your licence or passport, then a selfie. Usually instant, and it returns you to the screen you came from. In Canada the app cites FINTRAC rules; the equivalent elsewhere is <code>UNKNOWN</code>.</p>
+
+<h2 id="add-cash">Add cash from Interac, a bank or a card</h2>
+<p><strong>About a minute · no fee on Interac and bank deposits, 1% on debit · no cancel step once you confirm.</strong></p>
+<ol class="steps">
+<li><strong>Open Add cash.</strong> On the <strong>Actions</strong> tab, in the <strong>Cash</strong> group, or from the move-money menu on Home.</li>
+<li><strong>Enter the amount.</strong> Currency only — no gram or ounce units here, unlike a gold buy. Chips add +$10, +$50, +$100 and +$500.</li>
+<li><strong>Choose a deposit method.</strong> Interac e-Transfer, Bank account, Debit card, or Deposit USDC from a wallet.</li>
+<li><strong>Clear the identity check if prompted.</strong> You return to the same flow when it completes.</li>
+<li><strong>Read the review screen.</strong> Four lines: <strong>You add</strong>, <strong>Method</strong>, <strong>Held as USDC</strong>, <strong>Available</strong> — instant for Interac and debit, 1–2 hours for a bank transfer. People skim "Held as USDC"; it is telling you what you will own.</li>
+<li><strong>Confirm.</strong> Processing tracks each leg live — receiving funds, converting to USDC, updating your balance, plus awaiting-bank-settlement for transfers. Minimise it and the job keeps running, then notifies you.</li>
+</ol>
+<figure class="shot"><img src="../../assets/docs/cash-add-review.webp" alt="Check the &quot;Held as USDC&quot; and &quot;Available&quot; lines before confirming." loading="lazy" width="276">
+<figcaption>Check the "Held as USDC" and "Available" lines before confirming.</figcaption></figure>
+<p><strong>What you'll see when it works.</strong> A success screen, an updated balance on Home, and a row in <strong>Activity</strong> under the <strong>Cash</strong> filter — expand it for each leg with its reference or transaction hash.</p>
+
+<h2 id="usdc-deposits">Deposit USDC from your own wallet</h2>
+<p>This path works differently: instead of a review screen, the button becomes <strong>Deposit</strong> and Auri shows a deposit address labelled for USDC on Arbitrum, with a copy button. No identity check, no Auri fee, no quoted arrival time — the balance updates when the transfer confirms, and the network fee comes from the sending wallet.</p>
+<div class="callout warn"><p>Send <strong>only USDC, only on Arbitrum</strong>. Other tokens or networks sent to that address may be lost, and blockchain transfers cannot be reversed. Send a small test amount the first time. Whether a wrong-network send can be recovered is <code>UNKNOWN</code> — assume not.</p></div>
+
+
+<h2 id="withdraw-cash">Withdraw cash</h2>
+<p><strong>Under a minute to submit · CA$1.50 on Interac, no fee stated on bank transfer · irreversible once sent.</strong></p>
+<ol class="steps">
+<li><strong>Open Withdraw cash.</strong> From the <strong>Cash</strong> group on <strong>Actions</strong>, or the move-money menu.</li>
+<li><strong>Enter the amount.</strong> Chips add +$10, +$50 and +$100; <strong>Max</strong> fills your whole balance. Cash is never locked as collateral — only gold is — so the full balance stays withdrawable even with a loan open.</li>
+<li><strong>Pick a destination.</strong> Bank account (1–2 business days), Interac e-Transfer (instant, CA$1.50), or Crypto wallet, which reveals an address field.</li>
+<li><strong>Clear the identity check if prompted.</strong> Bank and Interac rails only.</li>
+<li><strong>Approve the step-up if you are sending to a wallet.</strong> A passkey, or two 6-digit codes — one emailed, one from your authenticator app. Auri cannot approve this step for you.</li>
+<li><strong>Read the review screen.</strong> <strong>You withdraw</strong>, <strong>To</strong>, <strong>Arrives</strong> — 1–2 days for a bank transfer, instant for Interac, minutes for a wallet.</li>
+<li><strong>Confirm.</strong> Processing shows redeeming USDC, converting to your currency, sending to your bank. The Activity receipt keeps the same breakdown.</li>
+</ol>
+<div class="callout warn"><p>Bank and Interac withdrawals can only go to an account <strong>in your own name</strong> — third-party payouts are not permitted, so a withdrawal cannot be used to pay someone else. A USDC withdrawal goes out on Arbitrum and cannot be reversed; check the address character by character.</p></div>
+
+
+<h2 id="timing">Timing, and what happens underneath</h2>
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 874 116" width="874" height="116" role="img"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#42454E"/></marker></defs><rect x="16" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="16" y="16" width="3.5" height="84" rx="2" fill="#852152"/><text x="32" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Deposit</text><text x="32" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">rail depends on your</text><text x="32" y="83" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">country</text><line x1="200" y1="58.0" x2="230" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="238" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="238" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="254" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Cash balance</text><text x="254" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">a stablecoin balance, not</text><text x="254" y="83" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">a deposit</text><line x1="422" y1="58.0" x2="452" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="460" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="460" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="476" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Buy or repay</text><text x="476" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">or withdraw again</text><line x1="644" y1="58.0" x2="674" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="682" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="682" y="16" width="3.5" height="84" rx="2" fill="#B08A3E"/><text x="698" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Withdraw</text><text x="698" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">back to your own bank</text></svg>
+<figcaption>Your money becomes USDC at the second step and stays USDC until you withdraw — buying gold and repaying a loan never touch the banking rails again, which is why they are fast and a withdrawal is not.</figcaption></figure>
+<p>Every fiat leg settles on a schedule Auri does not control; every on-chain leg is fast. That asymmetry explains all the timings above. One inconsistency to know: add-cash quotes 1–2 hours for a bank transfer, while paying for gold straight from a bank transfer quotes 1–2 business days — plan around the longer figure and trust the number on your own review screen. Weekend and holiday cut-offs are <code>UNKNOWN</code>. Auri's rewards catalogue includes a fee-waiver reward covering one withdrawal, shown as worth CA$12.</p>
+
+<section class="strategy">
+<h2 id="when-to-hold-cash">When a cash balance makes sense — and when it doesn't</h2>
+<p><strong>It makes sense when cash is a tool, not a destination.</strong> If you buy on a schedule, funding Auto-Invest from cash means a failed bank debit never skips a cycle. If a loan is open, a buffer lets you repay or unlock collateral the same day rather than waiting on a transfer — the unlock flow pays the matching part of the loan from cash, and shows a shortfall if the money is not there.</p>
+<p><strong>It stops making sense when cash becomes the destination.</strong> Hold a balance for months and you hold a stablecoin with no interest, no insurance and — unless you think in US dollars — an exchange-rate exposure you did not choose. Money you need in a bank account soon belongs in a bank account: the round trip costs a rail fee each way plus one to two business days at the bank end. Two mistakes in particular: funding cash with money earmarked for a bill due this week, since the deposit is instant but the exit is not; and treating a balance as a repayment plan, when the consequences of an unpaid loan land on your gold — see <a href="borrow.html#liquidation">liquidation</a> and the <a href="risks.html">risk page</a>.</p>
+</section>
+
+<h2 id="what-can-go-wrong">What can go wrong</h2>
+<ul>
+<li><strong>"My deposit says pending."</strong> Bank transfers carry an awaiting-settlement step. Expand the row in Activity to see which leg is outstanding.</li>
+<li><strong>"I sent USDC and nothing arrived."</strong> Almost always the wrong network or token. The address accepts USDC on Arbitrum only; recovery is <code>UNKNOWN</code>.</li>
+<li><strong>"My withdrawal was rejected over the account name."</strong> Payouts must go to an account in your own name. Withdraw to your own account, then pay the other person from there.</li>
+<li><strong>"Why ID for a card deposit but not a USDC transfer?"</strong> Expected — the check is tied to fiat rails, not to the amount.</li>
+<li><strong>"The app wants two codes."</strong> The step-up on an external-wallet withdrawal: the emailed code and your authenticator code, or a passkey instead.</li>
+</ul>
+
+<h2 id="related">Related</h2>
+<p>Fees and limits: <a href="reference.html">reference</a>. What backs the gold and who holds it: <a href="trust.html">proof and custody</a>. The risks in plain language: <a href="risks.html">risks</a>.</p>
+<p><strong>Next step:</strong> <a href="buy.html">buy gold from your cash balance</a> — the fastest path the product has.</p>
+<p><em>Nothing on this page is financial, tax or legal advice.</em></p>
+    <div class="pager"><a href="buy.html">&larr; Buying gold</a><a href="gift-send.html">Gift, send, remit &rarr;</a></div>
+    <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or legal
+    advice. Digital assets are not bank deposits and are not covered by any deposit-insurance scheme. Figures shown in
+    screenshots are from a demo build and will differ from live values.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.burger'), s=document.getElementById('sidenav');
+  b&&b.addEventListener('click',function(){
+    var open=s.classList.toggle('open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+</script>
+</body>
+</html>

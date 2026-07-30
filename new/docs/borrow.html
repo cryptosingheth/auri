@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Borrowing against your gold — Auri docs</title>
+<meta name="description" content="How to open a loan against gold you already own — the mechanics, the four numbers to check before confirming, how liquidation works at the market&#x27;s 77% ceiling, and when borrowing is and isn&#x27;t the right move.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#15161B;--ink2:#42454E;--ink3:#8A8F9C;--bg:#F6F5F8;--card:#fff;
+ --line:rgba(20,21,27,.09);--line2:rgba(20,21,27,.15);--plum:#852152;--plum-l:#A12C66;--gold:#B08A3E;
+ --mono:"Geist Mono",ui-monospace,monospace;--e:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
+img,svg{max-width:100%;display:block}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+ padding:12px 22px;background:rgba(246,245,248,.92);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line)}
+.top .wm{height:22px;width:auto;color:var(--ink)}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);
+ border-radius:9px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;
+ max-width:1240px;margin:0 auto;padding:34px 22px 90px}
+.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;
+ font-size:14px;padding-right:8px}
+.side h4{margin:20px 0 7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);font-weight:600}
+.side a{display:block;padding:5px 10px;margin-left:-10px;border-radius:8px;color:var(--ink2)}
+.side a:hover{background:#fff;text-decoration:none}
+.side a[aria-current=page]{background:#fff;color:var(--plum);font-weight:600;
+ box-shadow:inset 0 0 0 1px var(--line)}
+main{min-width:0}
+main h1{font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.035em;margin:0 0 6px}
+.lead{font-size:18.5px;line-height:1.6;color:var(--ink2);margin:0 0 30px}
+main h2{font-size:24px;letter-spacing:-.02em;margin:44px 0 12px;padding-top:10px}
+main h3{font-size:18px;letter-spacing:-.015em;margin:28px 0 8px}
+main p,main li{color:var(--ink2)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.88em;background:#fff;border:1px solid var(--line);
+ border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+ border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+ display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;
+ width:1.5px;background:var(--line2)}
+.callout{margin:20px 0;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+ background:#fff;border-left:3px solid var(--ink3)}
+.callout p{margin:0;font-size:14.5px}
+.callout.info{border-left-color:var(--plum-l);background:#fff}
+.callout.warn{border-left-color:#C08A16;background:#FFFCF5}
+.callout.risk{border-left-color:#C23B3B;background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+table.kv{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.kv th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--ink3);font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+.strategy{margin:40px 0;padding:24px 24px 8px;background:#fff;border:1px solid var(--line);
+ border-radius:16px}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10.5px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:rgba(133,33,82,.08);
+ border:1px solid rgba(133,33,82,.2);border-radius:999px;padding:3px 9px;margin-bottom:12px}
+figure{margin:26px 0}
+figure.shot img{border-radius:18px;border:1px solid var(--line);
+ box-shadow:0 18px 40px -26px rgba(20,18,60,.3);max-width:288px}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+figcaption{margin-top:9px;font-size:13px;line-height:1.5;color:var(--ink3)}
+.toc{margin:0 0 30px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.toc b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.toc ul{margin:0;padding-left:18px;font-size:14px}
+.toc li{margin:3px 0}
+.pager{display:flex;gap:12px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+ font-size:14.5px;flex-wrap:wrap}
+.pager a{padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.docfoot{margin-top:34px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr;gap:0;padding:20px 18px 70px}
+ .side{position:static;max-height:none;display:none;margin-bottom:22px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 14px}
+ .side.open{display:block}
+ .top nav{display:none}
+ .burger{display:block}
+ main h1{font-size:28px}.lead{font-size:17px}
+ figure.shot img{max-width:100%}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 371 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="index.html">Docs home</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Contents</button>
+</header>
+<div class="shell">
+  <aside class="side" id="sidenav"><h4>Start</h4>
+<a href="index.html">Overview</a>
+<a href="start.html">Start here</a>
+<h4>Everyday</h4>
+<a href="buy.html">Buying gold</a>
+<a href="cash.html">Cash in and out</a>
+<a href="gift-send.html">Gift, send, remit</a>
+<a href="auto-invest.html">Auto-invest</a>
+<h4>Borrowing</h4>
+<a href="borrow.html" aria-current="page">Borrow against gold</a>
+<a href="repay.html">Repay and unlock</a>
+<h4>Advanced</h4>
+<a href="boost.html">Boost (leverage)</a>
+<h4>Trust & safety</h4>
+<a href="trust.html">How gold is held</a>
+<a href="risks.html">Risks</a>
+<h4>Reference</h4>
+<a href="reference.html">Fees, limits, parameters</a></aside>
+  <main>
+    <h1>Borrowing against your gold</h1>
+    <div class="toc"><b>On this page</b><ul><li><a href="#what-happens">What actually happens when you borrow</a></li><li><a href="#before-you-start">Before you start</a></li><li><a href="#borrow-cash">Borrow cash against your gold</a></li><li><a href="#reading-the-numbers">The four numbers that matter</a></li><li><a href="#the-rate">The rate floats, and interest never stops</a></li><li><a href="#cash-out">Getting the cash out — or leaving it in</a></li><li><a href="#repay-and-unlock">Repaying, and getting your gold back</a></li><li><a href="#locked-vs-free">Locked gold cannot leave</a></li><li><a href="#liquidation">Liquidation: how it works, and how to stay away from it</a></li><li><a href="#borrow-strategies">Why people borrow instead of selling — and when they shouldn't</a></li><li><a href="#what-can-go-wrong">What can go wrong</a></li><li><a href="#reference">Reference</a></li><li><a href="#next-step">Next step</a></li></ul></div>
+<p class="lead">A loan against your gold turns metal you already own into dollars you can spend, without selling an ounce. Your gold is pledged as collateral, USDC is borrowed against it and credited to your Auri cash balance, and your gold exposure stays exactly where it was — same ounces, same upside. There is no repayment schedule and no maturity date. The trade-off is real: you are borrowing against an asset whose price moves, and if it moves far enough against you, your gold gets sold to clear the debt.</p>
+
+<h2 id="what-happens">What actually happens when you borrow</h2>
+
+<p>Three things happen when you confirm, and only three:</p>
+
+<ul>
+<li><strong>Your gold is pledged, not sold.</strong> The XAUt0 backing your balance becomes collateral. You pay no buy or sell spread and your ounce count does not change by a gram.</li>
+<li><strong>USDC is borrowed against it</strong> and credited to your Auri cash balance as spendable cash.</li>
+<li><strong>Interest starts accruing</strong> on the borrowed amount, continuously, at a rate that floats.</li>
+</ul>
+
+<p>The loan is not an Auri ledger entry. It is a position in a public lending market — a <a href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc">Morpho market on Arbitrum One</a> pairing XAUt0 collateral with USDC loans. Open that link without an account and read its supply, borrowing, utilisation, live rate and liquidation parameter yourself. Auri is the interface; the credit lives on chain.</p>
+
+<div class="callout info"><p>Borrowing does not reduce your gold balance. It reduces how much of that gold you are allowed to move — see <a href="borrow.html#locked-vs-free">Locked gold cannot leave</a>.</p></div>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 874 150" width="874" height="150" role="img"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#42454E"/></marker></defs><rect x="16" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="16" y="16" width="3.5" height="84" rx="2" fill="#852152"/><text x="32" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Gold locked</text><text x="32" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">as collateral, not sold</text><line x1="200" y1="58.0" x2="230" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="238" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="238" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="254" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Morpho market</text><text x="254" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">XAUt0 collateral, USDC</text><text x="254" y="83" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">borrowed</text><line x1="422" y1="58.0" x2="452" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="460" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="460" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="476" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">USDC to you</text><text x="476" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">spend, hold or withdraw</text><line x1="644" y1="58.0" x2="674" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="682" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="682" y="16" width="3.5" height="84" rx="2" fill="#B08A3E"/><text x="698" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Repay anytime</text><text x="698" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">no fixed schedule</text><text x="16" y="138" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">Your gold keeps its full upside while it is collateral.</text></svg>
+<figcaption>Your gold never moves when you borrow — only the stablecoin leg does.</figcaption></figure>
+
+<h2 id="before-you-start">Before you start</h2>
+
+<ul>
+<li>Gold in your account that is <strong>free</strong> — not already locked against a loan. If you have none, start at <a href="buy.html">Buying gold</a>.</li>
+<li>An amount in mind, and a plan for repaying it. Read <a href="borrow.html#borrow-strategies">why people borrow</a> before picking the number.</li>
+<li>To move the cash to a bank, a one-time identity check. Borrowing alone needs no ID check, because no money leaves your account.</li>
+<li>No open <a href="boost.html">Boost</a> position — the two cannot coexist, and the app blocks whichever you open second.</li>
+</ul>
+
+<p><strong>About a minute in the app · the review screen shows no Auri fee and no network fee, so your cost is floating interest · fully reversible by repaying, any time, in any amount. A liquidation is not reversible.</strong></p>
+
+<h2 id="borrow-cash">Borrow cash against your gold</h2>
+
+<ol class="steps">
+<li><strong>Open the borrow flow.</strong> On the <strong>Actions</strong> tab, under <strong>Borrow</strong>, select <strong>Borrow cash</strong>. It is also on the home loan card and in the move-money menu.</li>
+<li><strong>Set the amount.</strong> Drag the slider, tap a <strong>10% / 25% / 50% / Max</strong> chip, or nudge with the ±$100 steppers. The field opens at roughly 30% of the maximum rather than at the maximum, deliberately.</li>
+<li><strong>Read the live panel.</strong> Cash you receive, estimated monthly interest, your liquidation price, a now-to-after table for loan balance, loan-to-value and health factor, and a risk label for the amount chosen.</li>
+<li><strong>Check the detail rows.</strong> Current loan, cash received as USDC, gold locked as collateral in ounces, new loan-to-value, the rate, liquidation price. If any of those surprises you, lower the amount.</li>
+<li><strong>Review the summary.</strong> It restates what you borrow, your new loan-to-value, the rate, the liquidation price, your health factor after the draw, and that you receive it as Cash · USDC.</li>
+<li><strong>Confirm.</strong> No step-up verification and no processing wait, because nothing leaves your account. You land on <em>Cash borrowed — your gold stays intact</em>, with the on-chain legs on the receipt.</li>
+</ol>
+
+<figure class="shot"><img src="../../assets/docs/borrow-review.webp" alt="The review step is the one screen worth reading twice: loan-to-value, rate, liquidation price and health factor, all before you confirm." loading="lazy" width="276">
+<figcaption>The review step is the one screen worth reading twice: loan-to-value, rate, liquidation price and health factor, all before you confirm.</figcaption></figure>
+
+<h2 id="reading-the-numbers">The four numbers that matter</h2>
+
+<ul>
+<li><strong>Loan-to-value (LTV)</strong> — what you owe divided by the value of <em>all</em> the gold in your account, not just the slice labelled locked. Borrow US$10,000 against 10 oz worth US$40,000 and your LTV is 25%.</li>
+<li><strong>Health factor</strong> — your distance from liquidation as one number. Bigger is safer; 1.0 means you are standing on the line. The app computes and colours it live; read it there rather than deriving it.</li>
+<li><strong>Liquidation price</strong> — the gold price at which your LTV reaches the market's liquidation loan-to-value of 77%: what you owe ÷ (your ounces × 0.77). A US$10,000 loan against 10 oz liquidates near US$1,299/oz.</li>
+<li><strong>Estimated interest</strong> — a projection at the current rate. Because the rate floats, it is an estimate, not a bill.</li>
+</ul>
+
+<p>One identity is worth memorising: <strong>gold can fall by (1 − your LTV ÷ 0.77) before you are liquidated.</strong> At 25% LTV that is a 67.5% fall. At 50% it is 35%. At 70% it is 9%.</p>
+
+<h2 id="the-rate">The rate floats, and interest never stops</h2>
+
+<p>Auri does not set the rate. The lending market produces it from how much of the available USDC is being borrowed: utilisation up, rate up, changing continuously — checks an hour apart have returned around 3.48% and 3.70%. The live number appears on the <a href="index.html">home page</a> and in the app before you confirm. That is the figure to trust, not one printed in documentation.</p>
+
+<p>There is no monthly bill. Interest accrues into the balance you owe, which has a consequence people miss: <strong>your LTV drifts upward on its own, even if gold does nothing.</strong> A US$10,000 loan at 3.5% against US$40,000 of gold becomes about US$10,350 after a year, taking a 25.0% LTV to 25.9% with a flat price. You can also only draw what the market has available to lend at that moment, so a large borrow may need splitting or may not fill.</p>
+
+<div class="callout warn"><p>A loan you never touch still grows. If you intend to leave a position open for years, check it quarterly and pay down interest occasionally rather than letting the balance compound against a fixed pile of collateral.</p></div>
+
+<h2 id="cash-out">Getting the cash out — or leaving it in</h2>
+
+<p>Borrowed USDC lands in your cash balance and you do not have to withdraw it; leaving it there is often right, because it is the dry powder you will repay with. Rails are regional — bank transfer in the United States, Interac e-Transfer or bank EFT in Canada, or USDC to a wallet you control on Arbitrum. Two rules to plan around: bank and Interac payouts can only go to an account <strong>in your own name</strong>, and a first fiat withdrawal triggers the one-time identity check. Amounts, timings and fees are on <a href="cash.html">Cash in and out</a>.</p>
+
+<div class="callout soon"><p><strong>Coming soon.</strong> Spending borrowed cash on the Auri card, sending it abroad as a cross-border transfer, and drawing or repaying a loan through the API, CLI or MCP integration are not live. The card is currently a waitlist.</p></div>
+
+<h2 id="repay-and-unlock">Repaying, and getting your gold back</h2>
+
+<p>Repayment has no schedule: any amount, any time, from your cash balance. There are three ways out, and it is worth knowing all three before you need one.</p>
+
+<ol class="steps">
+<li><strong>Repay from cash.</strong> Open <strong>Repay loan</strong> and set an amount with the slider or 10% / 25% / 50% / Max chips — Max is capped by whichever is smaller, your loan or your cash. Remaining loan, health factor, LTV and liquidation price update as you drag, and the liquidation row reads <strong>Cleared</strong> once the loan is gone.</li>
+<li><strong>Unlock collateral.</strong> Unlock is its own flow, not a cleanup step. Choose how much locked gold to free with the slider or 25% / 50% / 75% / All chips, and Auri repays the matching portion of the loan from your cash automatically. If your cash is short it states exactly how much more you need and hands you into <a href="cash.html">Add cash</a>.</li>
+<li><strong>Sell free gold to repay.</strong> The last resort and the most expensive, because it crystallises the sale you were avoiding. Only free gold can be sold, so if everything is locked you must unlock first — which itself needs cash.</li>
+</ol>
+
+<p>A fourth route lowers risk without repaying anything: <strong>buy more gold</strong>. Adding collateral cuts your LTV and pushes your liquidation price down without needing dollars for a repayment.</p>
+
+<h2 id="locked-vs-free">Locked gold cannot leave</h2>
+
+<p>While a loan is open, Auri splits your gold into <strong>locked</strong> and <strong>free</strong> and shows both on the home card, the loan profile and inside every outbound flow. Free gold behaves normally; locked gold cannot be sold, gifted, sent or transferred out, and attempting it tells you only part of your holding is free to move while the rest backs your loan. Collateral is locked at the market's ratio, so roughly every US$1,000 borrowed locks about US$1,300 of gold. Note the asymmetry: the split governs what you may <em>move</em>, but your LTV, health factor and liquidation price are calculated against <em>all</em> your gold — which is why buying more gold improves your risk position even though it does not change your loan.</p>
+
+
+
+<h2 id="liquidation">Liquidation: how it works, and how to stay away from it</h2>
+
+<p>The market has a liquidation loan-to-value of <strong>77%</strong>. When what you owe reaches 77% of what your collateral is worth, anyone in the world can repay part or all of your debt and take collateral in exchange, at a discount set by the market. It is automatic and permissionless. Nobody phones you, there is no grace period, and there is nothing to negotiate. Treat 77% as a wall, not a target.</p>
+
+<p>Two figures locate the wall: your <strong>liquidation gold price</strong> is what you owe ÷ (your ounces × 0.77), and your <strong>buffer</strong> is 1 − (your LTV ÷ 0.77), the fall gold can take from today before you hit it. The app shows your exact liquidation price, health factor and remaining buffer live, updating as the price moves and interest accrues. Those live figures are authoritative; the arithmetic here is so you can sanity-check them.</p>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 132" width="760" height="132" role="img"><rect x="20.0" y="42" width="280.5" height="30" fill="#DCF2E7"/><text x="160.3" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#0F7A50">Safe</text><text x="300.5" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">30%</text><rect x="300.5" y="42" width="233.8" height="30" fill="#FBEEDA"/><text x="417.4" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#8A5E0F">Balanced</text><text x="534.3" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">55%</text><rect x="534.3" y="42" width="205.7" height="30" fill="#FAE3E3"/><text x="637.1" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#B23131">At risk</text><text x="740.0" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">77%</text><line x1="740" y1="34" x2="740" y2="80" stroke="#C23B3B" stroke-width="2.5"/><text x="740" y="28" text-anchor="end" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#C23B3B">liquidation 77%</text><text x="20" y="122" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">Stay well left of the cap; a falling gold price pushes you right.</text></svg>
+<figcaption>The gap between where you borrow and 77% is the only protection you have — and it shrinks from both ends.</figcaption></figure>
+
+<h3>What a liquidation costs you</h3>
+
+<p>Plainly: your gold is sold at the worst possible moment, in a falling market, because that is by definition when liquidations happen. You lose more gold than the debt was worth, because the liquidator takes collateral at a discount as their incentive. You keep the leftover collateral and the dollars you already spent, but the position you were preserving is gone. And unlike borrowing, a liquidation <em>is</em> a sale of your gold, so in many countries it is a taxable disposal — at the price you would least have chosen.</p>
+
+<h3>What causes one, and what prevents it</h3>
+
+<ul>
+<li><strong>Gold falls.</strong> The obvious cause, and the one people plan for.</li>
+<li><strong>Interest accrues.</strong> The slow one — your LTV rises with the price perfectly flat.</li>
+<li><strong>You borrowed near the ceiling.</strong> The <strong>Max</strong> chip is arithmetic, not advice; it is the limit of the market and leaves essentially no buffer.</li>
+<li><strong>You spent all the cash.</strong> With nothing to repay from and all your gold locked, you have no lever when you need one.</li>
+</ul>
+
+<p>Prevention is unglamorous: size the loan so a much larger fall than you expect still leaves you clear; keep cash or free gold in reserve specifically to repay or add collateral; turn on loan-health alerts, which push your current LTV and liquidation price; and act early. Repaying US$500 while your health factor is comfortable is trivial. Finding US$5,000 in a panic is not.</p>
+
+<div class="callout risk"><p>This is borrowing against a volatile asset. Gold is not a stable unit — it has had deep multi-year falls and long flat stretches, and can do so again while your interest keeps accruing. Pick an amount that survives a fall much larger than the one you think likely.</p></div>
+
+<section class="strategy">
+<h2 id="borrow-strategies">Why people borrow instead of selling — and when they shouldn't</h2>
+
+<p>The mechanics above tell you how. This is about whether. Borrowing against gold has a narrow set of good uses, and the difference is almost always about repayment rather than about gold.</p>
+
+<h3>Borrow or sell?</h3>
+
+<table class="kv">
+<thead><tr><th>Your situation</th><th>Borrowing</th><th>Selling</th></tr></thead>
+<tbody>
+<tr><td>You want to keep the gold exposure</td><td>Keeps it entirely</td><td>Ends it</td></tr>
+<tr><td>Cost</td><td>Floating interest for as long as you owe</td><td>0.49% Auri fee on the sale, and again if you buy back</td></tr>
+<tr><td>Tax treatment</td><td>Generally not a disposal</td><td>Generally a disposal, which can crystallise a gain</td></tr>
+<tr><td>Risk added</td><td>Liquidation risk if gold falls far enough</td><td>None — the position is closed</td></tr>
+<tr><td>Ongoing attention</td><td>Yes, indefinitely</td><td>No</td></tr>
+<tr><td>Reversible</td><td>Yes, by repaying</td><td>Only by buying back at whatever the price then is</td></tr>
+</tbody>
+</table>
+
+<p>If you no longer want the gold exposure, sell. Borrowing to avoid admitting you want out is the worst version of this product.</p>
+
+<h3>Liquidity without a disposal</h3>
+
+<p>This is why most people are here. Selling gold held for years can crystallise a gain and a tax bill in the year you sell; borrowing against it generally does not, because you have disposed of nothing and still own the same ounces. That is general information about how borrowing differs from selling, <strong>not tax advice</strong> — treatment varies by country and by your circumstances, and rules change, so confirm with a qualified adviser before treating a tax outcome as a reason to borrow. Note the sting: a liquidation is a sale, so borrowing to avoid a disposal can force the very disposal you were avoiding.</p>
+
+<h3>Bridging a cash gap</h3>
+
+<p>The cleanest use. A payment falls due before money you already expect arrives — a contract payment, a refund, a property completion. The loan lives for weeks, the repayment source is identified, and the cost is small because the duration is short: US$10,000 for two months at 3.5% is roughly US$58.</p>
+
+<h3>Not selling into a dip</h3>
+
+<p>You need cash and gold is down. Selling locks in the fall permanently; borrowing lets the position recover. The catch is that this is exactly when your buffer is smallest, because a lower price means a higher LTV for any given loan. Borrowing in a dip is defensible; borrowing <em>heavily</em> in a dip is how people get liquidated. Size it as if the fall continues, because it might.</p>
+
+<h3>Funding a purchase while keeping the exposure</h3>
+
+<p>A vehicle, tuition, business inventory, furnishing a home. This works only when repayment comes from income on a timetable you have written down. It stops working the moment the plan becomes "I'll repay when gold goes up" — that is not a plan, it is a second bet stacked on the first.</p>
+
+<h3>Choosing your LTV, with the arithmetic done</h3>
+
+<p>The maximum available is never the right answer. Below: 10 oz of gold, illustrated at US$4,000/oz, so US$40,000 of collateral. Interest is at an assumed 3.5% — check the live rate, which floats.</p>
+
+<table class="kv">
+<thead><tr><th>LTV</th><th>You borrow</th><th>Gold can fall</th><th>Liquidation price</th><th>Interest for a year</th></tr></thead>
+<tbody>
+<tr><td>10%</td><td>US$4,000</td><td>87.0%</td><td>US$519/oz</td><td>≈US$140</td></tr>
+<tr><td>20%</td><td>US$8,000</td><td>74.0%</td><td>US$1,039/oz</td><td>≈US$280</td></tr>
+<tr><td>25%</td><td>US$10,000</td><td>67.5%</td><td>US$1,299/oz</td><td>≈US$350</td></tr>
+<tr><td>35%</td><td>US$14,000</td><td>54.5%</td><td>US$1,818/oz</td><td>≈US$490</td></tr>
+<tr><td>50%</td><td>US$20,000</td><td>35.1%</td><td>US$2,597/oz</td><td>≈US$700</td></tr>
+<tr><td>65%</td><td>US$26,000</td><td>15.6%</td><td>US$3,377/oz</td><td>≈US$910</td></tr>
+<tr><td>70%</td><td>US$28,000</td><td>9.1%</td><td>US$3,636/oz</td><td>≈US$980</td></tr>
+</tbody>
+</table>
+
+<p>Read the third column, not the second. Going from 25% to 50% doubles your cash and costs roughly half your protection — a 67.5% cushion becomes 35.1%. Going from 50% to 70% buys 40% more cash and leaves a 9% fall from disaster, a move gold can make in a fortnight. The app labels the bands as you drag: Safe up to 20%, Conservative up to 35%, Balanced up to 55%, Risky above.</p>
+
+<h3>The same position, gain and loss</h3>
+
+<p>10 oz at US$4,000, US$10,000 borrowed, 25% LTV, liquidation near US$1,299/oz.</p>
+
+<ul>
+<li><strong>Gold rises 20%</strong> to US$4,800. Collateral is US$48,000, LTV falls to about 20.8%, and you still own all 10 oz — you captured the full US$8,000 rise while holding the cash. This is the case the product is sold on.</li>
+<li><strong>Gold falls 20%</strong> to US$3,200. Collateral is US$32,000, LTV rises to about 31.3%, and your cushion shrinks from a 67.5% fall to a 59.4% further fall. Not trouble, but less room than you started with, and interest is still accruing.</li>
+<li><strong>Gold falls 67.5%</strong> to US$1,299. You are liquidated, and the position you were protecting no longer exists.</li>
+</ul>
+
+<h3>The repayment plan is the product</h3>
+
+<p>Before you confirm, answer three questions in one sentence each. Where does the repayment money come from? By when? What do you do if gold falls 30% first? If any answer is vague, borrow less. Write the plan down — an open-ended loan is convenient precisely because nothing forces you to think about it, which is also its danger.</p>
+
+<h3>When not to borrow</h3>
+
+<ul>
+<li><strong>You cannot repay from income or an identified source.</strong> Hoping the collateral appreciates enough to cover the loan is a leveraged bet, not a loan.</li>
+<li><strong>You have higher-interest debt.</strong> Paying down a credit card is a better use of the same capacity.</li>
+<li><strong>You cannot check the position regularly.</strong> No margin call, no phone call, no grace period.</li>
+<li><strong>It is for consumption you could not otherwise afford.</strong> The loan does not make the purchase cheaper; it postpones the cost and adds liquidation risk.</li>
+<li><strong>You are borrowing to buy more gold.</strong> That is leverage and belongs on <a href="boost.html">Boost</a> — gated behind Pro mode, unable to coexist with a standard loan, and not for most people.</li>
+<li><strong>The gold is money you need soon.</strong> If you may have to sell inside a year, borrowing against it adds a second thing that can go wrong.</li>
+</ul>
+</section>
+
+<h2 id="what-can-go-wrong">What can go wrong</h2>
+
+<ul>
+<li><strong>"Max is lower than I expected."</strong> Max subtracts any existing loan and is capped by the USDC available in the market. Check your loan on the loan profile and liquidity on the market page linked above.</li>
+<li><strong>"Borrow sent me to the Boost screen", or borrowing is blocked.</strong> Pro mode routes Borrow to Boost's Standard tab, and an open Boost position blocks a standard loan entirely. Turn Pro mode off in Profile, or close the Boost position.</li>
+<li><strong>"I can't sell or send my gold."</strong> It is locked as collateral. Repay, or use Unlock to free a specific amount.</li>
+<li><strong>"Unlock says I need more cash."</strong> Unlocking repays the matching portion of the loan from cash. Add cash, or unlock less.</li>
+<li><strong>"My health factor barely moved after repaying."</strong> Accrued interest is part of the balance, and the gold price may have moved against you at the same time. Compare the loan ledger before and after on the loan profile.</li>
+<li><strong>"My bank withdrawal was rejected."</strong> Payouts must go to an account in your own name, and a first fiat withdrawal needs the one-time identity check.</li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<table class="kv">
+<thead><tr><th>Item</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td>Collateral asset</td><td>XAUt0 (Tether Gold) on Arbitrum One, <code>0x40461291347e1eCbb09499F3371D3f17f10d7159</code></td></tr>
+<tr><td>Borrowed asset</td><td>USDC on Arbitrum One</td></tr>
+<tr><td>Venue</td><td>Morpho market <code>0xed3f…4969610</code>, chain 42161, publicly inspectable</td></tr>
+<tr><td>Liquidation loan-to-value</td><td>77% — a hard ceiling, not a target</td></tr>
+<tr><td>Borrow rate</td><td>Floats with market utilisation; live figure in the app and on the home page</td></tr>
+<tr><td>Interest</td><td>Accrues continuously into the balance owed. No monthly payment, no schedule, no maturity</td></tr>
+<tr><td>Auri fee to borrow</td><td>None shown on the review screen; network fees covered by Auri</td></tr>
+<tr><td>Risk labels on the amount slider</td><td>Safe ≤20% · Conservative ≤35% · Balanced ≤55% · Risky above</td></tr>
+<tr><td>Collateral locked</td><td>About US$1,300 of gold per US$1,000 borrowed; the remainder stays free to move</td></tr>
+<tr><td>Verification to borrow</td><td>None. Withdrawing to a bank requires the one-time identity check</td></tr>
+<tr><td>Minimum borrow</td><td>UNKNOWN</td></tr>
+<tr><td>Mutually exclusive with</td><td><a href="boost.html">Boost</a> positions</td></tr>
+</tbody>
+</table>
+
+<p>Sale fees, deposit and withdrawal costs and every other charge live on <a href="reference.html">Fees and limits</a> — this page keeps no second copy.</p>
+
+<h2 id="next-step">Next step</h2>
+
+<p>If you have gold and a repayment plan, run the <a href="borrow.html#borrow-strategies">LTV table</a> at your own numbers, then open the borrow flow. If you do not, start with <a href="buy.html">Buying gold</a>.</p>
+
+<p>Related: <a href="cash.html">Cash in and out</a> · <a href="risks.html">Risks</a> · <a href="boost.html">Boost and leverage</a> · <a href="trust.html">Reserves and verification</a> · <a href="reference.html">Fees and limits</a> · <a href="start.html">Getting started</a></p>
+
+<p><em>Nothing on this page is financial, tax or legal advice. Borrowing against gold puts your gold at risk of being sold to repay your loan. Rates float and can rise. Tax treatment of borrowing, selling and liquidation varies by country and by individual circumstances — confirm with a qualified adviser. Illustrations use a stated gold price and a stated rate for arithmetic only and are not forecasts.</em></p>
+    <div class="pager"><a href="auto-invest.html">&larr; Auto-invest</a><a href="repay.html">Repay and unlock &rarr;</a></div>
+    <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or legal
+    advice. Digital assets are not bank deposits and are not covered by any deposit-insurance scheme. Figures shown in
+    screenshots are from a demo build and will differ from live values.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.burger'), s=document.getElementById('sidenav');
+  b&&b.addEventListener('click',function(){
+    var open=s.classList.toggle('open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+</script>
+</body>
+</html>

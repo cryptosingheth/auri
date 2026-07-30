@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boost — leverage — Auri docs</title>
+<meta name="description" content="How Boost loops borrowing against your gold to multiply exposure, what each multiplier does to your loan-to-value and liquidation price, and the losses it produces — with the numbers worked both ways.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#15161B;--ink2:#42454E;--ink3:#8A8F9C;--bg:#F6F5F8;--card:#fff;
+ --line:rgba(20,21,27,.09);--line2:rgba(20,21,27,.15);--plum:#852152;--plum-l:#A12C66;--gold:#B08A3E;
+ --mono:"Geist Mono",ui-monospace,monospace;--e:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
+img,svg{max-width:100%;display:block}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+ padding:12px 22px;background:rgba(246,245,248,.92);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line)}
+.top .wm{height:22px;width:auto;color:var(--ink)}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);
+ border-radius:9px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;
+ max-width:1240px;margin:0 auto;padding:34px 22px 90px}
+.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;
+ font-size:14px;padding-right:8px}
+.side h4{margin:20px 0 7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);font-weight:600}
+.side a{display:block;padding:5px 10px;margin-left:-10px;border-radius:8px;color:var(--ink2)}
+.side a:hover{background:#fff;text-decoration:none}
+.side a[aria-current=page]{background:#fff;color:var(--plum);font-weight:600;
+ box-shadow:inset 0 0 0 1px var(--line)}
+main{min-width:0}
+main h1{font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.035em;margin:0 0 6px}
+.lead{font-size:18.5px;line-height:1.6;color:var(--ink2);margin:0 0 30px}
+main h2{font-size:24px;letter-spacing:-.02em;margin:44px 0 12px;padding-top:10px}
+main h3{font-size:18px;letter-spacing:-.015em;margin:28px 0 8px}
+main p,main li{color:var(--ink2)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.88em;background:#fff;border:1px solid var(--line);
+ border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+ border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+ display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;
+ width:1.5px;background:var(--line2)}
+.callout{margin:20px 0;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+ background:#fff;border-left:3px solid var(--ink3)}
+.callout p{margin:0;font-size:14.5px}
+.callout.info{border-left-color:var(--plum-l);background:#fff}
+.callout.warn{border-left-color:#C08A16;background:#FFFCF5}
+.callout.risk{border-left-color:#C23B3B;background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+table.kv{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.kv th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--ink3);font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+.strategy{margin:40px 0;padding:24px 24px 8px;background:#fff;border:1px solid var(--line);
+ border-radius:16px}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10.5px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:rgba(133,33,82,.08);
+ border:1px solid rgba(133,33,82,.2);border-radius:999px;padding:3px 9px;margin-bottom:12px}
+figure{margin:26px 0}
+figure.shot img{border-radius:18px;border:1px solid var(--line);
+ box-shadow:0 18px 40px -26px rgba(20,18,60,.3);max-width:288px}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+figcaption{margin-top:9px;font-size:13px;line-height:1.5;color:var(--ink3)}
+.toc{margin:0 0 30px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.toc b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.toc ul{margin:0;padding-left:18px;font-size:14px}
+.toc li{margin:3px 0}
+.pager{display:flex;gap:12px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+ font-size:14.5px;flex-wrap:wrap}
+.pager a{padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.docfoot{margin-top:34px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr;gap:0;padding:20px 18px 70px}
+ .side{position:static;max-height:none;display:none;margin-bottom:22px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 14px}
+ .side.open{display:block}
+ .top nav{display:none}
+ .burger{display:block}
+ main h1{font-size:28px}.lead{font-size:17px}
+ figure.shot img{max-width:100%}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 371 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="index.html">Docs home</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Contents</button>
+</header>
+<div class="shell">
+  <aside class="side" id="sidenav"><h4>Start</h4>
+<a href="index.html">Overview</a>
+<a href="start.html">Start here</a>
+<h4>Everyday</h4>
+<a href="buy.html">Buying gold</a>
+<a href="cash.html">Cash in and out</a>
+<a href="gift-send.html">Gift, send, remit</a>
+<a href="auto-invest.html">Auto-invest</a>
+<h4>Borrowing</h4>
+<a href="borrow.html">Borrow against gold</a>
+<a href="repay.html">Repay and unlock</a>
+<h4>Advanced</h4>
+<a href="boost.html" aria-current="page">Boost (leverage)</a>
+<h4>Trust & safety</h4>
+<a href="trust.html">How gold is held</a>
+<a href="risks.html">Risks</a>
+<h4>Reference</h4>
+<a href="reference.html">Fees, limits, parameters</a></aside>
+  <main>
+    <h1>Boost — leverage</h1>
+    <div class="toc"><b>On this page</b><ul><li><a href="#what-boost-is">What Boost actually is</a></li><li><a href="#start-with-the-loss">Start with the loss, not the gain</a></li><li><a href="#liquidation">Liquidation: the level, the buffer, which number to believe</a></li><li><a href="#cost-to-hold">What it costs to hold</a></li><li><a href="#before-you-start">Before you start</a></li><li><a href="#open-a-position">Open a position</a></li><li><a href="#manage-and-exit">Manage and exit</a></li><li><a href="#when-not-to-use-boost">When not to use Boost</a></li><li><a href="#what-can-go-wrong">What can go wrong</a></li><li><a href="#related">Related</a></li></ul></div>
+<p class="lead">Boost borrows US dollars against gold you already own, buys more gold with them, and pledges that gold too — looping until your exposure reaches the multiplier you picked. It multiplies gains and losses by the same factor, and adds a failure mode plain gold holding does not have: forced closure.</p>
+
+<div class="callout risk"><p><strong>Read this first.</strong> At 3× exposure a 10% fall in gold costs you 30% of your money, and a 13% fall ends the position — you do not get to wait for the recovery. Boost is for experienced users who can afford to lose everything they commit. If losing it would hurt, do not use it.</p></div>
+
+<p><strong>At a glance:</strong> two minutes to open · interest accrues daily on the borrowed amount at a <em>floating</em> rate · confirming is irreversible, though you can close early at the price gold is at then · off by default.</p>
+
+<h2 id="what-boost-is">What Boost actually is</h2>
+
+<p>The app's <em>How leverage works</em> panel gives three steps: borrow USDC against the gold you hold, buy more gold with it, pledge that gold for the next borrow — repeated to your multiplier. More gold means bigger gains, and bigger losses if gold falls.</p>
+
+<p>The slider runs <strong>1.25× to 5×</strong> in 0.25 steps, with chips at 2×, 3×, 4× and 5×. The rest is fixed arithmetic: at multiplier <code>m</code> your loan-to-value is <code>(m − 1) / m</code> — 2× is 50%, 3× is 67%, 4× is 75%, 5× is 80%. Your commit is the only equity; everything above it is debt.</p>
+
+<p><strong>Why people do it:</strong> they already wanted more gold at today's price and were short of cash. That is the whole case — a conviction trade, not a savings strategy. <strong>What you keep:</strong> title to all the gold. <strong>What you owe:</strong> the USDC plus interest, growing daily whatever gold does. <strong>What you could lose:</strong> the entire commit.</p>
+
+<h2 id="start-with-the-loss">Start with the loss, not the gain</h2>
+
+<p>One position, both directions, identical numbers. You commit <strong>US$10,000</strong> of free gold at <strong>3×</strong>. Auri borrows US$20,000 and buys more gold, so you hold US$30,000 of gold and owe US$20,000 at a 67% LTV.</p>
+
+<ul>
+<li><strong>Gold falls 10%.</strong> Your gold is worth US$27,000; the debt is still US$20,000, because debt does not fall with the price. Equity is US$7,000 — you have lost <strong>US$3,000, 30% of your money</strong>, and your LTV is now 74%.</li>
+<li><strong>Gold rises 10%.</strong> Gold US$33,000, debt US$20,000, equity US$13,000 — up US$3,000, or 30%.</li>
+<li><strong>Unlevered.</strong> The same US$10,000 and the same 10% fall costs US$1,000.</li>
+</ul>
+
+<p>Before financing the two directions are symmetric; financing is not, since you pay it either way. And the loss column hides something: that 10% fall leaves you <strong>3.8% from closure</strong>. The table is the same ±10% frame the Boost screen shows — read the loss column first.</p>
+
+<table class="kv">
+<thead><tr><th>Multiplier</th><th>LTV</th><th>App's risk label</th><th>Gold fall that liquidates you</th><th>A 10% fall in gold</th></tr></thead>
+<tbody>
+<tr><td>None — just hold gold</td><td>0%</td><td>—</td><td>never</td><td>−10% of your money</td></tr>
+<tr><td>1.25×</td><td>20%</td><td>Conservative</td><td>74%</td><td>−12.5%</td></tr>
+<tr><td>1.5×</td><td>33%</td><td>Balanced</td><td>57%</td><td>−15%</td></tr>
+<tr><td>2×</td><td>50%</td><td>Balanced</td><td>35%</td><td>−20%</td></tr>
+<tr><td>2.5×</td><td>60%</td><td>Aggressive</td><td>22%</td><td>−25%</td></tr>
+<tr><td>3×</td><td>67%</td><td>Aggressive</td><td>13%</td><td>−30%, and 3.8% from closure</td></tr>
+<tr><td>3.5×</td><td>71%</td><td>High risk</td><td>7%</td><td><strong>liquidated</strong></td></tr>
+<tr><td>4×</td><td>75%</td><td>High risk</td><td>under 3%</td><td><strong>liquidated</strong></td></tr>
+<tr><td>4.5×</td><td>78%</td><td>High risk</td><td>at or past it already</td><td><strong>liquidated</strong></td></tr>
+<tr><td>5×</td><td>80%</td><td>High risk</td><td>at or past it already</td><td><strong>liquidated</strong></td></tr>
+</tbody>
+</table>
+
+<p>The liquidation column uses the <strong>77%</strong> level the live lending market enforces. The third column is the app's label for the LTV band, not a judgement about whether leverage suits you — an "Aggressive" 3× still means a 13% move ends the position.</p>
+
+<div class="callout warn"><p>Every multiplier from about 4.35× upward gives an LTV at or above the market's liquidation level, so 4.5× and 5× are not usable positions — they start at the line. The app blocks you only at a resulting LTV of 82%, which the 5× cap never quite hits. That block is not what keeps you safe.</p></div>
+
+<h2 id="liquidation">Liquidation: the level, the buffer, which number to believe</h2>
+
+<p>Boost borrows in a public market — USDC against XAUt0 on Morpho, Arbitrum One. Its liquidation loan-to-value is <strong>77%</strong>, written on chain and readable by anyone on the <a href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc">market page</a>. Reach it and a liquidator repays part of your loan and takes gold for it: no phone call, no grace period, nothing to negotiate. As a price, at 3× with gold near US$4,376/oz that level sits around <strong>US$3,789/oz</strong>. Write your own number down before you open anything, and check the live one in the app.</p>
+
+<div class="callout warn"><p><strong>The Boost screen is more flattering than the market.</strong> Its "Gold can fall X%" safety buffer, its liquidation price and its health-factor dial are all calculated against a liquidation level <em>above</em> 77%. The buffer it prints is wider than you have, and the liquidation price it prints sits below the price that will actually close you. Plan against 77%, treat a Boost health factor near <strong>1.1</strong> as the line rather than 1.0, and read the buffer as the optimistic end of a range. We are reconciling this in the product.</p></div>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 132" width="760" height="132" role="img"><rect x="20.0" y="42" width="439.0" height="30" fill="#FBEEDA"/><text x="239.5" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#8A5E0F">2x - 50%</text><text x="459.0" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">50%</text><rect x="459.0" y="42" width="149.3" height="30" fill="#FAE3E3"/><text x="533.7" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#B23131">3x - 67%</text><text x="608.3" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">67%</text><rect x="608.3" y="42" width="131.7" height="30" fill="#F6D2D2"/><text x="674.1" y="62" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#8E2020">4x+ - 75%+</text><text x="740.0" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#42454E">82%</text><line x1="740" y1="34" x2="740" y2="80" stroke="#C23B3B" stroke-width="2.5"/><text x="740" y="28" text-anchor="end" font-family="system-ui,sans-serif" font-size="11.5" font-weight="650" fill="#C23B3B">blocked at 82%</text><text x="20" y="122" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">Higher multipliers start closer to liquidation. Boost is blocked above 82% LTV.</text></svg>
+<figcaption>At 3×, gold must fall about 13% from today's price to reach the market's liquidation level; at 4× it takes under 3%.</figcaption></figure>
+
+<p><strong>The forced exit.</strong> Gold drifts down 10%, your LTV goes 67% → 74%, a loan-health alert fires. Gold slips another 4%, the LTV crosses 77%, and a liquidator clears part of your debt with your gold at whatever price gold is at — realised whether you were watching or not. Any equity left is still yours, but if gold rallies next week you are no longer in the position to benefit. The liquidator is also paid an incentive out of the position, so liquidation costs more than the arithmetic above; the exact penalty here is <strong>UNKNOWN</strong>.</p>
+
+<h2 id="cost-to-hold">What it costs to hold</h2>
+
+<p>You pay interest on the borrowed portion — <code>(m − 1) × commit</code> — for as long as the position is open, and that rate <strong>floats</strong> with supply and demand in the lending market. When we last checked it was near 3.5% and had already moved within the hour. Never plan on a fixed number; the live APR is shown in the app and on the site.</p>
+
+<p>On the 3× example, US$20,000 near 3.5% is roughly <strong>US$58 a month</strong> — about 7% a year against the US$10,000 you committed, which is the number that matters. Go sideways for a year at 3× and you are down roughly 7% with a narrower buffer, because the debt grew and the collateral did not. Leverage decays in a flat market. Whether Auri's 0.49% buy and sell fee applies inside Boost is <strong>UNKNOWN</strong> — the review screen shows no fee line. See <a href="reference.html">Fees and limits</a>.</p>
+
+<h2 id="before-you-start">Before you start</h2>
+
+<ul>
+<li><strong>Pro mode on.</strong> Boost does not exist in the app until you enable Pro mode in <em>Profile</em>: "leverage your gold for more exposure. For experienced users."</li>
+<li><strong>No standard loan open.</strong> The two are mutually exclusive, and the consequence is easy to miss: while boosted, <em>you cannot borrow cash</em>. If you might need a draw, take the <a href="borrow.html">standard loan</a> instead.</li>
+<li><strong>Free gold to commit.</strong> Only unpledged gold qualifies; chips are offered at $500 / $1,000 / $2,500 / max free.</li>
+<li><strong>Accept that the gold is unspendable.</strong> It is all collateral — no selling, gifting, sending or remitting until you close.</li>
+<li><strong>A loss number, decided in advance.</strong> Before you touch the slider, not after.</li>
+</ul>
+
+
+
+<h2 id="open-a-position">Open a position</h2>
+
+<ol class="steps">
+<li><strong>Open Boost.</strong> With Pro mode on it appears in the navigation and in Actions. Pick the <em>Boost</em> tab; <em>Standard loan</em> beside it is the unlevered product.</li>
+<li><strong>Enter your commit and set the multiplier.</strong> The commit is your equity and the most you can lose. As you drag the slider, watch the LTV and liquidation price move, not just the exposure figure.</li>
+<li><strong>Read the scenario panel as a loss.</strong> It shows a ±10% gold move against the unlevered outcome. Look at the down case and ask whether you would hold through it.</li>
+<li><strong>Check the review screen, then confirm.</strong> Multiplier, gold price, commit, exposure, cash borrowed, new LTV, liquidation price. Convert the gap between today's price and the liquidation price into a percentage yourself. On confirm, the debt starts accruing and the liquidation level is live.</li>
+</ol>
+
+
+
+<h2 id="manage-and-exit">Manage and exit</h2>
+
+<p>The open-position panel shows commit, exposure, cash borrowed, entry price, current price, liquidation price and unrealised P&amp;L. Watch the gap between current and liquidation price, not the profit line. You can close <strong>25%, 50% or 75%</strong> — the panel shows the gold freed and loan repaid — or close entirely, which sells enough gold to clear the debt and returns the rest as free gold. Partial closing is the deleveraging lever: it lowers LTV and widens the buffer.</p>
+
+<div class="callout warn"><p>The panel offers reducing, not reinforcing. There is no "add more gold" button, so in a falling market your only lever is to shrink the position — and shrinking realises the loss on the part you close. Whether adding collateral will be supported is <strong>UNKNOWN</strong>. Plan your exit assuming reducing is all you get.</p></div>
+
+<section class="strategy">
+<h2 id="when-not-to-use-boost">When not to use Boost</h2>
+
+<ul>
+<li><strong>If losing the commit would hurt.</strong> Not annoy — hurt. Assume the whole thing can go.</li>
+<li><strong>If you cannot check weekly at minimum.</strong> Gold trades continuously and there is no margin call to prompt you.</li>
+<li><strong>If the multiplier is what makes the trade interesting.</strong> Boost only makes sense if you wanted the gold anyway.</li>
+<li><strong>If the price just ran and you feel late.</strong> That is when leverage is most expensive and the buffer most likely to be tested.</li>
+<li><strong>Alongside a recurring buy.</strong> <a href="auto-invest.html">Auto-Invest</a> survives drawdowns by buying through them; leverage removes you from the market during one.</li>
+<li><strong>For rewards.</strong> Borrowing earns Jewels. Jewels are a rounding error against a liquidation.</li>
+</ul>
+
+<h3>Size it backwards from the loss</h3>
+
+<p>Start from the loss you can absorb: <code>commit = tolerable loss ÷ (multiplier × the fall you accept as plausible)</code>. If you can absorb US$2,000 and treat a 15% fall as plausible, at 2× your commit is US$6,667 — not "whatever is free in my vault". The same tolerance at 4× allows only US$3,333, and buys a buffer under 3%. Higher multipliers don't let you commit more; they force you to commit less. The floor: equity is gone entirely on a fall of <code>1 / m</code> — 50% at 2×, 33% at 3×, 20% at 5×. Liquidation always arrives first, which is what stops you owing more than you put in.</p>
+</section>
+
+<h2 id="what-can-go-wrong">What can go wrong</h2>
+
+<ul>
+<li><strong>"Boost isn't in my navigation."</strong> Pro mode is off. Turn it on in Profile.</li>
+<li><strong>"It says to repay my loan first."</strong> A standard loan is open. Repay it in full, or use that instead.</li>
+<li><strong>"My commit is capped below my gold balance."</strong> The rest is pledged; only free gold counts. See <a href="borrow.html">locked versus free gold</a>.</li>
+<li><strong>"I was closed out without being asked."</strong> That is liquidation working as designed — in the lending market at 77% LTV, not at Auri's discretion, and it does not wait for you.</li>
+<li><strong>"I closed part of it and my loss got bigger."</strong> Closing realises the loss on that portion. It reduces risk; it cannot undo a fall.</li>
+</ul>
+
+<h2 id="related">Related</h2>
+
+<p>If you want cash rather than more exposure, <a href="borrow.html">borrowing against your gold</a> is the lower-risk product and the one most people should use. <a href="trust.html">Where your gold is held</a> covers the collateral itself. <strong>Next step:</strong> if you have read this and still want to proceed, open <a href="risks.html">Risks</a> — not the Boost screen.</p>
+
+<p><em>Nothing here is financial, tax or legal advice. Figures are illustrations, not forecasts. Gold prices and the borrow rate both move; the live numbers in the app govern your position.</em></p>
+    <div class="pager"><a href="repay.html">&larr; Repay and unlock</a><a href="trust.html">How gold is held &rarr;</a></div>
+    <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or legal
+    advice. Digital assets are not bank deposits and are not covered by any deposit-insurance scheme. Figures shown in
+    screenshots are from a demo build and will differ from live values.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.burger'), s=document.getElementById('sidenav');
+  b&&b.addEventListener('click',function(){
+    var open=s.classList.toggle('open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+</script>
+</body>
+</html>

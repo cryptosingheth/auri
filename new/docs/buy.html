@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buying gold — Auri docs</title>
+<meta name="description" content="The full buy flow tap by tap — unit switching, funding rails, the 0.49% fee on the review screen, settlement — plus what you actually own afterwards and when buying gold is the wrong move.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%20%20%20%3Cdefs%3E%20%20%20%20%20%3ClinearGradient%20id%3D%22ai%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%23D8B366%22/%3E%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22/%3E%20%20%20%20%20%3C/linearGradient%3E%20%20%20%3C/defs%3E%20%20%20%3C%21--%20Auri%20%22ai%22%20lettermark%2C%20no%20tile.%20Single-story%20%27a%27%3B%20its%20right%20stem%20rises%20just%20a%20HAIR%20above%20the%20%20%20%20%20%20%20%20bowl%20%E2%80%94%20only%20a%20hint%20of%20the%20%27i%27%20edge%2C%20never%20a%20%27d%27%20ascender%20%E2%80%94%20with%20the%20round%20sun%20DOT%20%28the%20%20%20%20%20%20%20%20tittle%29%20and%20the%20straight%20dawn%20line%20floating%20above.%20Counter%20is%20a%20transparent%20hole%20%28evenodd%29.%20--%3E%20%20%20%3Cg%20fill%3D%22url%28%23ai%29%22%3E%20%20%20%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22/%3E%20%20%20%20%20%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22/%3E%20%20%20%20%20%3Crect%20x%3D%229%22%20y%3D%226%22%20width%3D%2221%22%20height%3D%222.6%22%20rx%3D%221.3%22/%3E%20%20%20%20%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.3%22%20r%3D%223.8%22/%3E%20%20%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#15161B;--ink2:#42454E;--ink3:#8A8F9C;--bg:#F6F5F8;--card:#fff;
+ --line:rgba(20,21,27,.09);--line2:rgba(20,21,27,.15);--plum:#852152;--plum-l:#A12C66;--gold:#B08A3E;
+ --mono:"Geist Mono",ui-monospace,monospace;--e:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum);text-decoration:none}a:hover{text-decoration:underline}
+img,svg{max-width:100%;display:block}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+ padding:12px 22px;background:rgba(246,245,248,.92);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line)}
+.top .wm{height:22px;width:auto;color:var(--ink)}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);
+ border-radius:9px;padding:6px 11px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.shell{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;
+ max-width:1240px;margin:0 auto;padding:34px 22px 90px}
+.side{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;
+ font-size:14px;padding-right:8px}
+.side h4{margin:20px 0 7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);font-weight:600}
+.side a{display:block;padding:5px 10px;margin-left:-10px;border-radius:8px;color:var(--ink2)}
+.side a:hover{background:#fff;text-decoration:none}
+.side a[aria-current=page]{background:#fff;color:var(--plum);font-weight:600;
+ box-shadow:inset 0 0 0 1px var(--line)}
+main{min-width:0}
+main h1{font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.035em;margin:0 0 6px}
+.lead{font-size:18.5px;line-height:1.6;color:var(--ink2);margin:0 0 30px}
+main h2{font-size:24px;letter-spacing:-.02em;margin:44px 0 12px;padding-top:10px}
+main h3{font-size:18px;letter-spacing:-.015em;margin:28px 0 8px}
+main p,main li{color:var(--ink2)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.88em;background:#fff;border:1px solid var(--line);
+ border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 16px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+ border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+ display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;
+ width:1.5px;background:var(--line2)}
+.callout{margin:20px 0;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+ background:#fff;border-left:3px solid var(--ink3)}
+.callout p{margin:0;font-size:14.5px}
+.callout.info{border-left-color:var(--plum-l);background:#fff}
+.callout.warn{border-left-color:#C08A16;background:#FFFCF5}
+.callout.risk{border-left-color:#C23B3B;background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+table.kv{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+ background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.kv th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--ink3);font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+.strategy{margin:40px 0;padding:24px 24px 8px;background:#fff;border:1px solid var(--line);
+ border-radius:16px}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10.5px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:rgba(133,33,82,.08);
+ border:1px solid rgba(133,33,82,.2);border-radius:999px;padding:3px 9px;margin-bottom:12px}
+figure{margin:26px 0}
+figure.shot img{border-radius:18px;border:1px solid var(--line);
+ box-shadow:0 18px 40px -26px rgba(20,18,60,.3);max-width:288px}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+figcaption{margin-top:9px;font-size:13px;line-height:1.5;color:var(--ink3)}
+.toc{margin:0 0 30px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.toc b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.toc ul{margin:0;padding-left:18px;font-size:14px}
+.toc li{margin:3px 0}
+.pager{display:flex;gap:12px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+ font-size:14.5px;flex-wrap:wrap}
+.pager a{padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.docfoot{margin-top:34px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr;gap:0;padding:20px 18px 70px}
+ .side{position:static;max-height:none;display:none;margin-bottom:22px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px 14px}
+ .side.open{display:block}
+ .top nav{display:none}
+ .burger{display:block}
+ main h1{font-size:28px}.lead{font-size:17px}
+ figure.shot img{max-width:100%}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 371 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM339 16A16 16 0 1 1 371 16A16 16 0 1 1 339 16ZM150 16Q231.4 14.4 331 11.5L331 20.5Q231.4 17.6 150 16Z"/></svg></a>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="index.html">Docs home</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Contents</button>
+</header>
+<div class="shell">
+  <aside class="side" id="sidenav"><h4>Start</h4>
+<a href="index.html">Overview</a>
+<a href="start.html">Start here</a>
+<h4>Everyday</h4>
+<a href="buy.html" aria-current="page">Buying gold</a>
+<a href="cash.html">Cash in and out</a>
+<a href="gift-send.html">Gift, send, remit</a>
+<a href="auto-invest.html">Auto-invest</a>
+<h4>Borrowing</h4>
+<a href="borrow.html">Borrow against gold</a>
+<a href="repay.html">Repay and unlock</a>
+<h4>Advanced</h4>
+<a href="boost.html">Boost (leverage)</a>
+<h4>Trust & safety</h4>
+<a href="trust.html">How gold is held</a>
+<a href="risks.html">Risks</a>
+<h4>Reference</h4>
+<a href="reference.html">Fees, limits, parameters</a></aside>
+  <main>
+    <h1>Buying gold</h1>
+    <div class="toc"><b>On this page</b><ul><li><a href="#why-people-buy">Why people do this</a></li><li><a href="#before-you-start">Before you start</a></li><li><a href="#step-by-step">Buy gold, step by step</a></li><li><a href="#what-it-costs">What buying costs</a></li><li><a href="#what-you-own">What you actually own afterwards</a></li><li><a href="#what-can-go-wrong">What can go wrong</a></li><li><a href="#why-buy-gold">Why people buy gold, and what it actually does</a></li><li><a href="#lump-sum-or-spread">Buy it all at once, or spread it out?</a></li><li><a href="#next">Next step</a></li></ul></div>
+<p class="lead">Buying gold in Auri converts money you already hold into tokenised gold that lands in a vault only you control. When you finish you own a specific weight of gold — divisible to a millionth of a troy ounce — that you can hold, send, gift or borrow against without selling. This page covers the flow tap by tap, what it actually costs, what you end up owning, and when buying is the wrong move.</p>
+
+<h2 id="why-people-buy">Why people do this</h2>
+
+<p>Most people buy for one of three reasons: they want savings held in something other than their home currency, they want a hard asset without a safe or a dealer, or they want gold they can later borrow against instead of selling. Gold pays you nothing while you hold it — that trade-off is the whole decision, and it is unpacked in <a href="#why-buy-gold">why people buy gold</a> below.</p>
+
+<h2 id="before-you-start">Before you start</h2>
+
+<ul>
+<li>An Auri account. No ID is needed to open one — see <a href="start.html">getting started</a>.</li>
+<li>A funding source: your Auri cash balance (USDC), a bank rail, or a debit card.</li>
+<li>An identity check <em>only if</em> you fund with a bank rail or debit card and have not verified yet. Funding with USDC you deposit yourself is tagged <strong>No ID</strong>.</li>
+<li>Minimum purchase: <code>UNKNOWN</code> — the buy screen displays none. Auto-Invest states a US$10 per-cycle minimum.</li>
+</ul>
+
+<div class="callout info"><p><strong>Cost, time, reversibility.</strong> About a minute to enter · <strong>0.49%</strong> of the purchase, plus 1% if you fund by debit card · network fees covered by Auri · settles instantly from your cash balance, in minutes by Interac e-Transfer in Canada, in 1–2 business days by bank transfer · <strong>irreversible once you confirm</strong>. There is no cancel button; to undo a purchase you sell the gold back and pay the fee again.</p></div>
+
+<h2 id="step-by-step">Buy gold, step by step</h2>
+
+<ol class="steps">
+<li><strong>Open the buy flow.</strong> On <strong>Actions</strong>, under the Gold group, select <strong>Buy gold</strong>. It is also on the Home card and in the move-money menu.</li>
+<li><strong>Enter the amount.</strong> Type a figure and pick the unit — <strong>Dollars</strong>, <strong>Grams</strong>, <strong>Ounces</strong> or <strong>XAUT</strong>. Chips add +$10, +$50, +$100 or +$500. A live line shows the equivalence: <em>≈ 7.108 g · 0.2285 oz · at US$4,376/oz</em>.</li>
+<li><strong>Choose how to pay.</strong> Pick <strong>Cash balance</strong>, <strong>Interac e-Transfer</strong>, <strong>Bank account</strong> or <strong>Debit card</strong>. Each row is tagged with its speed, its fee, and whether it needs ID.</li>
+<li><strong>Clear the identity check if prompted.</strong> Legal name and date of birth, a photo of your passport or licence, then a selfie. It resolves in about a minute and returns you to the review screen you were heading for.</li>
+<li><strong>Read the review screen line by line.</strong> It is the only place the fee and the gold you actually receive appear together. Check <strong>Gold received</strong> against the equivalence line from step 2 — they differ, on purpose, by the fee.</li>
+<li><strong>Confirm.</strong> Cash-balance buys execute immediately. Fiat-funded buys open a <strong>Processing</strong> screen with a live step list that you can minimise into a background pill; it finishes on its own and fires a notification.</li>
+<li><strong>Check the proof block.</strong> The success screen reads <em>Gold purchased — 0.2274 oz added to your vault</em> and carries the Arbitrum block number and transaction hash, a <strong>View on Arbiscan</strong> link, and an <strong>Advanced</strong> toggle revealing the receiving vault address.</li>
+</ol>
+
+<h3>Switching units</h3>
+
+<p>The dropdown changes what you <em>type</em>, not just what you read: <code>5</code> in Grams buys five grams whatever that costs today, <code>5</code> in Dollars buys five dollars' worth. Gold trades in <strong>troy</strong> ounces — 31.1035 g, not the 28.35 g kitchen ounce — so grams and ounces never look like a round conversion. <strong>Ounces and XAUT are the same number</strong>, because one XAUt0 token represents one troy ounce.</p>
+
+<figure class="shot"><img src="../../assets/docs/buy-amount-entry.webp" alt="The amount field with the unit dropdown open. The equivalence line is the &lt;em&gt;gross&lt;/em&gt; conversion, before the 0.49% fee." loading="lazy" width="276">
+<figcaption>The amount field with the unit dropdown open. The equivalence line is the <em>gross</em> conversion, before the 0.49% fee.</figcaption></figure>
+
+<h3>Choosing how to pay</h3>
+
+<p>Funding rails are regional: Interac e-Transfer is Canada-only, and in the US and other markets the equivalent row is a bank transfer. Exactly which rails are live in each market outside Canada is <code>UNKNOWN</code>.</p>
+
+<table class="kv">
+<thead><tr><th>Pay with</th><th>Speed</th><th>Funding fee</th><th>ID needed</th></tr></thead>
+<tbody>
+<tr><td>Cash balance (USDC)</td><td>Instant</td><td>None</td><td>No</td></tr>
+<tr><td>Interac e-Transfer (Canada)</td><td>Minutes</td><td>No fee</td><td>Yes, once</td></tr>
+<tr><td>Bank account (EFT / transfer)</td><td>1–2 business days</td><td>No fee stated</td><td>Yes, once</td></tr>
+<tr><td>Debit card</td><td>Instant</td><td>1%</td><td>Yes, once</td></tr>
+<tr><td>USDC you deposit yourself</td><td>Instant once received</td><td>No fee</td><td>No ID</td></tr>
+</tbody>
+</table>
+
+<p>Cheapest route: move money in on a fee-free rail first, then buy from your cash balance — see <a href="cash.html">adding and withdrawing cash</a>. Most expensive: debit, where 1% to fund plus 0.49% to buy is roughly <strong>1.49%</strong> all-in — about US$14.90 on a US$1,000 purchase instead of US$4.90.</p>
+
+<h3>What the review screen shows</h3>
+
+<p>Seven rows, and you should be able to reconcile all of them. Using US$1,000 at US$4,376/oz:</p>
+
+<table class="kv">
+<thead><tr><th>Review row</th><th>Example</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>You pay</td><td>US$1,000.00</td><td>Amount leaving your funding source.</td></tr>
+<tr><td>Gold price</td><td>US$4,376.00/oz</td><td>The price the order is struck at. Live, and it moves.</td></tr>
+<tr><td>Auri fee · 0.49%</td><td>US$4.90</td><td>Taken off the top, before any gold is bought.</td></tr>
+<tr><td>Price impact</td><td>Under 0.1%</td><td>Slippage on the underlying swap into gold.</td></tr>
+<tr><td>Network fee</td><td>Covered</td><td>Arbitrum gas, paid by Auri.</td></tr>
+<tr><td>Gold received</td><td>0.2274 oz (7.073 g)</td><td>US$995.10 ÷ US$4,376. The number that matters.</td></tr>
+<tr><td>Pay with</td><td>Cash balance · USDC</td><td>Last chance to change the rail.</td></tr>
+</tbody>
+</table>
+
+<p>The gap between 0.2285 oz on the entry screen and 0.2274 oz here is 0.0011 oz — roughly 0.035 g, which is the fee. If those two figures ever match exactly, something is wrong.</p>
+
+<div class="callout warn"><p><strong>Price impact is an estimate, not a cap.</strong> Your purchase is executed as a swap into tokenised gold on an on-chain venue, and larger orders move the price more. Whether Auri absorbs impact above the displayed figure or you do is <code>UNKNOWN</code> — the app does not say. On a large purchase, split it and compare the received amounts.</p></div>
+
+<figure class="shot"><img src="../../assets/docs/buy-review.webp" alt="The review screen is where the 0.49% fee appears. It appears nowhere earlier in the flow." loading="lazy" width="276">
+<figcaption>The review screen is where the 0.49% fee appears. It appears nowhere earlier in the flow.</figcaption></figure>
+
+<h3>Settlement</h3>
+
+<p>Confirming is not settling. From your cash balance it is one on-chain step, done in seconds. From a bank rail the money must arrive, be converted to USDC, be swapped into gold, then be credited — which is why the Activity receipt for a bank-funded buy has four legs and a cash-funded buy has three. Every leg is auditable afterwards: open the row in <strong>Activity</strong> and it expands into a transaction sequence with a hash or reference per step.</p>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 874 116" width="874" height="116" role="img"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#42454E"/></marker></defs><rect x="16" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="16" y="16" width="3.5" height="84" rx="2" fill="#852152"/><text x="32" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Confirm</text><text x="32" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">price and fees shown first</text><line x1="200" y1="58.0" x2="230" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="238" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="238" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="254" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Funding clears</text><text x="254" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">instant rail, or 1-2</text><text x="254" y="83" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">business days</text><line x1="422" y1="58.0" x2="452" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="460" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="460" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="476" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Gold allocated</text><text x="476" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">credited to your vault</text><line x1="644" y1="58.0" x2="674" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="682" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="682" y="16" width="3.5" height="84" rx="2" fill="#B08A3E"/><text x="698" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Visible on chain</text><text x="698" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">verifiable holding</text></svg>
+<figcaption>Your money crosses two conversions before it becomes gold — cash-balance buys skip the first, which is why they are instant.</figcaption></figure>
+
+
+
+<h2 id="what-it-costs">What buying costs</h2>
+
+<table class="kv">
+<thead><tr><th>Charge</th><th>Amount</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Auri fee on a buy</td><td>0.49%</td><td>Every purchase, shown on review</td></tr>
+<tr><td>Auri fee on a sell</td><td>0.49%</td><td>When you sell back</td></tr>
+<tr><td>Round trip, buy then sell</td><td>≈0.98%</td><td>Gold must rise about 1% to break even</td></tr>
+<tr><td>Debit card funding</td><td>1%</td><td>On top of the 0.49%</td></tr>
+<tr><td>Network / gas fee</td><td>Covered</td><td>Not billed to you</td></tr>
+<tr><td>Auto-Invest setup</td><td>Free</td><td>Each cycle's buy still pays 0.49%</td></tr>
+<tr><td>Storage or custody fee</td><td><code>UNKNOWN</code></td><td>None appears anywhere in the app</td></tr>
+</tbody>
+</table>
+
+<p>Buying also earns Auri Jewels at 1 jewel per dollar spent; redemption rates and tiers, and the canonical fee schedule for every flow, are in the <a href="reference.html">reference</a>.</p>
+
+<h2 id="what-you-own">What you actually own afterwards</h2>
+
+<p>You own <strong>Tether Gold</strong>, held in a self-custody vault whose address you can view in your profile. On Arbitrum the token is <strong>XAUt0</strong> — contract <code>0x40461291347e1eCbb09499F3371D3f17f10d7159</code> — the cross-chain version of native XAUt. Each XAUt0 is backed 1:1 by native XAUt locked in an adapter contract on Ethereum, and each of those by one troy ounce of vaulted physical gold. The app labels the unit "XAUT" throughout; on Arbitrum the asset is precisely XAUt0.</p>
+
+<p><strong>Fractional ownership is real, not notional.</strong> XAUt0 carries six decimals, so the smallest amount you can own is 0.000001 oz — about 0.0000311 g, or four-tenths of a cent at US$4,376/oz. There is no rounding up to a bar, no minimum weight, no queue to be allocated. A US$20 purchase gives you 0.004548 oz, yours the moment the transaction confirms.</p>
+
+<p>The physical backing sits in Swiss vaults. Auri's reserves screen names <strong>Brink's, Switzerland</strong> as custodian with serial-numbered bars, cites attestation by <strong>BDO Italia</strong>, and links to Tether Gold's own published data so you can check the figures against the issuer rather than against Auri. The legal structure — whether bars are titled in your name, held in bailment, or held by the issuer against your token — is <code>UNKNOWN</code>, and is the most important thing to settle on <a href="trust.html">the trust page</a> before committing meaningful money.</p>
+
+<div class="callout risk"><p><strong>You are not holding metal, and that means counterparties.</strong> Gold in your own safe has none. This has several: Tether Gold as issuer, the custodian holding the bars, the adapter contract holding the native XAUt, the Arbitrum network, and Auri as the interface. Any honest case for tokenised gold starts by admitting that stack exists. What you get in exchange is divisibility to a millionth of an ounce, transfer in seconds, and the ability to borrow against it without selling.</p></div>
+
+<p>Newly bought gold is <strong>free</strong> — sellable, sendable, giftable immediately. It becomes restricted only if you borrow against it, at which point part of your holding locks as collateral until you repay. See <a href="borrow.html">borrowing</a> and <a href="borrow.html#liquidation">liquidation</a>.</p>
+
+<div class="callout soon"><p><strong>You cannot spend it yet.</strong> The Auri card is a waitlist, not a product — the app shows a queue position, not a card you can tap. Cross-border remittance, and the MCP, CLI and API integrations, are also not live. Do not buy gold as a spending balance on the assumption the card is arriving.</p></div>
+
+<h2 id="what-can-go-wrong">What can go wrong</h2>
+
+<p><strong>"I received less gold than my amount divided by the price."</strong> Expected. The 0.49% comes off before the conversion. Reconcile against Gold received on the review screen, not the equivalence line on the entry screen.</p>
+
+<p><strong>"My purchase says processing."</strong> Bank-funded buys wait on the bank, 1–2 business days; Interac is minutes. Minimise the screen — the job keeps running and notifies you when it lands.</p>
+
+<p><strong>"The price moved while I was in the flow."</strong> The review screen shows the price your order is struck at. Whether that price is locked when you confirm, or struck when a slow bank transfer finally settles, is <code>UNKNOWN</code> — and it matters on a multi-day transfer. If timing is critical, fund your cash balance first so entry and execution are the same moment.</p>
+
+<p><strong>"I was asked for ID unexpectedly."</strong> The check fires only for bank rails and debit cards; in Canada the app cites FINTRAC rules for bank transfers. Funding with USDC you deposit yourself never triggers it.</p>
+
+<p><strong>"I cannot sell the gold I just bought."</strong> That happens only when it is locked as loan collateral. The app shows exactly how much is free and how much is locked; repay to unlock.</p>
+
+<section class="strategy">
+<h2 id="why-buy-gold">Why people buy gold, and what it actually does</h2>
+
+<p>Gold has no cash flow. No dividend, no interest, no earnings. A business and a rental property pay you for waiting; gold pays you nothing and costs something to keep. Every argument for owning it has to survive that sentence first. The ones that do are narrow:</p>
+
+<ul>
+<li><strong>Currency exposure, not returns.</strong> If all your savings sit in one national currency you are making a concentrated bet on that currency's purchasing power, whether you meant to or not. Gold holds part of your savings outside that bet. This is the strongest case, and it is about what you are exposed to rather than about going up.</li>
+<li><strong>No issuer can print more of it.</strong> Supply grows slowly and by physical effort. That is the whole debasement argument — a decades-long thesis, not a this-quarter one.</li>
+<li><strong>It moves differently from equities.</strong> Not reliably opposite — sometimes it falls alongside everything else — but differently enough that a modest allocation changes a portfolio's shape.</li>
+</ul>
+
+<p>What we will not tell you is how much to hold. Anyone naming a percentage without knowing your income, debts, timeline and temperament is selling, not advising.</p>
+
+<h3>How this differs from an ETF or a price-tracking token</h3>
+
+<p>An ETF share is a claim on a fund: bought through a broker, tradable only in market hours, charged an annual expense ratio, and in almost all cases not redeemable for metal by an ordinary holder. For pure price exposure inside a brokerage or tax-advantaged account it is often the cheaper answer, with familiar tax reporting and no on-chain mechanics to learn. What Auri gives instead: the holding sits in a vault you control, moves 24/7 including weekends, can be sent to a person rather than a broker, and can back a loan without being sold or credit-checked.</p>
+
+<p>Against a synthetic gold-price token, the distinction that matters is whether the backing terminates in identifiable metal. Here it does — XAUt0 unwinds to native XAUt, which unwinds to specific vaulted bars, through a burn-and-mint adapter rather than a wrapped IOU. But whether <em>Auri</em> offers physical delivery, and at what minimum, is <code>UNKNOWN</code>: the app has no delivery flow. Do not buy assuming you can request bars.</p>
+</section>
+
+<section class="strategy">
+<h2 id="lump-sum-or-spread">Buy it all at once, or spread it out?</h2>
+
+<p><strong>Buying in one go:</strong> if you have decided you want the exposure, every day you are not holding is a day you remain fully exposed to the currency you were trying to diversify away from. Historically, investing immediately has more often beaten phasing in, because waiting means sitting in cash while prices drift upward.</p>
+
+<p><strong>Spreading it out:</strong> this is a behavioural tool, and behaviour is where most people lose money. It removes the chance of putting your whole position in on the worst day of the year — the outcome that makes people abandon a plan entirely — and turns an intimidating one-off decision into a habit funded from income. <a href="auto-invest.html">Auto-Invest</a> automates it from US$10 per cycle, daily, weekly or monthly, and tracks your average cost per ounce. Be clear what it does not do: it does not guarantee a profit and does not protect you in a sustained decline. If gold falls for three years, buying weekly for three years means losing money weekly. The honest framing is regret-minimisation, not risk-elimination.</p>
+
+<p>Fees do not settle the argument either way. Because the 0.49% is proportional rather than flat, twenty US$50 buys cost the same percentage as one US$1,000 buy — frequency is free. So cadence barely matters and sustainability matters enormously. Pick an amount you will not resent in month seven.</p>
+
+<h3>When not to buy</h3>
+
+<ul>
+<li><strong>You need the money inside a year.</strong> Gold can fall 20% and stay there. Money with a deadline does not belong in a volatile asset, and a round trip costs about 1% before the price does anything.</li>
+<li><strong>You are carrying high-interest debt.</strong> Paying down a 20% credit card is a guaranteed 20% return. No gold thesis beats that.</li>
+<li><strong>You are buying because the price just jumped.</strong> The urge to buy after a run and to sell after a fall are the same reflex, and it is the main reason retail positions lose money. If a headline is the reason, wait a week and see whether you still want it.</li>
+<li><strong>You want something to spend.</strong> The card is not live. Money you will spend next month should stay cash.</li>
+<li><strong>You are borrowing to buy.</strong> That is leverage, it has a liquidation price, and it belongs on <a href="boost.html">the Boost page</a> where the risks are laid out — not in an ordinary purchase.</li>
+</ul>
+</section>
+
+<h2 id="next">Next step</h2>
+
+<p>Read <a href="trust.html">where your gold is and how to verify it</a> before buying anything substantial — checking the backing is a prerequisite to a first purchase, not an appendix. Then <a href="auto-invest.html">set up a recurring buy</a>, or read <a href="borrow.html">borrowing against your gold</a> to see what the holding can do without being sold. Everything that can lose you money is collected in <a href="risks.html">risks</a>.</p>
+
+<p><em>Auri does not provide financial, tax or legal advice. Nothing here is a recommendation to buy gold or a prediction about its price. Gold can fall in value and you can get back less than you put in.</em></p>
+    <div class="pager"><a href="start.html">&larr; Start here</a><a href="cash.html">Cash in and out &rarr;</a></div>
+    <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or legal
+    advice. Digital assets are not bank deposits and are not covered by any deposit-insurance scheme. Figures shown in
+    screenshots are from a demo build and will differ from live values.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.burger'), s=document.getElementById('sidenav');
+  b&&b.addEventListener('click',function(){
+    var open=s.classList.toggle('open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+})();
+</script>
+</body>
+</html>
