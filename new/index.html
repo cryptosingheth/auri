@@ -111,9 +111,15 @@ img,svg,video,canvas{display:block;max-width:100%}
 .nlinks a{white-space:nowrap;padding:6px 2px;opacity:.9}
 .nlinks a:hover{opacity:1}
 .nav-cta{margin-left:auto;display:flex;align-items:center;gap:14px}
+@keyframes pulsering{0%{transform:scale(1);opacity:.55}70%{transform:scale(3.2);opacity:0}100%{opacity:0}}
 .goldtick{font-family:var(--mono);font-size:12px;color:rgba(242,233,212,.7);display:flex;gap:7px;align-items:center;white-space:nowrap;transition:color .3s}
 .nav.light .goldtick{color:var(--ink2)}
-.goldtick .gd{width:7px;height:7px;border-radius:50%;background:var(--gold-grad)}
+.goldtick .gd{position:relative;width:7px;height:7px;border-radius:50%;background:var(--green);flex:none}
+.goldtick .gd::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green);
+  animation:pulsering 1.8s ease-out infinite}
+.goldtick.stale .gd{background:rgba(242,233,212,.45)}
+.goldtick.stale .gd::after{animation:none}
+.goldtick .lv{font-size:9.5px;letter-spacing:.14em;opacity:.7}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;font-family:var(--sans);font-weight:600;font-size:14.5px;border-radius:999px;padding:11px 22px;border:none;transition:transform .2s,background .2s,box-shadow .2s;white-space:nowrap;will-change:transform}
 .btn:active{transform:scale(.98)}
 .btn-line{background:transparent;color:var(--cream);border:1px solid var(--wline2)}
@@ -547,17 +553,27 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   .biz-foot{flex-direction:column;align-items:flex-start}
 }
 
+/* live indicators on the proof stats: a small pulsing dot means the number was read from a
+   public source just now; "as attested" means it is frozen to the last published report. */
+.livedot{display:inline-block;position:relative;width:6px;height:6px;border-radius:50%;
+  background:var(--green-b,#4ADE9E);margin-left:6px;vertical-align:middle}
+.livedot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green-b,#4ADE9E);
+  animation:pulsering 1.8s ease-out infinite}
+.livedot.stale{background:rgba(242,233,212,.35)}
+.livedot.stale::after{animation:none}
+.asof{margin-left:6px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
+
 /* ---------- (A2) CALCULATORS — light band inside .daybreak ----------
-   Both cards are driven by the live market module (window.AURI): the gold price, the borrow
-   rate and the FX table are all read from public sources, never typed in here. The LTV bands
-   and their labels are the SAME bands the product itself uses (Safe / Conservative / Balanced
-   / Risky) so the site and the app never disagree. */
+   Structure follows what the best consumer collateral lenders actually ship: the amount you
+   want to BORROW leads, the collateral follows and stays editable, and the entire risk story
+   is one headline sentence plus one price line — no meter, no gauge, no "health factor", no
+   scenario table. Free-text money inputs only; sliders were removed deliberately. */
 .calc{padding:11vh 0 12vh;background:var(--bg);color:var(--ink)}
 .calc-head{max-width:680px;margin-bottom:34px}
 .calc-head h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.04em;line-height:1.05}
 .calc-head .sub{margin-top:16px;font-size:17px;line-height:1.6;color:var(--ink2);max-width:620px}
 
-/* live feed bar — the blinking dot is the signal that this is real, moving data */
+/* live feed chips — the pulsing dot is the signal that this is real, moving data */
 .feedbar{display:flex;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap}
 .feed{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;
   background:#fff;border:1px solid var(--line);font-size:13px;color:var(--ink2);
@@ -571,150 +587,97 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pulse{position:relative;flex:none;width:8px;height:8px;border-radius:50%;background:var(--green)}
 .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--green);
   animation:pulsering 1.8s ease-out infinite}
-@keyframes pulsering{0%{transform:scale(1);opacity:.55}70%{transform:scale(3.2);opacity:0}100%{opacity:0}}
 .feed.stale .pulse{background:var(--ink3)}
 .feed.stale .pulse::after{animation:none}
 .feed-note{font-size:12px;color:var(--ink3)}
-/* a fresh value briefly lifts, so you can see it tick */
 @keyframes tick{0%{background:rgba(22,160,106,.16)}100%{background:transparent}}
 .ticked{animation:tick 1.1s ease-out;border-radius:5px}
 
-.calc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:22px;align-items:start}
-.ccard{min-width:0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 22px 22px;
+.calc-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
+.ccard{min-width:0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 24px 22px;
   box-shadow:0 1px 2px rgba(20,18,60,.04),0 20px 44px -28px rgba(20,18,60,.20)}
-.ctop{display:flex;align-items:baseline;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-.ckicker{font-size:15px;font-weight:650;letter-spacing:-.015em;color:var(--ink)}
-.csub{font-size:13px;color:var(--ink3)}
+.cq{margin:0 0 16px;font-size:19px;font-weight:650;letter-spacing:-.022em;color:var(--ink);line-height:1.25}
 
-.cfield{display:block;margin-bottom:12px;min-width:0}
-.clabel{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:7px}
-.cinput{min-width:0;display:flex;align-items:stretch;border:1px solid var(--line2);border-radius:12px;
+/* money input — free text, no slider, currency alongside */
+.cinput{min-width:0;display:flex;align-items:stretch;border:1px solid var(--line2);border-radius:13px;
   background:var(--bg);overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .cinput:focus-within{border-color:rgba(133,33,82,.45);box-shadow:0 0 0 3px rgba(133,33,82,.10)}
-.cinput input{flex:1;min-width:0;width:100%;size:1;border:0;background:none;outline:none;padding:12px 13px;
-  font:inherit;font-size:19px;font-weight:640;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.cinput input{flex:1;min-width:0;width:100%;border:0;background:none;outline:none;padding:13px 15px;
+  font:inherit;font-size:20px;font-weight:640;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.cinput input::placeholder{color:var(--ink3);font-weight:500}
 .cinput input::-webkit-outer-spin-button,.cinput input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .cinput input[type=number]{-moz-appearance:textfield}
-.cselect{flex:none;border:0;border-left:1px solid var(--line);background:#fff;padding:0 30px 0 12px;
-  font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer;outline:none;
+.cinput.big input{font-size:28px;padding:15px 16px;letter-spacing:-.03em}
+.cselect{flex:none;border:0;border-left:1px solid var(--line);background:#fff;padding:0 32px 0 14px;
+  font:inherit;font-size:14px;font-weight:650;color:var(--ink);cursor:pointer;outline:none;
   -webkit-appearance:none;appearance:none;
   background-image:linear-gradient(45deg,transparent 50%,var(--ink3) 50%),linear-gradient(135deg,var(--ink3) 50%,transparent 50%);
-  background-position:calc(100% - 17px) 51%,calc(100% - 12px) 51%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
 .cselect:focus-visible{box-shadow:inset 0 0 0 2px rgba(133,33,82,.4)}
-.cunit{flex:none;display:flex;align-items:center;padding:0 13px;border-left:1px solid var(--line);
-  background:#fff;font-size:13px;font-weight:600;color:var(--ink3);font-family:var(--mono)}
-.cpair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;min-width:0}
+.cunit{flex:none;display:flex;align-items:center;padding:0 15px;border-left:1px solid var(--line);
+  background:#fff;font-size:13.5px;font-weight:650;color:var(--ink3);font-family:var(--mono)}
 
-.crange{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:none;margin:6px 0 16px;cursor:pointer}
-.crange::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--well)}
-.crange::-moz-range-track{height:5px;border-radius:3px;background:var(--well)}
-.crange::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
-  background:var(--plum);border:2.5px solid #fff;box-shadow:0 2px 8px -2px rgba(133,33,82,.55);margin-top:-7.5px}
-.crange::-moz-range-thumb{width:20px;height:20px;border:2.5px solid #fff;border-radius:50%;
-  background:var(--plum);box-shadow:0 2px 8px -2px rgba(133,33,82,.55)}
-.crange:focus-visible{outline:2px solid rgba(133,33,82,.5);outline-offset:4px;border-radius:4px}
+.cfield{display:block;margin-top:16px;min-width:0}
+.clabel{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:7px}
+.chelp{display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:var(--ink3)}
+.chelp b{color:var(--ink2);font-weight:650;font-variant-numeric:tabular-nums}
 
-/* unit segmented control — one unit at a time, never a jumble */
-.cseg{display:inline-flex;background:var(--well);border-radius:11px;padding:3px;gap:2px;margin:2px 0 18px}
+/* the risk story: one headline, one price line, one band word */
+.riskbox{margin:22px 0 4px;padding:18px 20px;border-radius:16px;border:1px solid;position:relative}
+.riskbox[data-zone="safe"]{background:#F1FAF5;border-color:rgba(22,160,106,.28)}
+.riskbox[data-zone="conservative"]{background:#F5FAEF;border-color:rgba(99,153,34,.28)}
+.riskbox[data-zone="balanced"]{background:#FFFAF0;border-color:rgba(168,116,19,.30)}
+.riskbox[data-zone="risky"]{background:#FEF5F5;border-color:rgba(194,59,59,.30)}
+.risk-big{margin:0;font-size:clamp(18px,2vw,22px);line-height:1.3;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.risk-big b{font-weight:700;font-variant-numeric:tabular-nums}
+.riskbox[data-zone="safe"] .risk-big b{color:#0F7A50}
+.riskbox[data-zone="conservative"] .risk-big b{color:#3B6D11}
+.riskbox[data-zone="balanced"] .risk-big b{color:#8A5E0F}
+.riskbox[data-zone="risky"] .risk-big b{color:#B23131}
+.risk-sub{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+.risk-sub b{color:var(--ink);font-weight:650;font-variant-numeric:tabular-nums}
+.risk-tagline{position:absolute;top:14px;right:16px;font-size:10.5px;font-weight:650;letter-spacing:.06em;
+  text-transform:uppercase;border-radius:999px;padding:3px 9px;background:#fff;border:1px solid var(--line2);color:var(--ink2)}
+.riskbox[data-zone="safe"] .risk-tagline{color:#0F7A50;border-color:rgba(22,160,106,.3)}
+.riskbox[data-zone="conservative"] .risk-tagline{color:#3B6D11;border-color:rgba(99,153,34,.3)}
+.riskbox[data-zone="balanced"] .risk-tagline{color:#8A5E0F;border-color:rgba(168,116,19,.32)}
+.riskbox[data-zone="risky"] .risk-tagline{color:#B23131;border-color:rgba(194,59,59,.32)}
+
+/* unit segmented control */
+.cseg{display:inline-flex;background:var(--well);border-radius:11px;padding:3px;gap:2px;margin:16px 0 14px}
 .segb{border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--ink2);
   padding:7px 15px;border-radius:9px;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
 .segb.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(20,18,60,.10)}
 .segb:focus-visible{outline:2px solid rgba(133,33,82,.45);outline-offset:1px}
 
-.cbig{display:flex;align-items:baseline;gap:9px;padding:4px 0 2px}
+.cbig{display:flex;align-items:baseline;gap:10px;padding:2px 0 4px;flex-wrap:wrap}
 .cbig b{font-size:clamp(34px,4.4vw,44px);font-weight:650;letter-spacing:-.035em;color:var(--ink);
   font-variant-numeric:tabular-nums;line-height:1}
 .cbig-u{font-size:15px;font-weight:600;color:var(--ink2)}
 
-.crows{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:2px}
-.crows>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0}
-.crows dt{font-size:13.5px;color:var(--ink2)}
-.crows dd{margin:0;font-size:14px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
-.crows dd em{font-style:normal;font-weight:500;color:var(--ink3);font-size:12px}
+/* label / value / caption rows — the pattern the best lenders use for results */
+.crows{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);display:grid;gap:2px}
+.crows>div{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:8px 0}
+.crows dt{font-size:13.5px;color:var(--ink2);padding-top:1px}
+.crows dd{margin:0;text-align:right;min-width:0}
+.crows dd b{font-size:15.5px;font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums}
+.crows dd b.ok{color:#0F7A50}
+.crows dd em{display:block;margin-top:1px;font-style:normal;font-size:11.5px;line-height:1.4;color:var(--ink3)}
 
-/* ---- LTV against the product's four bands ---- */
-.bands{margin:2px 0 20px}
-.bands-track{position:relative;display:flex;height:34px;border-radius:9px;overflow:hidden;
-  border:1px solid var(--line)}
-.band{position:relative;display:flex;align-items:center;justify-content:center}
-.band i{font-style:normal;font-size:10.5px;font-weight:650;letter-spacing:.02em;white-space:nowrap;opacity:.9}
-.band.b1{flex:20;background:#DCF2E7;color:#0F7A50}
-.band.b2{flex:15;background:#EAF3DE;color:#3B6D11}
-.band.b3{flex:20;background:#FBEEDA;color:#8A5E0F}
-.band.b4{flex:22;background:#FAE3E3;color:#B23131}
-.band.b4 i{margin-right:6px}
-.bands-cap{position:absolute;top:-3px;bottom:-3px;right:0;width:2.5px;background:#C23B3B;border-radius:2px}
-.bands-cap-note{margin-left:auto;font-size:11.5px;color:var(--ink3);white-space:nowrap}
-.bands-cap-note b{color:#B23131;font-weight:650;font-variant-numeric:tabular-nums}
-.bands-pin{position:absolute;top:-5px;bottom:-5px;width:3px;border-radius:2px;background:var(--ink);
-  box-shadow:0 0 0 2px #fff;transition:left .16s linear}
-.bands-read{display:flex;align-items:center;gap:10px;margin-top:11px;font-size:13px;color:var(--ink2)}
-.bands-ltv b{color:var(--ink);font-variant-numeric:tabular-nums;font-size:14.5px;font-weight:650}
-.bands-tag{font-size:10.5px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;
-  border-radius:999px;padding:3px 10px}
-.bands[data-zone="safe"] .bands-tag{background:rgba(22,160,106,.12);color:#0F7A50;border:1px solid rgba(22,160,106,.28)}
-.bands[data-zone="conservative"] .bands-tag{background:rgba(99,153,34,.12);color:#3B6D11;border:1px solid rgba(99,153,34,.28)}
-.bands[data-zone="balanced"] .bands-tag{background:rgba(168,116,19,.12);color:#8A5E0F;border:1px solid rgba(168,116,19,.30)}
-.bands[data-zone="risky"] .bands-tag{background:rgba(194,59,59,.10);color:#B23131;border:1px solid rgba(194,59,59,.30)}
-
-/* ---- impact panel (mirrors the app's own) ---- */
-.impact{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:16px}
-.impact-h{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink3);font-weight:600;margin-bottom:12px}
-.impact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;min-width:0}
-.im{display:flex;flex-direction:column;gap:2px;min-width:0}
-.im span{font-size:11.5px;font-weight:600;color:var(--ink3)}
-.im b{font-size:20px;font-weight:650;letter-spacing:-.025em;color:var(--ink);font-variant-numeric:tabular-nums}
-.im b.ok{color:#0F7A50}
-.im b.warn{color:#8A5E0F}
-.im b.bad{color:#B23131}
-.im em{font-size:11px;font-style:normal;line-height:1.35;color:var(--ink3)}
-
-/* ---- falling-gold scenario table ---- */
-.scen{margin-bottom:16px;min-width:0}
-.scen-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.scen-h{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink3);font-weight:600;margin-bottom:8px}
-.scen-t{width:100%;border-collapse:collapse;font-size:13.5px}
-.scen-t th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
-  font-weight:650;padding:6px 8px;border-bottom:1px solid var(--line)}
-.scen-t td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink2);font-variant-numeric:tabular-nums}
-.scen-t tr:last-child td{border-bottom:0}
-.scen-t td:first-child{color:var(--ink);font-weight:600}
-.scen-t .st{font-size:10.5px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;
-  border-radius:999px;padding:2px 8px;white-space:nowrap}
-.scen-t .st.safe{background:rgba(22,160,106,.12);color:#0F7A50}
-.scen-t .st.conservative{background:rgba(99,153,34,.12);color:#3B6D11}
-.scen-t .st.balanced{background:rgba(168,116,19,.12);color:#8A5E0F}
-.scen-t .st.risky{background:rgba(194,59,59,.10);color:#B23131}
-.scen-t .st.liq{background:#C23B3B;color:#fff}
-
-.cnote{margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink3)}
-.cnote.risk{border-left:2px solid rgba(194,59,59,.35);padding-left:12px;color:var(--ink2)}
-.cnote.risk b{color:var(--ink)}
-.cacts{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.cacts{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
 .calc .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line2)}
 .calc .btn-ghost:hover{border-color:rgba(20,21,27,.3);background:#fff}
-.calc-foot{margin-top:26px;font-size:12.5px;line-height:1.6;color:var(--ink3);max-width:780px}
+.cnote{margin-top:14px;font-size:12px;line-height:1.55;color:var(--ink3)}
 
-@media (max-width:1040px){
-  .calc-grid{grid-template-columns:minmax(0,1fr)}
-  .impact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-}
+@media (max-width:1040px){.calc-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){
   .calc{padding:7vh 0 8vh}
-  .cpair{grid-template-columns:minmax(0,1fr)}
-  .impact-grid{grid-template-columns:1fr 1fr;gap:12px}
-  .band i{font-size:9px}
-  .band.b2 i,.band.b3 i{display:none}
-  .bands-cap-note{margin-left:0;width:100%}
-  .cbig b{font-size:34px}
+  .cinput.big input{font-size:24px}
+  .risk-tagline{position:static;display:inline-block;margin-bottom:8px}
+  .crows>div{flex-direction:column;gap:2px}
+  .crows dd{text-align:left}
 }
-@media (prefers-reduced-motion:reduce){
-  .pulse::after{animation:none}
-  .ticked{animation:none}
-  .bands-pin{transition:none}
-}
+@media (prefers-reduced-motion:reduce){.pulse::after{animation:none}.ticked{animation:none}}
 
 /* ---------- (B) DEVELOPER — the one dark surface (nightwrap) ---------- */
 .devx{padding:14vh 0 9vh}
@@ -836,6 +799,9 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 .foot-col h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,233,212,.4);font-weight:600;margin-bottom:14px}
 .foot-col a{display:block;font-size:13.5px;color:rgba(242,233,212,.65);padding:4px 0;font-weight:450}
 .foot-col a:hover{color:var(--cream)}
+.legal-line{max-width:760px;margin:0 0 22px;font-size:12.5px;line-height:1.65;color:rgba(242,233,212,.42)}
+.legal-line a{color:rgba(242,233,212,.72);text-decoration:underline;text-underline-offset:2px}
+.legal-line a:hover{color:var(--cream)}
 .legal{margin-top:44px;padding-top:24px;border-top:1px solid var(--wline);font-size:11px;line-height:1.65;color:rgba(242,233,212,.38);columns:2;column-gap:40px}
 .legal p{margin-bottom:8px;break-inside:avoid}
 .legal strong{color:rgba(242,233,212,.55)}
@@ -933,7 +899,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <a href="docs/index.html">Docs</a>
     </div>
     <div class="nav-cta">
-      <span class="goldtick"><span class="gd"></span>GOLD <b class="num" data-gold-price>$4,054</b>/oz</span>
+      <span class="goldtick"><span class="gd"></span>GOLD <b class="num" data-gold-price>$4,054</b>/oz <span class="lv">LIVE</span></span>
       <a class="btn btn-plum" href="#cta" data-magnet>Get started</a>
     </div>
   </div>
@@ -972,10 +938,10 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 <!-- ================= RECEIPTS ================= -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track" id="tickertrack">
-    <span class="tick-item"><span class="gd"></span>BACKED <b>1:1</b> — 22+ TONNES · 1,792 NUMBERED BARS</span>
+    <span class="tick-item"><span class="gd"></span>BACKED <b>1:1</b> — <span data-xaut-t>22</span>+ TONNES · <span data-xaut-bars>1,804</span> NUMBERED BARS</span>
     <span class="tick-item">VAULTED IN <b>SWITZERLAND</b> · ATTESTED <b>QUARTERLY</b></span>
     <span class="tick-item">CUSTODY <b>YOURS — AURI HOLDS $0</b></span>
-    <span class="tick-item">LOANS ON <b>MORPHO — $10B+ DEPOSITS · 25+ AUDITS</b></span>
+    <span class="tick-item">LOANS ON <b>MORPHO — $<span data-morpho-tvl>10</span><span data-morpho-suf>B+</span> DEPOSITS</b></span>
     <span class="tick-item">FUND BY <b>INTERAC (CANADA) · BANK TRANSFER (US)</b></span>
     <span class="tick-item">GOLD <b data-gold-price>$4,054</b>/OZ · LIVE</span>
   </div>
@@ -1126,18 +1092,14 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap">
     <div class="calc-head">
       <h2 class="rv">Run your own numbers.</h2>
-      <p class="sub rv d1">Everything below moves with the real market — the gold price and the borrow rate are read
-        live, not typed in by us. Pick your currency and your unit.</p>
+      <p class="sub rv d1">The gold price and the borrow rate below are read live from the market — not typed in by us.</p>
       <div class="feedbar rv d1">
-        <a class="feed" data-feed-src="gold" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">
-          <span class="pulse" aria-hidden="true"></span>
-          <span class="fl">Gold</span>
-          <b data-gold-price>—</b><span class="fu">/oz</span>
-          <span class="fchg" data-gold-change></span>
+        <a class="feed" href="https://www.tradingview.com/symbols/XAUUSD/" target="_blank" rel="noopener">
+          <span class="pulse" aria-hidden="true"></span><span class="fl">Gold</span>
+          <b data-gold-price>—</b><span class="fu">/oz</span><span class="fchg" data-gold-change></span>
         </a>
-        <a class="feed" data-feed-src="apr" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">
-          <span class="pulse" aria-hidden="true"></span>
-          <span class="fl">Borrow rate</span>
+        <a class="feed" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">
+          <span class="pulse" aria-hidden="true"></span><span class="fl">Borrow rate</span>
           <b data-apr>—</b><span class="fu">APR</span>
         </a>
         <span class="feed-note" data-market-note>reading live market data…</span>
@@ -1145,21 +1107,53 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     </div>
 
     <div class="calc-grid">
-      <!-- ---------------- BUY ---------------- -->
-      <div class="ccard rv" data-calc="buy">
-        <div class="ctop">
-          <span class="ckicker">Buy gold</span>
-          <span class="csub">what you'd own today</span>
+      <!-- ---------------- BORROW — leads, because it is the main reason people come ---------------- -->
+      <div class="ccard rv" data-calc="borrow">
+        <h3 class="cq">How much do you want to borrow?</h3>
+        <div class="cinput big">
+          <input type="number" id="borAmt" min="0" step="100" value="5000" inputmode="decimal"
+                 placeholder="Enter any amount" aria-label="Amount you want to borrow">
+          <select id="curSel" class="cselect" aria-label="Currency"></select>
         </div>
 
-        <label class="cfield">
-          <span class="clabel">You spend</span>
+        <label class="cfield sub">
+          <span class="clabel">Gold you'll lock as security</span>
           <span class="cinput">
-            <input type="number" id="buyAmt" min="1" step="10" value="1000" inputmode="decimal" aria-label="Amount to spend">
-            <select id="buyCur" class="cselect" aria-label="Spending currency"></select>
+            <input type="number" id="colAmt" min="0" step="100" value="14286" inputmode="decimal"
+                   aria-label="Value of gold you will lock">
+            <span class="cunit" data-cur-code>USD</span>
           </span>
+          <span class="chelp"><b data-col-grams>—</b> · you keep ownership — it's freely yours again the moment you repay</span>
         </label>
-        <input class="crange" type="range" id="buyRange" min="10" max="25000" step="10" value="1000" aria-label="Amount to spend">
+
+        <!-- the whole risk story, in one line and its follow-up -->
+        <div class="riskbox" data-zone="conservative">
+          <p class="risk-big">Gold can fall <b data-buffer>—</b> before we'd sell any of it</p>
+          <p class="risk-sub">That's gold at <b data-sell-price>—</b>/oz. Today it's <b data-spot>—</b>/oz.</p>
+          <span class="risk-tagline" data-band>—</span>
+        </div>
+
+        <dl class="crows">
+          <div><dt>Rate</dt><dd><b data-apr>—</b> APR<em>floats with the market</em></dd></div>
+          <div><dt>Interest</dt><dd><b data-int-mo>—</b> a month<em><span data-int-yr>—</span> a year</em></dd></div>
+          <div><dt>Gold sold to fund it</dt><dd><b class="ok">None</b><em>your ounces don't change</em></dd></div>
+        </dl>
+
+        <div class="cacts">
+          <a class="btn btn-plum" href="#cta" data-magnet>Open a credit line</a>
+          <a class="btn btn-ghost" href="docs/borrow.html#borrow-strategies">Why people borrow</a>
+        </div>
+        <p class="cnote">Illustration, not an offer of credit. Your actual rate and limits are shown in the app before you confirm.</p>
+      </div>
+
+      <!-- ---------------- BUY ---------------- -->
+      <div class="ccard rv d1" data-calc="buy">
+        <h3 class="cq">How much gold would that buy?</h3>
+        <div class="cinput big">
+          <input type="number" id="buyAmt" min="0" step="50" value="1000" inputmode="decimal"
+                 placeholder="Enter any amount" aria-label="Amount to spend">
+          <span class="cunit" data-cur-code>USD</span>
+        </div>
 
         <div class="cseg" role="group" aria-label="Gold unit">
           <button type="button" class="segb on" data-unit="g">Grams</button>
@@ -1167,94 +1161,22 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </div>
 
         <div class="cbig">
-          <b data-buy-amount>—</b>
-          <span class="cbig-u" data-buy-unit>g of gold</span>
+          <b data-buy-amount>—</b><span class="cbig-u" data-buy-unit>g of gold</span>
         </div>
 
         <dl class="crows">
-          <div><dt>Gold price used</dt><dd><span data-buy-price>—</span> <em>per <span data-buy-unit-short>g</span></em></dd></div>
-          <div><dt>Auri fee · 0.49%</dt><dd data-buy-fee>—</dd></div>
-          <div><dt>Held as</dt><dd>XAUT · your own vault</dd></div>
+          <div><dt>Gold price used</dt><dd><b data-buy-price>—</b><em>per <span data-buy-unit-short>g</span>, live</em></dd></div>
+          <div><dt>Auri fee · 0.49%</dt><dd><b data-buy-fee>—</b><em>shown before you confirm</em></dd></div>
+          <div><dt>Held as</dt><dd><b>XAUT</b><em>allocated, in your own vault</em></dd></div>
         </dl>
-        <p class="cnote">Real allocated gold, not a price feed — and you can own a fraction of a gram.
-          <a href="docs/buy.html">How buying works</a></p>
-      </div>
 
-      <!-- ---------------- BORROW ---------------- -->
-      <div class="ccard wide rv d1" data-calc="borrow">
-        <div class="ctop">
-          <span class="ckicker">Borrow against it</span>
-          <span class="csub">cash without selling a gram</span>
-        </div>
-
-        <div class="cpair">
-          <label class="cfield">
-            <span class="clabel">Gold you hold</span>
-            <span class="cinput">
-              <input type="number" id="colAmt" min="100" step="100" value="10000" inputmode="decimal" aria-label="Value of gold you hold">
-              <span class="cunit" data-cur-code>USD</span>
-            </span>
-          </label>
-          <label class="cfield">
-            <span class="clabel">You borrow</span>
-            <span class="cinput">
-              <input type="number" id="borAmt" min="0" step="100" value="2000" inputmode="decimal" aria-label="Amount to borrow">
-              <span class="cunit" data-cur-code>USD</span>
-            </span>
-          </label>
-        </div>
-        <input class="crange" type="range" id="borRange" min="0" max="77" step="1" value="20" aria-label="Loan to value percentage">
-
-        <!-- LTV against the product's own risk bands -->
-        <div class="bands" data-zone="safe">
-          <div class="bands-track">
-            <span class="band b1"><i>Safe</i></span>
-            <span class="band b2"><i>Conservative</i></span>
-            <span class="band b3"><i>Balanced</i></span>
-            <span class="band b4"><i>Risky</i></span>
-            <span class="bands-cap" aria-hidden="true"></span>
-            <span class="bands-pin" data-ltv-pin></span>
-          </div>
-          <div class="bands-read">
-            <span class="bands-ltv">LTV <b data-ltv>—</b></span>
-            <span class="bands-tag" data-ltv-tag>—</span>
-            <span class="bands-cap-note">liquidation at <b data-lltv>77%</b></span>
-          </div>
-        </div>
-
-        <!-- mirrors the app's own "impact on your position" panel -->
-        <div class="impact">
-          <span class="impact-h">Impact on your position</span>
-          <div class="impact-grid">
-            <div class="im"><span>Health factor</span><b data-health>—</b><em data-health-note>—</em></div>
-            <div class="im"><span>Liquidation price</span><b data-liq>—</b><em data-liq-drop>—</em></div>
-            <div class="im"><span>Interest</span><b data-int-mo>—</b><em>per month · <span data-int-yr>—</span> a year</em></div>
-            <div class="im"><span>Gold sold</span><b class="ok">None</b><em>your ounces don't change</em></div>
-          </div>
-        </div>
-
-        <!-- what a falling gold price does to this position -->
-        <div class="scen">
-          <span class="scen-h">If gold falls from here</span>
-          <div class="scen-wrap"><table class="scen-t">
-            <thead><tr><th>Gold</th><th>Your LTV</th><th>Health</th><th></th></tr></thead>
-            <tbody data-scenarios></tbody>
-          </table></div>
-        </div>
-
-        <p class="cnote risk"><b>The risk, plainly:</b> if gold falls to the liquidation price, part of your gold is
-          sold to clear the loan. Borrow in the Safe or Conservative band and you keep a wide buffer. The rate floats —
-          it is read live from the market you can open yourself.</p>
         <div class="cacts">
-          <a class="btn btn-plum" href="#cta" data-magnet>Open a credit line</a>
-          <a class="btn btn-ghost" href="docs/borrow.html#borrow-strategies">Borrowing strategies</a>
+          <a class="btn btn-plum" href="#cta" data-magnet>Buy gold</a>
+          <a class="btn btn-ghost" href="docs/buy.html">How buying works</a>
         </div>
+        <p class="cnote">Real allocated gold, not a price feed — and you can own a fraction of a gram.</p>
       </div>
     </div>
-
-    <p class="calc-foot rv">Illustration only — not an offer of credit and not investment advice. Live figures come
-      from public market data and refresh while this page is open; your actual rate, limits and eligibility are shown
-      in the app before you confirm anything.</p>
   </div>
 </section>
 
@@ -1267,7 +1189,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <!-- PROOF -->
   <section class="proof" id="trust">
     <div class="wrap">
-      <h2>1,792 bars.<br>Every one is checkable.</h2>
+      <h2><span data-xaut-bars>1,804</span> bars.<br>Every one is checkable.</h2>
       <p class="psub">Auri's gold is Tether Gold (XAUT) — every gram allocated, London Good Delivery, vaulted in Switzerland, attested quarterly by BDO Italia. This is the whole vault, one mark per bar.</p>
       <div class="barwall rv">
         <canvas id="barwall" aria-label="1,792 gold bars visualized, one mark per bar"></canvas>
@@ -1280,22 +1202,22 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <div class="pl-head gold"><span class="dot"></span><span class="lbl">Tether Gold (XAUT)</span><span class="tail">every gram allocated · checkable to the bar</span></div>
         <div class="pstats">
           <div class="pstat asset">
-            <div class="pv"><span class="num" data-count="707747">707,747</span></div>
-            <div class="unit">ounces of fine gold</div>
-            <div class="mean">Every ounce allocated to a specific numbered bar.</div>
-            <a class="src" href="https://gold.tether.to/transparency" target="_blank" rel="noopener">Attestation <span class="ar" aria-hidden="true">↗</span></a>
+            <div class="pv"><span class="num" data-count="707747" data-xaut-oz>707,747</span></div>
+            <div class="unit">ounces of fine gold <span class="livedot" data-chain-live aria-label="read live from Ethereum"></span></div>
+            <div class="mean">XAUT outstanding, each redeemable for one fine troy ounce — read live from Ethereum.</div>
+            <a class="src" href="https://etherscan.io/token/0x68749665ff8d2d112fa859aa293f07a622782f38" target="_blank" rel="noopener">Token supply <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat asset">
-            <div class="pv"><span class="num" data-count="22">22</span><span class="suf">+</span></div>
-            <div class="unit">tonnes of attested gold</div>
-            <div class="mean">The same reserve by weight — enough to back every balance 1:1.</div>
-            <a class="src" href="https://gold.tether.to/transparency" target="_blank" rel="noopener">Reserves <span class="ar" aria-hidden="true">↗</span></a>
+            <div class="pv"><span class="num" data-count="22" data-xaut-t>22</span></div>
+            <div class="unit">tonnes of gold <span class="livedot" data-chain-live aria-label="derived from live supply"></span></div>
+            <div class="mean">The same reserve by weight, derived from the live token supply.</div>
+            <a class="src" href="https://gold.tether.to/reports" target="_blank" rel="noopener">Reserves reports <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat asset">
-            <div class="pv"><span class="num" data-count="1792">1,792</span></div>
-            <div class="unit">numbered bars</div>
-            <div class="mean">London Good Delivery, vaulted in Switzerland.</div>
-            <a class="src" href="https://gold.tether.to/transparency" target="_blank" rel="noopener">Look up a bar <span class="ar" aria-hidden="true">↗</span></a>
+            <div class="pv"><span class="num" data-count="1804" data-xaut-bars>1,804</span></div>
+            <div class="unit">numbered bars <span class="asof" data-bars-asof>as attested</span></div>
+            <div class="mean">London Good Delivery, serial-tracked, vaulted in Switzerland.</div>
+            <a class="src" href="https://gold.tether.to/reports" target="_blank" rel="noopener">Attestation <span class="ar" aria-hidden="true">↗</span></a>
           </div>
         </div>
       </div>
@@ -1305,10 +1227,10 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <div class="pl-head rails"><span class="dot"></span><span class="lbl">The lending rails</span><span class="tail">loans on Morpho · custody yours</span></div>
         <div class="pstats">
           <div class="pstat">
-            <div class="pv"><span class="pre">$</span><span class="num" data-count="10">10</span><span class="suf">B+</span></div>
-            <div class="unit">deposited on Morpho</div>
+            <div class="pv"><span class="pre">$</span><span class="num" data-count="10" data-morpho-tvl>10</span><span class="suf" data-morpho-suf>B+</span></div>
+            <div class="unit">deposited on Morpho <span class="livedot" data-morpho-live aria-label="read live from Morpho"></span></div>
             <div class="mean">DeFi's largest lending network — the rails Auri's loans run on, alongside major fintechs.</div>
-            <a class="src" href="https://morpho.org" target="_blank" rel="noopener">Morpho <span class="ar" aria-hidden="true">↗</span></a>
+            <a class="src" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">Our market <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat">
             <div class="pv"><span class="num" data-count="25">25</span><span class="suf">+</span></div>
@@ -1454,15 +1376,12 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </div>
         <div class="foot-col">
           <h4>Company</h4>
-          <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Risk Disclosure</a>
+          <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Terms</a><a href="#">Privacy</a><a href="legal.html">Risk &amp; legal</a>
         </div>
       </div>
-      <div class="legal">
-        <p><strong>Auri is a non-custodial software platform. Auri is not a bank and is not a deposit-taking institution</strong>, and it does not provide banking, brokerage, investment, legal, or tax advice. Auri does not hold custody of your funds; your gold and cash balances are held in a wallet that you control.</p>
-        <p>Digital assets — including tokenized gold and stablecoins — are not bank deposits and are not covered by any government or private deposit-insurance or investor-compensation scheme (including CDIC in Canada and FDIC in the US). The value of gold and crypto assets can go down as well as up, and you can lose money.</p>
-        <p>Borrowing against gold carries liquidation risk: if the value of your collateral falls, some or all of your gold may be sold to repay your loan. Boost uses leverage, which amplifies both gains and losses and increases the risk of liquidation. Only use leverage you can afford to lose.</p>
-        <p>Any rates, prices, or figures shown are illustrative examples only and vary with market conditions; the actual rate and price are shown before you confirm any transaction. Nothing on this site is a recommendation or an offer, and nothing here is financial or tax advice — you can export your full transaction history at tax time.</p>
-        <p>Fiat deposits and withdrawals, currency conversion, and identity verification (KYC) are performed by licensed third-party partners, and are subject to their terms, eligibility, and availability in your region. Feature availability varies by region. Lifestyle footage is illustrative.</p>
+      <p class="legal-line">Auri is a non-custodial software platform, not a bank. Digital assets are not
+        deposits and are not covered by any deposit-insurance scheme. Borrowing against gold carries liquidation risk.
+        <a href="legal.html">Read the full risk &amp; legal notice</a>.</p>
       </div>
       <div class="foot-base">
         <span>© 2026 Auri.</span>
@@ -1871,7 +1790,7 @@ window.AURI = (function(){
       el.textContent = state.live ? 'live' : 'indicative';
       el.classList.toggle('is-live', state.live);
     });
-    document.querySelectorAll('.feed').forEach(el=>el.classList.toggle('stale', !state.live));
+    document.querySelectorAll('.feed,.goldtick,.gold-tick').forEach(el=>el.classList.toggle('stale', !state.live));
     document.querySelectorAll('[data-feed]').forEach(el=>el.classList.toggle('stale', !state.live));
     document.querySelectorAll('[data-market-note]').forEach(el=>{
       el.textContent = state.live
@@ -1946,142 +1865,152 @@ window.AURI = (function(){
   return {state, onUpdate, usd, pct, refresh, fx};
 })();
 
-/* ---------- calculators: buy + borrow, driven by the live feed above ----------
-   Risk bands and their names are the product's own borrow-sizing bands, so the site and the
-   app never label the same LTV differently:  Safe <=20%  Conservative <=35%  Balanced <=55%
-   Risky >55%, with liquidation at the market's LLTV. Health factor = LLTV / LTV, matching the
-   app's "above 1.0" convention. */
+/* ================= PROOF NUMBERS — read from public sources, not typed in =================
+   Ounces come from XAUt's totalSupply on Ethereum (1 token = 1 fine troy ounce, 6 decimals),
+   read through public keyless RPCs. Tonnes are derived from it. Morpho's total deposits come
+   from Morpho's own public API. Bars are NOT machine-readable anywhere, so that one stays as
+   the last attested figure and is labelled "as attested" rather than pretending to be live. */
+(function(){
+  const RPCS = ['https://ethereum-rpc.publicnode.com','https://mainnet.gateway.tenderly.co',
+                'https://eth.drpc.org','https://eth-mainnet.public.blastapi.io'];
+  const XAUT = '0x68749665FF8D2d112Fa859AA293F07A622782F38';   /* Tether Gold, Ethereum mainnet */
+  const OZ_T = 31.1034768;
+  const nf = (n,dp=0)=>n.toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp});
+  const put = (sel,val)=>document.querySelectorAll(sel).forEach(e=>{e.textContent=val;});
+  const lit = (sel,on)=>document.querySelectorAll(sel).forEach(e=>e.classList.toggle('stale',!on));
+
+  async function xautOunces(){
+    for(const url of RPCS){
+      try{
+        const r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_call',
+            params:[{to:XAUT,data:'0x18160ddd'},'latest']})});
+        const j = await r.json();
+        if(j && j.result) return Number(BigInt(j.result))/1e6;
+      }catch(e){ /* next RPC */ }
+    }
+    return null;
+  }
+
+  async function morphoTvl(){
+    /* the same endpoint morpho.org and app.morpho.org use for their own headline "Deposits"
+       figure. totalSupply.global is a WAD-scaled hex string. */
+    try{
+      const r = await fetch('https://api.morpho.org/metrics');
+      const j = await r.json();
+      const raw = j && j.totalSupply && j.totalSupply.global;
+      if(!raw) return null;
+      const usd = Number(BigInt(raw)) / 1e18;
+      return usd > 0 ? usd : null;
+    }catch(e){ return null; }
+  }
+
+  (async ()=>{
+    const oz = await xautOunces();
+    if(oz){
+      put('[data-xaut-oz]', nf(oz));
+      put('[data-xaut-t]', nf(oz*OZ_T/1e6, 1));
+      lit('[data-chain-live]', true);
+    } else {
+      lit('[data-chain-live]', false);
+    }
+    const tvl = await morphoTvl();
+    if(tvl){
+      put('[data-morpho-tvl]', nf(tvl/1e9, 1));
+      put('[data-morpho-suf]', 'B');
+      lit('[data-morpho-live]', true);
+    } else {
+      lit('[data-morpho-live]', false);
+    }
+  })();
+})();
+
+/* ---------- calculators: borrow-first, driven by the live feed above ----------
+   Shape follows what consumer collateral lenders actually ship (Nexo, Ledn, Arch): the amount
+   you want to BORROW leads; the gold you lock is derived but stays editable; and the whole
+   risk story is one sentence — how far gold can fall before any is sold — with the price that
+   corresponds to it underneath. No slider, no gauge, no health factor, no scenario table.
+   Band names (Safe / Conservative / Balanced / Risky) are the product's own. */
 (function(){
   const A = window.AURI, calc = document.querySelector('#calculator');
   if(!calc || !A) return;
-  const OZ_G = 31.1034768;
+  const OZ_G = 31.1034768, FEE = 0.0049, DEFAULT_LTV = 0.35;   /* opens in the Conservative band */
   const $ = s => calc.querySelector(s);
   const all = s => calc.querySelectorAll(s);
   const set = (s,v) => all(s).forEach(e => { e.textContent = v; });
-  const clamp = (v,lo,hi) => Math.min(hi, Math.max(lo, isFinite(v) ? v : lo));
+  const num = el => { const v = parseFloat(el.value); return isFinite(v) && v > 0 ? v : 0; };
 
-  const CURRENCIES = ['USD','CAD','EUR','GBP','INR','AED','AUD','SGD','CHF','JPY','PHP','MXN','BRL','NGN','ZAR','SAR','HKD','NZD'];
-  let cur = 'USD', unit = 'g';
+  const CURRENCIES = ['USD','CAD','EUR','GBP','INR'];
+  let cur = 'USD', unit = 'g', editedCollateral = false;
 
-  const buyAmt=$('#buyAmt'), buyRange=$('#buyRange'), buyCur=$('#buyCur');
-  const colAmt=$('#colAmt'), borAmt=$('#borAmt'), borRange=$('#borRange');
+  const borAmt=$('#borAmt'), colAmt=$('#colAmt'), curSel=$('#curSel');
+  const buyAmt=$('#buyAmt');
 
   CURRENCIES.forEach(c => {
-    const o = document.createElement('option'); o.value = c; o.textContent = c; buyCur.appendChild(o);
+    const o = document.createElement('option'); o.value = c; o.textContent = c; curSel.appendChild(o);
   });
-  buyCur.value = 'USD';
+  curSel.value = 'USD';
 
-  /* ---- band helpers: the product's own labels ---- */
-  function band(ltv){
-    if(ltv <= 0.20) return 'safe';
-    if(ltv <= 0.35) return 'conservative';
-    if(ltv <= 0.55) return 'balanced';
-    return 'risky';
-  }
-  const money = (n, code) => {
-    try{
-      return n.toLocaleString(undefined, {style:'currency', currency:code,
-        minimumFractionDigits: n < 100 ? 2 : 0, maximumFractionDigits: n < 100 ? 2 : 0});
-    }catch(e){ return code + ' ' + A.usd(n, n < 100 ? 2 : 0); }
+  const band = ltv => ltv <= 0.20 ? 'safe' : ltv <= 0.35 ? 'conservative' : ltv <= 0.55 ? 'balanced' : 'risky';
+  const money = (n, dp) => {
+    try{ return n.toLocaleString(undefined,{style:'currency',currency:cur,
+      minimumFractionDigits: dp===undefined ? (n<100?2:0) : dp,
+      maximumFractionDigits: dp===undefined ? (n<100?2:0) : dp}); }
+    catch(e){ return cur + ' ' + A.usd(n, n<100?2:0); }
   };
 
-  /* ---- BUY ---- */
-  function renderBuy(){
-    const st = A.state;
-    const rate = A.fx(cur);                        /* units of `cur` per 1 USD */
-    const priceCur = st.goldUsd * rate;            /* gold price per oz in the chosen currency */
-    const spend = clamp(parseFloat(buyAmt.value), 0, 1e12);
-    const net = spend * (1 - 0.0049);              /* Auri fee 0.49% */
-    const oz = priceCur > 0 ? net / priceCur : 0;
-    const amount = unit === 'g' ? oz * OZ_G : oz;
-
-    set('[data-buy-amount]', amount.toLocaleString(undefined,
-        {minimumFractionDigits: unit === 'g' ? 2 : 4, maximumFractionDigits: unit === 'g' ? 2 : 4}));
-    set('[data-buy-unit]', unit === 'g' ? 'g of gold' : 'troy oz of gold');
-    set('[data-buy-unit-short]', unit === 'g' ? 'g' : 'oz');
-    set('[data-buy-price]', money(unit === 'g' ? priceCur / OZ_G : priceCur, cur));
-    set('[data-buy-fee]', money(spend * 0.0049, cur));
-  }
-
-  /* ---- BORROW ---- */
   function renderBorrow(){
-    const st = A.state, lltv = st.lltv, apr = st.borrowApy;
-    const rate = A.fx(cur);
-    const C = clamp(parseFloat(colAmt.value), 0, 1e12);
-    const cap = C * lltv;
-    let B = clamp(parseFloat(borAmt.value), 0, cap);
-    if(parseFloat(borAmt.value) > cap) borAmt.value = Math.floor(cap);
-    const ltv = C > 0 ? B / C : 0;
+    const st = A.state, lltv = st.lltv, apr = st.borrowApy, rate = A.fx(cur);
+    const spot = st.goldUsd * rate;                    /* gold price per oz in the chosen currency */
+    const B = num(borAmt);
 
-    borRange.max = Math.round(lltv * 100);
-    borRange.value = Math.round(ltv * 100);
-    set('[data-lltv]', Math.round(lltv * 100) + '%');
-    set('[data-ltv]', (ltv * 100).toFixed(1) + '%');
-
-    const z = band(ltv);
-    const bands = $('.bands');
-    bands.dataset.zone = z;
-    set('[data-ltv-tag]', z);
-    const pin = $('[data-ltv-pin]');
-    if(pin) pin.style.left = Math.min(100, (ltv / lltv) * 100) + '%';
-
-    /* health factor, as the app shows it: above 1.0 is not yet liquidatable */
-    const hf = ltv > 0 ? lltv / ltv : Infinity;
-    const hEl = $('[data-health]');
-    if(hEl){
-      hEl.textContent = B > 0 ? (hf > 99 ? '99+' : hf.toFixed(2)) : '—';
-      hEl.className = B === 0 ? '' : hf >= 2 ? 'ok' : hf >= 1.3 ? 'warn' : 'bad';
+    if(!editedCollateral) colAmt.value = B > 0 ? Math.round(B / DEFAULT_LTV) : 0;
+    let C = num(colAmt);
+    if(B > 0 && C < B / lltv){                          /* never show an impossible position */
+      C = Math.ceil(B / lltv); colAmt.value = C;
     }
-    set('[data-health-note]', B > 0
-      ? (hf >= 2 ? 'comfortable — above 2.0' : hf >= 1.3 ? 'thinner — watch it' : 'close to liquidation')
-      : 'no loan, no risk');
 
-    /* you hold C/price ounces; liquidation when loan / (oz x price) = lltv */
-    const liqCur = C > 0 && B > 0 ? (B * (st.goldUsd * rate)) / (C * lltv) : 0;
-    set('[data-liq]', B > 0 ? money(liqCur, cur) + ' /oz' : '—');
-    const drop = B > 0 ? (1 - (ltv / lltv)) : 0;
-    set('[data-liq-drop]', B > 0 ? 'gold can fall ' + (drop * 100).toFixed(0) + '% first' : 'nothing to liquidate');
+    const ltv = C > 0 ? B / C : 0;
+    const z = band(ltv);
+    const box = $('.riskbox');
+    if(box) box.dataset.zone = z;
+    set('[data-band]', z);
+
+    const grams = spot > 0 ? (C / spot) * OZ_G : 0;
+    set('[data-col-grams]', grams.toLocaleString(undefined,
+        {minimumFractionDigits:2, maximumFractionDigits:2}) + ' g of gold');
+
+    const buffer = ltv > 0 ? Math.max(0, 1 - ltv / lltv) : 1;
+    const sell = spot * (ltv / lltv);
+    set('[data-buffer]', (buffer * 100).toFixed(0) + '%');
+    set('[data-sell-price]', B > 0 ? money(sell, 0) : '—');
+    set('[data-spot]', money(spot, 0));
 
     const yr = B * apr;
-    set('[data-int-mo]', money(yr / 12, cur));
-    set('[data-int-yr]', money(yr, cur));
-
-    /* what a falling gold price does: LTV rises as collateral value falls */
-    const tb = $('[data-scenarios]');
-    if(tb){
-      const rows = [0.10, 0.20, 0.30, 0.40].map(d => {
-        const newLtv = C > 0 && B > 0 ? B / (C * (1 - d)) : 0;
-        const liquidated = newLtv >= lltv;
-        const nz = liquidated ? 'liq' : band(newLtv);
-        const nhf = newLtv > 0 ? lltv / newLtv : Infinity;
-        const tr = document.createElement('tr');
-
-        const td1 = document.createElement('td');
-        td1.textContent = '−' + (d * 100).toFixed(0) + '%';
-        const td2 = document.createElement('td');
-        td2.textContent = B > 0 ? (Math.min(newLtv, 9.99) * 100).toFixed(1) + '%' : '—';
-        const td3 = document.createElement('td');
-        td3.textContent = B > 0 ? (liquidated ? '<1.00' : nhf.toFixed(2)) : '—';
-        const td4 = document.createElement('td');
-        const tag = document.createElement('span');
-        tag.className = 'st ' + nz;
-        tag.textContent = liquidated ? 'liquidated' : nz;
-        td4.appendChild(tag);
-
-        tr.append(td1, td2, td3, td4);
-        return tr;
-      });
-      tb.replaceChildren(...rows);
-    }
+    set('[data-int-mo]', money(yr / 12));
+    set('[data-int-yr]', money(yr));
   }
 
-  const renderAll = () => { renderBuy(); renderBorrow(); };
+  function renderBuy(){
+    const st = A.state, rate = A.fx(cur), spot = st.goldUsd * rate;
+    const spend = num(buyAmt);
+    const oz = spot > 0 ? (spend * (1 - FEE)) / spot : 0;
+    const amount = unit === 'g' ? oz * OZ_G : oz;
+    set('[data-buy-amount]', amount.toLocaleString(undefined,
+        {minimumFractionDigits: unit==='g'?2:4, maximumFractionDigits: unit==='g'?2:4}));
+    set('[data-buy-unit]', unit === 'g' ? 'g of gold' : 'troy oz of gold');
+    set('[data-buy-unit-short]', unit === 'g' ? 'g' : 'oz');
+    set('[data-buy-price]', money(unit === 'g' ? spot / OZ_G : spot));
+    set('[data-buy-fee]', money(spend * FEE));
+  }
 
-  /* ---- wiring ---- */
-  buyAmt.addEventListener('input', ()=>{ buyRange.value = clamp(parseFloat(buyAmt.value),10,25000); renderBuy(); });
-  buyRange.addEventListener('input', ()=>{ buyAmt.value = buyRange.value; renderBuy(); });
-  buyCur.addEventListener('change', ()=>{
-    cur = buyCur.value;
+  const renderAll = () => { renderBorrow(); renderBuy(); };
+
+  borAmt.addEventListener('input', ()=>{ editedCollateral = false; renderBorrow(); });
+  colAmt.addEventListener('input', ()=>{ editedCollateral = true; renderBorrow(); });
+  buyAmt.addEventListener('input', renderBuy);
+  curSel.addEventListener('change', ()=>{
+    cur = curSel.value;
     all('[data-cur-code]').forEach(e => { e.textContent = cur; });
     renderAll();
   });
@@ -2090,13 +2019,6 @@ window.AURI = (function(){
     all('.segb').forEach(x => x.classList.toggle('on', x === b));
     renderBuy();
   }));
-  colAmt.addEventListener('input', renderBorrow);
-  borAmt.addEventListener('input', renderBorrow);
-  borRange.addEventListener('input', ()=>{
-    const C = clamp(parseFloat(colAmt.value),0,1e12);
-    borAmt.value = Math.round(C * (parseFloat(borRange.value)/100));
-    renderBorrow();
-  });
 
   A.onUpdate(renderAll);
 })();
