@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risk &amp; legal notice — Auri</title>
+<meta name="description" content="What Auri is and is not, why your balances are not insured deposits, how liquidation works when you borrow against gold, and the risks of the third-party infrastructure Auri is built on.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%20role%3D%22img%22%20aria-label%3D%22Auri%20ai%20lettermark%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22ag%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22%2F%3E%3Cstop%20offset%3D%220.5%22%20stop-color%3D%22%23D8B366%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22url%28%23ag%29%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22%2F%3E%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22%2F%3E%3Cpath%20d%3D%22M31.7%207.3A3.8%203.8%200%201%201%2039.3%207.3A3.8%203.8%200%201%201%2031.7%207.3ZM7%207.3Q18.2731%206.86869%2029.5462%206.08846L29.5462%208.51154Q18.2731%207.73131%207%207.3Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{--ink:#F2E9D4;--ink2:rgba(242,233,212,.72);--ink3:rgba(242,233,212,.45);
+ --night:#0B0906;--card:rgba(255,255,255,.03);--line:rgba(242,233,212,.13);--plum:#C4699A;
+ --mono:"Geist Mono",ui-monospace,monospace}
+html{scroll-behavior:smooth;scroll-padding-top:86px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--night);color:var(--ink2);
+ font-family:"Geist",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.7;
+ -webkit-font-smoothing:antialiased}
+a{color:var(--plum)}a:hover{color:var(--ink)}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;padding:14px 24px;
+ background:rgba(11,9,6,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wm{height:22px;color:var(--plum)}
+.top nav{margin-left:auto;display:flex;gap:18px;font-size:14px}
+.top nav a{color:var(--ink3);text-decoration:none}.top nav a:hover{color:var(--ink)}
+.wrap{max-width:1080px;margin:0 auto;padding:52px 24px 100px;display:grid;
+ grid-template-columns:236px minmax(0,1fr);gap:52px}
+h1{grid-column:1/-1;margin:0 0 6px;font-size:clamp(30px,4vw,44px);line-height:1.08;
+ letter-spacing:-.035em;color:var(--ink)}
+.sub{grid-column:1/-1;margin:0 0 30px;font-size:17px;color:var(--ink3);max-width:640px}
+.toc{position:sticky;top:96px;align-self:start;font-size:13.5px}
+.toc b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink3);margin-bottom:10px;font-weight:600}
+.toc a{display:block;padding:5px 0;color:var(--ink3);text-decoration:none;line-height:1.4}
+.toc a:hover{color:var(--ink)}
+main{min-width:0}
+section{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:0}
+h2{margin:0 0 14px;font-size:21px;letter-spacing:-.02em;color:var(--ink);scroll-margin-top:96px}
+p{margin:0 0 14px;font-size:15.5px}
+strong{color:var(--ink);font-weight:620}
+.foot{max-width:1080px;margin:0 auto;padding:0 24px 70px;font-size:12.5px;color:var(--ink3)}
+@media (max-width:860px){
+ .wrap{grid-template-columns:1fr;gap:0;padding:34px 20px 70px}
+ .toc{position:static;margin-bottom:30px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+ .toc a{display:inline-block;margin-right:14px}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 363 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg></a>
+  <nav><a href="index.html">Site</a><a href="docs/index.html">Docs</a></nav>
+</header>
+<div class="wrap">
+  <h1>Risk &amp; legal notice</h1>
+  <p class="sub">The things that matter about what Auri is, what it is not, and what can go wrong. Written to be read,
+    not to be skipped.</p>
+  <aside class="toc"><b>On this page</b><a href="#what-auri-is">What Auri is, and is not</a><a href="#not-insured">Your balances are not insured deposits</a><a href="#borrowing-risk">Borrowing and liquidation risk</a><a href="#leverage">Leverage (Boost)</a><a href="#figures">Figures, rates and illustrations</a><a href="#partners-regions">Partners, regions and identity checks</a><a href="#third-party">Third-party technology</a></aside>
+  <main><section id="what-auri-is"><h2>What Auri is, and is not</h2><p><strong>Auri is a non-custodial software platform.</strong> It is not a bank, not a deposit-taking institution,
+not a broker-dealer, and not an investment adviser. Auri does not provide banking, brokerage, investment, legal or
+tax advice.</p>
+<p>Auri does not take custody of your assets. Your gold and cash balances sit in a wallet that you control, and Auri
+holds none of your money on its own balance sheet. Auri's role is the software you use to buy, hold, move and borrow
+against that asset — plus the on-ramp and off-ramp partners that connect it to the banking system in your country.</p>
+<p>Because Auri is non-custodial, the protections that come with a bank account do not apply here. What you get
+instead is ownership and verifiability: you can check your holding on a public blockchain at any time, and you can
+move it without asking Auri's permission.</p></section><section id="not-insured"><h2>Your balances are not insured deposits</h2><p>Digital assets — including tokenized gold and stablecoins — are <strong>not bank deposits</strong>. They are not
+covered by any government or private deposit-insurance or investor-compensation scheme. That includes the Canada
+Deposit Insurance Corporation (CDIC) in Canada, the Federal Deposit Insurance Corporation (FDIC) and the Securities
+Investor Protection Corporation (SIPC) in the United States, the Financial Services Compensation Scheme (FSCS) in the
+United Kingdom, and every equivalent scheme elsewhere.</p>
+<p>The value of gold and of crypto assets can go down as well as up. <strong>You can lose money.</strong> Nothing
+about gold being a long-established store of value guarantees its price will rise, or that it will not fall sharply
+over the period you happen to hold it.</p></section><section id="borrowing-risk"><h2>Borrowing and liquidation risk</h2><p>When you borrow against your gold, that gold becomes collateral. If its value falls far enough relative to what
+you owe, <strong>some or all of your gold can be sold to repay the loan</strong>. This is called liquidation. It can
+happen quickly, it can happen while you are asleep, and it does not require your consent — it is the condition on
+which the loan was made.</p>
+<p>The level at which this happens is set by the lending market, not by Auri, and it is shown to you in the app
+before you confirm any borrow. Borrowing a smaller fraction of your gold's value leaves more room for the price to
+fall before that point is reached.</p>
+<p>Borrow rates float with market conditions. A rate you see today is not fixed for the life of the loan.</p></section><section id="leverage"><h2>Leverage (Boost)</h2><p>Boost uses leverage to multiply your exposure to the gold price. <strong>Leverage amplifies losses exactly as
+hard as it amplifies gains</strong>, and it brings the liquidation point much closer. A price move that would be a
+mild setback on an unleveraged holding can close a leveraged position entirely.</p>
+<p>Boost is intended for experienced users who understand this and can afford to lose the position. Only use leverage
+you can afford to lose.</p></section><section id="figures"><h2>Figures, rates and illustrations</h2><p>Any rates, prices, projections or figures shown on this site — including the calculators — are
+<strong>illustrative only</strong>. They are not a quote, not an offer of credit, and not a promise of any particular
+outcome. Live figures are read from public market data and change continuously.</p>
+<p>The actual rate, price, fee and limits that apply to you are shown in the app before you confirm a transaction.
+Where this site shows a figure sourced from a third party — the gold price, the borrow rate, token supply, or a
+lending market's size — it links to the source it read, so you can check it yourself.</p>
+<p>Reserve and attestation figures reflect the most recent published report at the time of reading, and a market
+value quoted in an attestation reflects the gold price on that report's date, not today's.</p>
+<p>Nothing on this site is a recommendation, a solicitation or an offer, and nothing here is financial, investment or
+tax advice.</p></section><section id="partners-regions"><h2>Partners, regions and identity checks</h2><p>Fiat deposits and withdrawals, currency conversion, and identity verification are performed by licensed
+third-party partners. Those services are subject to the partners' own terms, eligibility criteria and availability,
+and the partner used depends on where you live.</p>
+<p>Identity verification (KYC) is required where the law of your country requires it for the on-ramp or off-ramp you
+choose. Funding methods differ by region — for example, Interac e-Transfer is available in Canada and not elsewhere.
+Feature availability varies by region and can change.</p>
+<p>You are responsible for determining whether your use of Auri is lawful where you live, and for meeting your own
+tax obligations. Auri is not a tax adviser. Disposing of gold, and in some countries gifting it, can be a taxable
+event; you can export your full transaction history at tax time.</p></section><section id="third-party"><h2>Third-party technology</h2><p>Auri is built on public infrastructure it does not control: the Tether Gold token that represents the underlying
+metal, the blockchains that record it, the cross-chain mechanism that represents it on other networks, the Morpho
+lending markets that loans run through, and the stablecoins used for cash balances.</p>
+<p>Each of these carries its own risk, including smart-contract defects, oracle failure, bridge failure and
+issuer risk. Independent security reviews reduce that risk; they do not eliminate it. A failure in any of these
+components could affect your funds even if Auri's own software works exactly as intended.</p>
+<p>Media on this site, including lifestyle footage, is illustrative.</p></section></main>
+</div>
+<p class="foot">Last updated 30 July 2026. This notice describes general product risk; it is not legal advice and does
+not form part of any contract. Where a partner provides a regulated service, that partner's own terms apply.</p>
+</body>
+</html>

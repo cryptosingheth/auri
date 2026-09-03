@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gifting, sending and remitting — Auri docs</title>
+<meta name="description" content="How to gift gold with a claim link or QR code, send gold to an Auri user or an Arbitrum wallet, what happens to unclaimed gifts, and what cross-border remittance will look like when it ships.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%20role%3D%22img%22%20aria-label%3D%22Auri%20ai%20lettermark%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22ag%22%20x1%3D%2224%22%20y1%3D%224%22%20x2%3D%2224%22%20y2%3D%2246%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EFD9A3%22%2F%3E%3Cstop%20offset%3D%220.5%22%20stop-color%3D%22%23D8B366%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23B98A38%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22url%28%23ag%29%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M9%2031a15%2015%200%201%201%2030%200a15%2015%200%201%201%20-30%200ZM16.5%2031a7.5%207.5%200%201%201%2015%200a7.5%207.5%200%201%201%20-15%200Z%22%2F%3E%3Crect%20x%3D%2232%22%20y%3D%2215.5%22%20width%3D%227%22%20height%3D%2230.5%22%2F%3E%3Cpath%20d%3D%22M31.7%207.3A3.8%203.8%200%201%201%2039.3%207.3A3.8%203.8%200%201%201%2031.7%207.3ZM7%207.3Q18.2731%206.86869%2029.5462%206.08846L29.5462%208.51154Q18.2731%207.73131%207%207.3Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-var-latin.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-style:normal;font-weight:100 900;font-display:swap;src:url(../../assets/fonts/geist-mono-var-latin.woff2) format('woff2')}
+
+*{box-sizing:border-box}
+:root{
+  --ink:#15161B; --ink2:#42454E; --ink3:#8A8F9C;
+  --bg:#F6F5F8; --card:#fff; --well:#EFEEF4;
+  --line:rgba(20,21,27,.09); --line2:rgba(20,21,27,.15);
+  --plum:#852152; --plum-l:#A12C66; --plum-pale:#F7EDF3; --gold:#B08A3E;
+  --green:#16A06A; --amber:#A87413; --red:#C23B3B;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,monospace;
+  --sidebar:284px; --topbar:60px; --measure:74ch;
+  --e:cubic-bezier(.22,1,.36,1);
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--topbar) + 26px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink2);
+  font-family:"Geist",system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--plum);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:2px}
+img,svg,video{max-width:100%;display:block}
+
+.top{position:sticky;top:0;z-index:60;height:var(--topbar);display:flex;align-items:center;gap:16px;
+  padding:0 22px;background:rgba(246,245,248,.86);backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line)}
+.top .wm{height:21px;width:auto;color:var(--plum)}
+.top .tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--plum);background:var(--plum-pale);border:1px solid rgba(133,33,82,.16);
+  border-radius:999px;padding:3px 9px}
+.top nav{display:flex;gap:16px;margin-left:auto;font-size:14px}
+.top nav a{color:var(--ink2)}
+.top nav a:hover{color:var(--ink);text-decoration:none}
+.burger{display:none;margin-left:auto;background:#fff;border:1px solid var(--line2);border-radius:9px;
+  padding:7px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+
+.shell{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);max-width:1500px;margin:0 auto}
+.side{position:sticky;top:var(--topbar);align-self:start;height:calc(100vh - var(--topbar));
+  overflow-y:auto;padding:24px 14px 70px 24px;border-right:1px solid var(--line);
+  scrollbar-width:thin;scrollbar-color:rgba(133,33,82,.3) transparent}
+.side::-webkit-scrollbar{width:8px}
+.side::-webkit-scrollbar-thumb{background:rgba(133,33,82,.26);border-radius:8px}
+
+.ask{position:relative;margin-bottom:20px}
+.ask input{width:100%;border:1px solid var(--line2);border-radius:11px;background:#fff;
+  padding:10px 12px 10px 34px;font:inherit;font-size:13.5px;color:var(--ink);outline:none;
+  transition:border-color .2s,box-shadow .2s}
+.ask input::placeholder{color:var(--ink3)}
+.ask input:focus{border-color:rgba(133,33,82,.45);box-shadow:0 0 0 3px rgba(133,33,82,.10)}
+.ask .mag{position:absolute;left:11px;top:19px;width:15px;height:15px;color:var(--ink3);pointer-events:none}
+.ask-hint{margin:7px 2px 0;font-size:11px;color:var(--ink3);line-height:1.4}
+.answers{position:absolute;top:44px;left:0;right:-6px;z-index:70;background:#fff;
+  border:1px solid var(--line2);border-radius:14px;box-shadow:0 22px 50px -26px rgba(20,18,60,.42);
+  padding:6px;max-height:min(64vh,520px);overflow-y:auto;display:none}
+.answers.open{display:block}
+.ans-hit{display:block;padding:10px 11px;border-radius:10px;color:inherit}
+.ans-hit:hover,.ans-hit:focus-visible{background:var(--bg);text-decoration:none;outline:none}
+.ans-crumb{display:block;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
+  font-weight:650;margin-bottom:2px}
+.ans-h{display:block;font-size:14px;font-weight:640;color:var(--ink);line-height:1.35}
+.ans-x{display:block;margin-top:3px;font-size:12.5px;line-height:1.5;color:var(--ink2)}
+.ans-x mark{background:rgba(196,162,92,.30);color:inherit;border-radius:3px;padding:0 1px}
+.ans-none{padding:14px 12px;font-size:13px;color:var(--ink3);line-height:1.5}
+
+.side h4{display:flex;align-items:center;gap:7px;margin:22px 0 7px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);font-weight:600}
+.side h4:first-of-type{margin-top:6px}
+.side h4 svg{width:14px;height:14px;color:var(--plum-l);opacity:.85;flex:none}
+.side a.nl{display:block;padding:6px 12px;margin-left:-4px;border-radius:9px;font-size:14px;
+  line-height:1.35;color:var(--ink2);border-left:2px solid transparent}
+.side a.nl:hover{background:#fff;color:var(--ink);text-decoration:none}
+.side a.nl[aria-current=page]{background:var(--plum-pale);color:var(--plum);font-weight:600;
+  border-left-color:var(--plum)}
+
+.body{display:grid;grid-template-columns:minmax(0,1fr) 212px;gap:44px;padding:38px 40px 110px}
+main{min-width:0;max-width:calc(var(--measure) + 8px)}
+.crumbs{font-size:12.5px;color:var(--ink3);margin-bottom:16px}
+.crumbs b{color:var(--plum);font-weight:600}
+main h1{margin:0 0 8px;font-size:clamp(30px,3.6vw,43px);line-height:1.06;letter-spacing:-.035em;
+  color:var(--ink);font-weight:650}
+.lead{font-size:18.5px;line-height:1.62;color:var(--ink2);margin:0 0 32px;max-width:var(--measure)}
+main h2{margin:52px 0 14px;font-size:25px;line-height:1.15;letter-spacing:-.022em;color:var(--ink);
+  font-weight:650;scroll-margin-top:calc(var(--topbar) + 24px)}
+main h3{margin:32px 0 9px;font-size:18px;letter-spacing:-.015em;color:var(--ink);font-weight:640}
+main p{margin:0 0 15px;max-width:var(--measure)}
+main ul,main ol{margin:0 0 16px;padding-left:22px;max-width:var(--measure)}
+main li{margin:6px 0}
+main li::marker{color:var(--plum-l)}
+main strong{color:var(--ink);font-weight:640}
+code{font-family:var(--mono);font-size:.87em;background:#fff;border:1px solid var(--line);
+  border-radius:5px;padding:1.5px 5px;color:var(--ink)}
+
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:20px 0;max-width:var(--measure)}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 46px;margin:0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;
+  border-radius:50%;background:var(--plum);color:#fff;font-size:13.5px;font-weight:650;
+  display:flex;align-items:center;justify-content:center}
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:33px;bottom:3px;
+  width:1.5px;background:var(--line2)}
+
+.callout{margin:22px 0;padding:14px 16px 14px 15px;border-radius:12px;background:#fff;
+  border:1px solid var(--line);border-left:3px solid var(--ink3);max-width:var(--measure)}
+.callout p{margin:0;font-size:14.5px}
+.callout p+p{margin-top:8px}
+.callout.info{border-left-color:var(--plum-l)}
+.callout.warn{border-left-color:var(--amber);background:#FFFCF5}
+.callout.risk{border-left-color:var(--red);background:#FFF8F8}
+.callout.soon{border-left-color:var(--gold);background:#FFFDF7}
+
+table.kv{width:100%;border-collapse:separate;border-spacing:0;margin:22px 0;font-size:14.5px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;max-width:var(--measure)}
+table.kv th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);
+  font-weight:650;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBFAFC}
+table.kv td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+table.kv tr:last-child td{border-bottom:0}
+table.kv td:first-child{color:var(--ink);font-weight:560}
+
+.strategy{margin:44px 0;padding:26px 26px 10px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;box-shadow:0 1px 2px rgba(20,18,60,.03),0 18px 40px -30px rgba(20,18,60,.18);
+  max-width:var(--measure)}
+.strategy>h2{margin-top:0}
+.strategy::before{content:"Why and when";display:inline-block;font-family:var(--mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--plum);background:var(--plum-pale);
+  border:1px solid rgba(133,33,82,.18);border-radius:999px;padding:3px 10px;margin-bottom:14px}
+
+figure{margin:28px 0;max-width:var(--measure)}
+figure.shot img{border-radius:20px;border:1px solid var(--line);max-width:276px;
+  box-shadow:0 20px 44px -28px rgba(20,18,60,.34)}
+figure.diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;overflow-x:auto}
+figcaption{margin-top:10px;font-size:12.5px;line-height:1.5;color:var(--ink3)}
+
+.rail{position:sticky;top:calc(var(--topbar) + 30px);align-self:start;font-size:13px;
+  max-height:calc(100vh - var(--topbar) - 60px);overflow-y:auto}
+.rail b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:9px;font-weight:600}
+.rail a{display:block;padding:4px 0 4px 11px;border-left:2px solid var(--line);color:var(--ink3);
+  line-height:1.4}
+.rail a:hover{color:var(--ink);border-left-color:var(--line2);text-decoration:none}
+.rail a.on{color:var(--plum);border-left-color:var(--plum);font-weight:600}
+
+.pager{display:flex;gap:12px;margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+  max-width:var(--measure)}
+.pager a{flex:1;max-width:50%;padding:13px 16px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;color:inherit}
+.pager a:hover{border-color:var(--line2);text-decoration:none}
+.pager .dir{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);
+  font-weight:650;margin-bottom:3px}
+.pager .ttl{display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.pager .next{text-align:right;margin-left:auto}
+.docfoot{margin-top:36px;font-size:12.5px;line-height:1.6;color:var(--ink3);max-width:var(--measure)}
+.docfoot a{color:var(--ink2);text-decoration:underline;text-underline-offset:2px}
+
+@media (max-width:1180px){
+  .body{grid-template-columns:minmax(0,1fr);gap:0}
+  .rail{display:none}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;top:var(--topbar);left:0;bottom:0;width:min(320px,86vw);z-index:65;
+    background:#fff;border-right:1px solid var(--line);transform:translateX(-102%);
+    transition:transform .28s var(--e);box-shadow:0 0 60px rgba(20,18,60,.18)}
+  body.nav-open .side{transform:none}
+  body.nav-open::after{content:"";position:fixed;inset:var(--topbar) 0 0;background:rgba(20,18,60,.35);
+    z-index:64}
+  .top nav{display:none}
+  .burger{display:block}
+  .body{padding:26px 20px 80px}
+  main h1{font-size:29px}
+  .lead{font-size:17px}
+  figure.shot img{max-width:100%}
+}
+@media (prefers-reduced-motion:reduce){.side{transition:none}}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../index.html" aria-label="Auri home"><svg class="wm" viewBox="0 0 363 152" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg></a>
+  <span class="tag">Docs</span>
+  <nav>
+    <a href="../index.html">Site</a>
+    <a href="../index.html#calculator">Calculators</a>
+    <a href="../legal.html">Risk &amp; legal</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="sidenav">Menu</button>
+</header>
+
+<div class="shell">
+  <aside class="side" id="sidenav">
+    <div class="ask">
+      <svg class="mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="askq" placeholder="Ask a question…" autocomplete="off"
+             aria-label="Ask a question about Auri" aria-expanded="false" aria-controls="answers">
+      <div class="answers" id="answers" role="listbox" aria-label="Answers"></div>
+      <p class="ask-hint">Searches every page and jumps you to the answer.</p>
+    </div>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 10l7-7 7 7"/></svg>Start</h4>
+    <a class="nl" href="index.html">Overview</a>
+    <a class="nl" href="start.html">Start here</a>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Everyday</h4>
+    <a class="nl" href="buy.html">Buying gold</a>
+    <a class="nl" href="cash.html">Cash in and out</a>
+    <a class="nl" href="gift-send.html" aria-current="page">Gift, send, remit</a>
+    <a class="nl" href="auto-invest.html">Auto-invest</a>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Borrowing</h4>
+    <a class="nl" href="borrow.html">Borrow against gold</a>
+    <a class="nl" href="repay.html">Repay and unlock</a>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Advanced</h4>
+    <a class="nl" href="boost.html">Boost (leverage)</a>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Trust & safety</h4>
+    <a class="nl" href="trust.html">How gold is held</a>
+    <a class="nl" href="risks.html">Risks</a>
+    <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M8 7h8M8 11h6"/></svg>Reference</h4>
+    <a class="nl" href="reference.html">Fees, limits, parameters</a>
+  </aside>
+
+  <div class="body">
+    <main>
+      <div class="crumbs"><b>Everyday</b> &rsaquo; Gifting, sending and remitting</div>
+      <h1>Gifting, sending and remitting</h1>
+<p class="lead">Gold you own can leave your account three ways: as a <strong>gift</strong> the recipient claims through a link or QR code, as a <strong>send</strong> straight to another Auri user or an Arbitrum wallet, or — once it ships — as a <strong>cross-border remittance</strong> paid out in local currency. This page covers what each does, what the person on the other end has to do, and when not to use any of them.</p>
+
+<h2 id="gift-or-send">Gift or send: which one you want</h2>
+
+<p>All of them move the same asset and all require step-up verification. What differs is who the recipient is and what they must do next.</p>
+
+<table class="kv">
+  <thead><tr><th>Use</th><th>When</th><th>What the recipient does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Gift</strong></td><td>They probably have no Auri account, and you want an occasion, a message and something shareable.</td><td>Opens a claim link or scans a QR code, creates an account, and the gold lands in their vault.</td></tr>
+    <tr><td><strong>Send</strong> to <code>@username</code></td><td>They already use Auri.</td><td>Nothing. It arrives as gold, no claim link.</td></tr>
+    <tr><td><strong>Send</strong> to a wallet</td><td>They self-custody and want the token itself.</td><td>Nothing, but they must control an Arbitrum One wallet. Cannot be reversed.</td></tr>
+    <tr><td><strong>Remit</strong></td><td>They need spendable local currency, not gold.</td><td>Nothing — payout lands in their account. <strong>Not live yet.</strong></td></tr>
+  </tbody>
+</table>
+
+<h2 id="before-you-start">Before you start</h2>
+
+<ul>
+  <li><strong>You need gold already.</strong> These flows move gold you hold; they do not buy it. See <a href="buy.html">Buy gold</a> — funding is regional (Interac e-Transfer in Canada, bank transfer in the US).</li>
+  <li><strong>Only free gold can move.</strong> With a loan open, part of your gold is locked as collateral and cannot be gifted, sent or sold. The app caps the amount at your free balance; to move more, repay or unlock (see <a href="borrow.html">Borrow against gold</a>).</li>
+  <li><strong>Step-up verification is mandatory</strong> on every gift, send and remittance — a passkey approval, or two six-digit codes (one emailed, one from your authenticator). This is separate from signing in.</li>
+  <li><strong>For an <code>@username</code> send, get the handle exactly right</strong> — 3–20 characters, lowercase letters, numbers and underscores, set by the recipient in Profile.</li>
+  <li><strong>For a wallet send, get the address from the recipient directly.</strong> Never from a message you did not expect.</li>
+</ul>
+
+<h2 id="gift-gold">Gift gold</h2>
+
+<p><strong>Time:</strong> about a minute. <strong>Cost:</strong> network fee covered by Auri; see <a href="#fees-and-limits">fees and limits</a>. <strong>Reversibility:</strong> cancellable any time before the recipient claims.</p>
+
+<ol class="steps">
+  <li><strong>Open Gift gold</strong> from the Actions catalogue or the move-money menu, under <em>Move gold</em>.</li>
+  <li><strong>Choose delivery.</strong> <em>Contact</em> sends the claim link for you, by mobile number or email — the mobile field offers dial codes for Canada, the US, India, the UK, the UAE, Singapore, Australia, the Philippines, Pakistan, Nigeria, Germany and France. <em>Share link</em> and <em>QR code</em> hand the claim back to you, so you can deliver it in a card, over a messaging app, or on a screen in person.</li>
+  <li><strong>Enter the amount</strong> in dollars, grams, ounces or XAUT, with the live equivalent shown in the other units. Presets are $50 / $100 / $250 / $500, or 1 / 5 / 10 / 25 g, or 0.1 / 0.25 / 0.5 / 1 oz. Capped at your free gold.</li>
+  <li><strong>Pick an occasion</strong> — Birthday, Wedding, Festival, Shagun, Congrats, or Just because. This is presentation, not mechanics: it changes what the recipient sees on opening the claim.</li>
+  <li><strong>Add a message.</strong> Optional, and the part people actually remember.</li>
+  <li><strong>Complete step-up verification.</strong></li>
+  <li><strong>Check the review screen:</strong> gift value, the amount in gold (oz), delivery method, occasion. The gold figure is the one that matters — that is what the recipient ends up owning, whatever the price does later.</li>
+  <li><strong>Confirm.</strong> The gold moves into gift escrow on Arbitrum and a claim link is generated. Contact gifts confirm the link is on its way; link and QR gifts show the claim URL with Copy, WhatsApp and Email share.</li>
+</ol>
+
+<figure class="shot"><img src="../../assets/docs/gift-review.webp" alt="The review screen is the last place to check the gold amount before the gift enters escrow." loading="lazy" width="276">
+<figcaption>The review screen is the last place to check the gold amount before the gift enters escrow.</figcaption></figure>
+
+<h3>What you'll see when it works</h3>
+<p>A success screen naming the amount in ounces, plus the claim URL for link and QR gifts. The gift then appears in Activity with a <strong>Pending claim</strong> badge, and Home shows a banner counting gifts awaiting claim. Nothing is the recipient's yet — the gold is escrowed until they claim it.</p>
+
+<h2 id="claiming">How the recipient claims</h2>
+
+<p>They open the link or scan the QR, create an Auri account if needed, and the gold moves from escrow into their vault. From then it is theirs: hold, sell, send onward, borrow against, or move to their own wallet. You cannot take it back.</p>
+
+<div class="callout info"><p>Tell the recipient it is coming <em>before</em> you send it. An unannounced message containing a gold claim link looks exactly like a scam, and that is the most common reason gifts sit unclaimed.</p></div>
+
+<p>Claiming means signing up: passwordless sign-in, and biometrics on mobile. Auri's identity check is triggered by funding and cash-out rails — bank transfer, debit card, Interac — so claiming a gift and holding the gold does not by itself require ID. The moment they want to sell and withdraw cash, it will.</p>
+
+<h2 id="unclaimed">Unclaimed gifts, reminders and cancelling</h2>
+
+<p>Until claimed, the gold sits in escrow: out of your spendable balance, not yet the recipient's. In Activity, a pending gift states that the recipient has not claimed it and that the gold stays on hold until they do. Two actions sit on that row:</p>
+
+<ul>
+  <li><strong>Remind / re-send</strong> — re-delivers the claim to the same contact.</li>
+  <li><strong>Cancel gift</strong> — pulls the gold out of escrow back to your free balance, confirmed as the gift cancelled and funds returned.</li>
+</ul>
+
+<figure class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 874 150" width="874" height="150" role="img"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#42454E"/></marker></defs><rect x="16" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="16" y="16" width="3.5" height="84" rx="2" fill="#852152"/><text x="32" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">You choose</text><text x="32" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">amount plus an occasion</text><line x1="200" y1="58.0" x2="230" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="238" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="238" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="254" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">Link, QR or contact</text><text x="254" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">sent to the recipient</text><line x1="422" y1="58.0" x2="452" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="460" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="460" y="16" width="3.5" height="84" rx="2" fill="#42454E"/><text x="476" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">They claim</text><text x="476" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">sign in and accept</text><line x1="644" y1="58.0" x2="674" y2="58.0" stroke="#42454E" stroke-width="1.5" marker-end="url(#a)"/><rect x="682" y="16" width="176" height="84" rx="12" fill="#fff" stroke="#E3E1E8"/><rect x="682" y="16" width="3.5" height="84" rx="2" fill="#B08A3E"/><text x="698" y="48" font-family="system-ui,sans-serif" font-size="14.5" font-weight="650" fill="#15161B">They own gold</text><text x="698" y="68" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">an asset, not a voucher</text><text x="16" y="138" font-family="system-ui,sans-serif" font-size="11.5" fill="#42454E">Unclaimed gifts stay yours until the recipient accepts.</text></svg>
+<figcaption>A gift is not the recipient's until they claim it — until then it is escrowed and you can still pull it back.</figcaption></figure>
+
+<div class="callout warn"><p>Auri's V2.2 prototype states no expiry period for an unclaimed gift and no automatic refund after a set number of days. Until that is published, treat an unclaimed gift as something you must chase or cancel yourself. Escrowed value still tracks the gold price while it waits — it is not parked in dollars.</p></div>
+
+
+
+<h2 id="send-gold">Send gold to a person or a wallet</h2>
+
+<p><strong>Time:</strong> immediate to an <code>@username</code>. <strong>Cost:</strong> network fee covered; see <a href="#fees-and-limits">fees and limits</a>. <strong>Reversibility:</strong> a wallet send is irreversible on confirmation.</p>
+
+<ol class="steps">
+  <li><strong>Open Send gold</strong> and choose <em>Contact</em>, <em>@Username</em>, or <em>Wallet</em>.</li>
+  <li><strong>Enter the destination.</strong> Contact takes a mobile number (same dial-code picker) or an email. <em>@Username</em> delivers as gold immediately with no claim step. <em>Wallet</em> takes an Arbitrum address and shows an irreversibility warning worth reading.</li>
+  <li><strong>Enter the amount</strong> in dollars, grams, ounces or XAUT. Presets $50 / $100 / $250 / $500, capped at your free gold.</li>
+  <li><strong>Complete step-up verification.</strong></li>
+  <li><strong>Check the review screen:</strong> amount, gold equivalent, destination, and method — <em>On-chain wallet</em> or <em>Claim as gold</em>. If it says <em>Claim as gold</em>, the recipient must claim it exactly like a gift.</li>
+  <li><strong>Confirm.</strong></li>
+</ol>
+
+<div class="callout risk"><p><strong>A wallet send cannot be undone, and Auri cannot recover it.</strong> The asset that arrives is XAUt0 on Arbitrum One — the LayerZero version of Tether Gold, contract <code>0x40461291347e1eCbb09499F3371D3f17f10d7159</code>. The receiving wallet must support Arbitrum One and be able to display that token, or the balance looks missing even though the transfer succeeded. Send a small test amount to any new address first. A typo, the wrong network, or an exchange deposit address that does not accept XAUt0 all mean the gold is gone.</p></div>
+
+<h2 id="remittance">Cross-border remittance</h2>
+
+<div class="callout soon"><p><strong>Coming soon — you cannot do this today.</strong> Remittance is modelled in Auri's V2.2 prototype but is not in the live product. What follows describes the intended flow; do not plan a real payment around it.</p></div>
+
+<p>The design converts gold or your cash balance into a local-currency payout: pick a destination country, choose to fund from gold or cash, enter an amount, and a live panel shows what the recipient receives, the rate, the fee and an expected arrival time. Then payout details, step-up verification, review, and a processing state. <strong>The stated fee is 0.7%</strong> of the amount sent, with mid-market rates and no FX markup claimed — that second part is the substantive one, because remittance cost normally hides in the FX margin, not the visible fee. For scale, the World Bank puts the global average cost of sending $200 at 6.49% in Q1 2025 (banks 9.50%, digital providers 3.65%). Judge any number all-in.</p>
+
+<table class="kv">
+  <thead><tr><th>Corridor</th><th>Payout methods</th><th>Details required</th></tr></thead>
+  <tbody>
+    <tr><td>India (INR)</td><td>UPI, or bank account</td><td>UPI ID, or account number + IFSC code</td></tr>
+    <tr><td>Philippines (PHP)</td><td>Bank account, or GCash</td><td>Account number + bank name, or GCash number</td></tr>
+    <tr><td>Mexico (MXN)</td><td>Bank (CLABE)</td><td>18-digit CLABE</td></tr>
+    <tr><td>United States (USD)</td><td>Bank account</td><td>Account number + routing number</td></tr>
+    <tr><td>United Kingdom (GBP)</td><td>Bank account</td><td>Sort code + account number</td></tr>
+  </tbody>
+</table>
+
+<p>The receipt breaks the transfer into auditable legs: gold sold to USDC on Uniswap v3, USDC converted to local currency, then payout over local rails. So funding from gold means <strong>selling</strong> gold — you give up the exposure, and the disposal has tax consequences. Remittance is also the one flow that always passes through a processing state, because a real bank with real cut-offs sits on the other side: a transfer started late on a Friday can land after the weekend however fast the on-chain legs are.</p>
+
+<section class="strategy">
+<h2 id="why-gift-gold">Why gift gold instead of a gift card</h2>
+
+<p>A gift card is a liability of a merchant: dollar-denominated, usable in one place, quietly eroded by inflation, and frequently never fully spent. A gold gift is different in kind — the recipient owns a claim on a specific quantity of vaulted metal, sellable anywhere Auri operates, with a price unrelated to any company's solvency. Five grams is five grams in ten years. Five grams is not a promise from a retailer.</p>
+
+<p>The unit matters more than people expect. <strong>Grams read as a gift; dollars read as a transfer.</strong> "Ten grams for your wedding" is an object; a dollar figure is a bank notification. That is why you can type the amount in grams or ounces directly, and why a round weight usually lands better than a round price.</p>
+
+<h3>Occasions where it works</h3>
+<p>The built-in occasions track where gold gifting is already a norm rather than a novelty: weddings, births, milestone birthdays, and festival gifting — Shagun and Diwali in South Asian households, where giving gold at an auspicious time is the tradition itself. It also suits the graduation or first-job gift where you specifically do not want the money spent this month. Gold is illiquid in the useful sense: claiming is easy, spending takes a deliberate decision.</p>
+
+<h3>What the recipient is taking on</h3>
+<p>Be honest that you are signing someone up for an app. If they ever want cash rather than gold, they will go through an identity check and a bank connection. For a confident adult that is a short errand; for an older relative it may be a phone call with you walking them through it — budget for that call, or hand over the QR code in person and do it together. Set price expectations too: gold pays no dividend and no interest, it has had long stretches of falling real value, and a gift given at a high price can be worth less a year later. If a fixed sum on a fixed date is the point, gift cash.</p>
+
+<p>Gifting to a child is the one case with no documented answer: Auri publishes nothing on custodial or minor accounts, so how a gift to a minor is held, and who controls it, is <strong>UNKNOWN</strong>. In practice a gift claimed into an adult's account is owned by that adult. Do not assume otherwise until Auri says so.</p>
+
+<h3>When not to gift or send gold</h3>
+<ul>
+  <li><strong>They need to spend the money now.</strong> They would have to claim, sell (0.49% Auri fee on the sale) and withdraw, then wait on a bank transfer.</li>
+  <li><strong>The gold is collateral.</strong> Locked gold cannot move, and freeing it means repaying. Do not unwind a loan to fund a present.</li>
+  <li><strong>You would have to sell at a bad moment to fund it.</strong> A gift is not a reason to realise a loss.</li>
+  <li><strong>They cannot or will not use an app.</strong> The gold sits in escrow and the gesture never lands.</li>
+  <li><strong>Someone contacted you unprompted asking for it.</strong> An urgent request for a claim link or a wallet transfer is the shape of a scam. Gold sent to a wallet is unrecoverable, which is precisely why fraudsters ask for it.</li>
+</ul>
+</section>
+
+<h2 id="tax">Tax and reporting</h2>
+
+<p>Giving gold away is still a disposal of an asset in many tax systems, even though no cash reached you. Depending on where you live, a gift can trigger a capital gain measured from what you paid to the value on the day you gave it; some countries tax or require reporting of gifts above a threshold, on the giver's side, the recipient's side, or both; and treatment differs again for gifts to a spouse, to a minor, or across a border. Funding a remittance from gold is unambiguously a sale.</p>
+
+<p>Profile includes a Tax &amp; reports section with transaction-history export and realised gain/loss figures — the raw material an accountant will ask for. The obligation is yours. Thresholds and treatment vary by country and change; check your own jurisdiction and get a qualified adviser if a gift is large.</p>
+
+<h2 id="fees-and-limits">Fees and limits</h2>
+
+<table class="kv">
+  <thead><tr><th>Item</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Auri fee on a gift or send</td><td>UNKNOWN — no fee line appears on the V2.2 gift or send review screens. Confirm against <a href="reference.html">the fee reference</a>.</td></tr>
+    <tr><td>Network fee</td><td>Covered by Auri</td></tr>
+    <tr><td>Minimum gift or send</td><td>UNKNOWN — presets start at $50, no minimum stated</td></tr>
+    <tr><td>Maximum gift or send</td><td>Your free (unlocked) gold balance</td></tr>
+    <tr><td>Amount units accepted</td><td>Dollars, grams, ounces, or XAUT</td></tr>
+    <tr><td>Verification</td><td>Step-up MFA on every gift, send and remittance</td></tr>
+    <tr><td>Speed</td><td><code>@username</code>: immediate · gift or claim-based send: when claimed · wallet: on-chain confirmation</td></tr>
+    <tr><td>Reversibility</td><td>Gift: cancellable until claimed · <code>@username</code> and wallet: not reversible</td></tr>
+    <tr><td>Remittance fee</td><td>0.7% — <strong>not live yet</strong></td></tr>
+    <tr><td>Remittance corridors</td><td>India, Philippines, Mexico, US, UK — <strong>not live yet</strong></td></tr>
+  </tbody>
+</table>
+
+<h2 id="what-can-go-wrong">What can go wrong</h2>
+
+<h3>The recipient hasn't claimed the gift</h3>
+<p>Open Activity, find the row badged <strong>Pending claim</strong>, then use <strong>Remind / re-send</strong> or <strong>Cancel gift</strong> to return the gold. Message the person yourself first — most unclaimed gifts are unclaimed because the link looked untrustworthy.</p>
+
+<h3>Only part of my gold is free to move</h3>
+<p>You have a loan open and the rest is locked as collateral. Repay, or unlock a specific amount of collateral, then retry. See <a href="borrow.html">Borrow against gold</a>.</p>
+
+<h3>I sent gold to the wrong wallet address</h3>
+<p>There is no recovery — Auri cannot reverse an on-chain transfer and neither can anyone else. If the address belongs to an exchange or a wallet you can contact, that is your only avenue and it usually fails. Hence the small test transfer to any new address.</p>
+
+<h3>The @username wasn't found</h3>
+<p>Handles are 3–20 characters, lowercase letters, numbers and underscores, and the recipient must have set one in Profile. Confirm the spelling, or send to their mobile number or email and let them claim.</p>
+
+<h3>I can't find remittance in the app</h3>
+<p>It is not released. Nothing in the current app sends a local-currency payout abroad.</p>
+
+<h2 id="next">Next step</h2>
+
+<p>Short of gold for an occasion? Start with <a href="buy.html">Buy gold</a>. If a loan is limiting how much you can move, read <a href="borrow.html">Borrow against gold</a>. Before any large or irreversible transfer, read <a href="risks.html">Risks</a>.</p>
+
+<p><em>This is information, not financial, tax or legal advice. Gold's price moves and can fall. Transfers to a wallet address cannot be reversed.</em></p>
+
+      <div class="pager"><a href="cash.html"><span class="dir">Previous</span><span class="ttl">Cash in and out</span></a><a class="next" href="auto-invest.html"><span class="dir">Next</span><span class="ttl">Auto-invest</span></a></div>
+      <p class="docfoot">Auri is a non-custodial software platform, not a bank. Nothing here is financial, tax or
+        legal advice. Digital assets are not deposits and are not covered by any deposit-insurance scheme. Screenshots
+        come from a demo build, so the figures in them are illustrative.
+        <a href="../legal.html">Full risk &amp; legal notice</a>.</p>
+    </main>
+    <aside class="rail"><b>On this page</b><a href="#gift-or-send">Gift or send: which one you want</a><a href="#before-you-start">Before you start</a><a href="#gift-gold">Gift gold</a><a href="#claiming">How the recipient claims</a><a href="#unclaimed">Unclaimed gifts, reminders and cancelling</a><a href="#send-gold">Send gold to a person or a wallet</a><a href="#remittance">Cross-border remittance</a><a href="#why-gift-gold">Why gift gold instead of a gift card</a><a href="#tax">Tax and reporting</a><a href="#fees-and-limits">Fees and limits</a><a href="#what-can-go-wrong">What can go wrong</a><a href="#next">Next step</a></aside>
+  </div>
+</div>
+
+<script src="../../assets/docs/vendor/minisearch.umd.js"></script>
+<script>
+(function(){
+  var b=document.querySelector('.burger');
+  if(b) b.addEventListener('click',function(){
+    var open=document.body.classList.toggle('nav-open');
+    b.setAttribute('aria-expanded', open?'true':'false');
+  });
+
+  var links=[].slice.call(document.querySelectorAll('.rail a'));
+  if(links.length && 'IntersectionObserver' in window){
+    var heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));}).filter(Boolean);
+    var spy=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        links.forEach(function(a){a.classList.toggle('on', a.getAttribute('href').slice(1)===e.target.id);});
+      });
+    },{rootMargin:'-80px 0px -70% 0px',threshold:0});
+    heads.forEach(function(h){spy.observe(h);});
+  }
+
+  /* Ask box: retrieval over a prebuilt index of every heading-scoped section. It finds the
+     passage that answers you and links straight to it. Retrieval, not generation — so it can
+     only ever show what the docs actually say. */
+  var q=document.getElementById('askq'), panel=document.getElementById('answers');
+  if(!q||!panel||typeof MiniSearch==='undefined') return;
+  var mini=null, loading=false;
+
+  function load(){
+    if(mini||loading) return Promise.resolve();
+    loading=true;
+    return fetch('../../assets/docs/search-index.json').then(function(r){return r.json();}).then(function(d){
+      mini=new MiniSearch({
+        fields:['title','heading','text'],
+        storeFields:['title','heading','text','url','group'],
+        searchOptions:{boost:{heading:3,title:2},prefix:true,fuzzy:0.2}
+      });
+      mini.addAll(d);
+      loading=false;
+    }).catch(function(){loading=false;});
+  }
+
+  function snippetParts(text,terms){
+    var low=text.toLowerCase(), at=-1;
+    for(var i=0;i<terms.length;i++){var p=low.indexOf(terms[i].toLowerCase()); if(p>-1){at=p;break;}}
+    var start=at>120?at-90:0;
+    var out=text.slice(start,start+210).trim();
+    if(start>0) out='\u2026'+out;
+    if(start+210<text.length) out+='\u2026';
+    var live=terms.filter(function(t){return t.length>2;});
+    if(!live.length) return [{t:out,m:false}];
+    var alts=live.map(function(t){return t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}).join('|');
+    return out.split(new RegExp('('+alts+')','ig')).map(function(piece,idx){
+      return {t:piece, m:(idx%2===1)};
+    }).filter(function(p){return p.t;});
+  }
+
+  function render(hits,terms){
+    panel.textContent='';
+    if(!hits.length){
+      var n=document.createElement('div'); n.className='ans-none';
+      n.textContent='No page covers that yet. Try fewer words, or browse the sections on the left.';
+      panel.appendChild(n); panel.classList.add('open'); q.setAttribute('aria-expanded','true'); return;
+    }
+    hits.slice(0,5).forEach(function(h){
+      var a=document.createElement('a'); a.className='ans-hit'; a.href=h.url; a.setAttribute('role','option');
+      var c=document.createElement('span'); c.className='ans-crumb'; c.textContent=h.group+' \u203a '+h.title;
+      var t=document.createElement('span'); t.className='ans-h'; t.textContent=h.heading;
+      var x=document.createElement('span'); x.className='ans-x';
+      snippetParts(h.text,terms).forEach(function(p){
+        if(p.m){ var mk=document.createElement('mark'); mk.textContent=p.t; x.appendChild(mk); }
+        else { x.appendChild(document.createTextNode(p.t)); }
+      });
+      a.appendChild(c); a.appendChild(t); a.appendChild(x);
+      panel.appendChild(a);
+    });
+    panel.classList.add('open'); q.setAttribute('aria-expanded','true');
+  }
+
+  var timer=null;
+  q.addEventListener('input',function(){
+    clearTimeout(timer);
+    var v=q.value.trim();
+    if(v.length<3){panel.classList.remove('open'); q.setAttribute('aria-expanded','false'); return;}
+    timer=setTimeout(function(){
+      load().then(function(){
+        if(!mini) return;
+        var terms=v.split(/\s+/).filter(function(w){return w.length>2;});
+        render(mini.search(v),terms);
+      });
+    },140);
+  });
+  q.addEventListener('focus',load);
+  document.addEventListener('click',function(e){
+    if(!panel.contains(e.target)&&e.target!==q){panel.classList.remove('open');q.setAttribute('aria-expanded','false');}
+  });
+  q.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){panel.classList.remove('open');q.setAttribute('aria-expanded','false');q.blur();}
+    if(e.key==='ArrowDown'){var f=panel.querySelector('.ans-hit'); if(f){e.preventDefault(); f.focus();}}
+  });
+})();
+</script>
+</body>
+</html>
