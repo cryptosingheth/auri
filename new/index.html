@@ -110,6 +110,9 @@ img,svg,video,canvas{display:block;max-width:100%}
 .nav.light .brand{color:var(--plum)}
 .nav.light .brand .wm path{fill:var(--plum)}
 .brand .wm{width:auto;height:31px;flex:none;overflow:visible}
+/* wordmark cuts: full above 760 px, the heavier small-size cut on phones (trail stays visible) */
+.brand .wm-s{display:none}
+@media (max-width:760px){.brand .wm-l{display:none}.brand .wm-s{display:block}}
 .nlinks{display:flex;gap:24px;font-size:14px;font-weight:500;color:rgba(242,233,212,.75);margin-left:8px;transition:color .3s}
 .nav.light .nlinks{color:var(--ink2)}
 .nlinks a{white-space:nowrap;padding:6px 2px;opacity:.9}
@@ -896,7 +899,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 <!-- ================= NAV ================= -->
 <nav class="nav on" id="nav">
   <div class="nav-in">
-    <a class="brand" href="#top"><svg class="wm" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg></a>
+    <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
     <div class="nlinks">
       <a href="#demos">Product</a>
       <a href="#business">Why Auri</a>
@@ -927,7 +930,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap hero-in">
     <h1><span class="l"><span>Gold has been sleeping</span></span><span class="l"><span>for <span class="goldword">5,000 years.</span></span></span></h1>
     <div class="hero-foot">
-      <p class="hero-sub">Buy real gold in seconds. Spend it, send it home, or borrow against it without selling an ounce. And it stays in your own custody the whole time.</p>
+      <p class="hero-sub">Buy real gold in seconds. Spend it, send money home, or borrow against it without selling an ounce. And it stays in your own custody the whole time.</p>
       <div class="hero-ctas">
         <a class="btn btn-plum btn-big" href="#cta" data-magnet>Wake your gold</a>
         <a class="btn btn-line btn-big" href="#demos">Watch it work</a>
@@ -1060,7 +1063,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap">
     <div class="biz-head">
       <h2 class="rv">Why Auri, and not<br>a bank or a gold app.</h2>
-      <p class="sub rv d1">Everything you can do with money in a bank account, you can do with gold in Auri. Borrow against it, spend it, send it abroad, even trade on it. The difference is that it stays gold, and the gold stays yours.</p>
+      <p class="sub rv d1">Everything you can do with money in a bank account, you can do with gold in Auri. Borrow against it, spend it, send money home from it, even trade on it. The difference is that it stays gold, and the gold stays yours.</p>
     </div>
 
     <div class="biz-grid">
@@ -1079,10 +1082,10 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <!-- 2 · remittance, coming soon -->
       <div class="bcard rv d1">
         <div class="frame">
-          <img class="shot phone" src="../assets/shots/m-remit.webp" alt="Auri app — send gold to family abroad, paid out as gold or local cash" loading="lazy" onerror="this.style.display='none'">
+          <img class="shot phone" src="../assets/shots/m-remit.webp" alt="Auri app — send money home from your gold or cash balance" loading="lazy" onerror="this.style.display='none'">
         </div>
-        <div class="cap"><span class="t">Send it home, as gold or cash. <span class="soon-tag">Coming soon</span></span>
-          <span class="p">Send gold to family in another country in minutes. They can keep it as gold or take it as cash in their own currency, with nothing lost to a bank in between.</span></div>
+        <div class="cap"><span class="t">Send money home, straight from your gold. <span class="soon-tag">Coming soon</span></span>
+          <span class="p">Cross-border remittance from your Auri balance. Pay it from the gold you hold or from your cash, and your family receives money in their own currency in minutes, at the mid-market rate.</span></div>
       </div>
 
       <!-- 3 · Boost (leverage — amber/red risk-flagged) -->
@@ -1304,7 +1307,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand">
-          <a class="brand" href="#top"><svg class="wm" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg></a>
+          <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
           <p>Real gold, really yours. Spend it, send it, borrow against it. It never leaves your custody.</p>
         </div>
         <div class="foot-col">
