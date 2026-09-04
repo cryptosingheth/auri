@@ -466,16 +466,20 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pstat .src .ar{font-size:12px;line-height:1}
 
 /* caption strip — the seal */
-.runson{display:flex;align-items:center;flex-wrap:wrap;gap:16px 34px;margin-top:40px;padding-top:26px;border-top:1px solid var(--wline)}
-.ro-lbl{font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.55);margin-right:6px}
-.ro{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:rgba(242,233,212,.72);
-  text-decoration:none;transition:color .2s,opacity .2s}
-.ro i{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:#fff;flex:none}
-.ro img{width:18px;height:18px;object-fit:contain;display:block}
-.ro:hover{color:var(--cream);text-decoration:none}
-@media (min-width:1041px){.runson{justify-content:space-between}.runson .ro-lbl{margin-right:auto}}
-@media (max-width:1040px){.runson{gap:14px 28px}.ro-lbl{width:100%;margin:0 0 -2px}}
-@media (max-width:560px){.runson{gap:16px 0}.ro{flex:0 0 50%;font-size:14px}}
+.runs{background:var(--night);padding:26px 0 34px;overflow:hidden;border-top:1px solid var(--wline);border-bottom:1px solid var(--wline)}
+.runs-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+.runs-lbl{font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.75)}
+.runs-sub{font-size:13px;color:rgba(242,233,212,.45)}
+.runs-track{display:flex;width:max-content;animation:runs 42s linear infinite}
+.runs:hover .runs-track{animation-play-state:paused}
+.runs-row{display:flex;align-items:center;gap:64px;padding-right:64px}
+.ru{display:inline-flex;align-items:center;gap:14px;font-size:19px;font-weight:600;letter-spacing:-.015em;color:rgba(242,233,212,.82);text-decoration:none;white-space:nowrap;transition:color .2s}
+.ru i{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#fff;flex:none;box-shadow:0 8px 20px -12px rgba(0,0,0,.6)}
+.ru img{width:28px;height:28px;object-fit:contain;display:block}
+.ru:hover{color:var(--cream);text-decoration:none}
+@keyframes runs{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:760px){.runs{padding:22px 0 26px}.runs-row{gap:40px;padding-right:40px}.ru{font-size:16px;gap:11px}.ru i{width:38px;height:38px;border-radius:10px}.ru img{width:24px;height:24px}.runs-sub{display:none}}
+@media (prefers-reduced-motion:reduce){.runs-track{animation:none;width:auto;flex-wrap:wrap}.runs-row[aria-hidden="true"]{display:none}.runs-row{flex-wrap:wrap;gap:22px 40px;padding:0 30px}}
 .proof-cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;
   font-size:12px;color:rgba(242,233,212,.52)}
 .proof-cap .cdot{width:4px;height:4px;border-radius:50%;background:rgba(242,233,212,.3)}
@@ -1202,18 +1206,17 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           </div>
         </div>
       </div>
-      <!-- GROUP C — what it runs on: one quiet strip, marks on small white tiles -->
-      <div class="runson rv" aria-label="Infrastructure Auri runs on">
-        <span class="ro-lbl">Runs on</span>
-        <a class="ro" href="https://arbitrum.io" target="_blank" rel="noopener" title="The network every action settles on"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a>
-        <a class="ro" href="https://gold.tether.to" target="_blank" rel="noopener" title="The gold, one token per ounce"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a>
-        <a class="ro" href="https://morpho.org" target="_blank" rel="noopener" title="The lending market behind loans"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a>
-        <a class="ro" href="https://www.enso.build" target="_blank" rel="noopener" title="Routing for buys and sells"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a>
-        <a class="ro" href="https://www.privy.io" target="_blank" rel="noopener" title="Embedded wallets"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a>
-        <a class="ro" href="https://zerodev.app" target="_blank" rel="noopener" title="Smart accounts, passkeys and gas-free actions"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a>
-        </div>
     </div>
   </section>
+
+<!-- ================= RUNS ON — the infrastructure, as a moving band ================= -->
+<section class="runs" aria-label="Infrastructure Auri runs on">
+  <div class="wrap runs-head"><span class="runs-lbl">Runs on</span><span class="runs-sub">the networks and tools under the hood</span></div>
+  <div class="runs-track" aria-hidden="false">
+    <div class="runs-row"><a class="ru" href="https://arbitrum.io" target="_blank" rel="noopener"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a><a class="ru" href="https://gold.tether.to" target="_blank" rel="noopener"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a><a class="ru" href="https://morpho.org" target="_blank" rel="noopener"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a><a class="ru" href="https://www.enso.build" target="_blank" rel="noopener"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a><a class="ru" href="https://www.privy.io" target="_blank" rel="noopener"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a><a class="ru" href="https://zerodev.app" target="_blank" rel="noopener"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a></div>
+    <div class="runs-row" aria-hidden="true"><a class="ru" href="https://arbitrum.io" target="_blank" rel="noopener"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a><a class="ru" href="https://gold.tether.to" target="_blank" rel="noopener"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a><a class="ru" href="https://morpho.org" target="_blank" rel="noopener"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a><a class="ru" href="https://www.enso.build" target="_blank" rel="noopener"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a><a class="ru" href="https://www.privy.io" target="_blank" rel="noopener"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a><a class="ru" href="https://zerodev.app" target="_blank" rel="noopener"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a></div>
+  </div>
+</section>
 
 <!-- ================= DEVELOPER / AGENTIC — the one dark surface ================= -->
 <section class="devx" id="developers">
