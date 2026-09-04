@@ -496,7 +496,7 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   font-weight:640;color:var(--ink)}
 .biz-head .sub{margin-top:16px;font-size:17px;line-height:1.6;color:var(--ink2);max-width:600px}
 
-.biz-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.biz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
 .bcard{display:flex;flex-direction:column}
 /* frame bg MUST equal the screenshots' own edge colour (#F6F5F8 = --bg) so the 24px
    margins beside the inset shot are the SAME colour — no "strip of a different colour". */
@@ -505,6 +505,8 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   box-shadow:0 1px 2px rgba(20,18,60,.04),0 18px 40px -24px rgba(20,18,60,.18)}
 .bcard .frame .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
 .bcard .skel,.bpill{display:none!important}
+.bcard .frame .shot.phone{object-fit:contain;object-position:center 28px;padding:0;background:var(--bg)}
+.bcard .frame .shot.phone{inset:auto 0 0 0;height:calc(100% - 22px);object-position:top center}
 .bcard .skel{position:absolute;left:24px;right:24px;bottom:0;top:24px;border-radius:12px 12px 0 0;
   background:var(--card);border:1px solid var(--line);border-bottom:none;padding:18px 18px 0;overflow:hidden}
 .bcard .skel i{display:block;height:11px;border-radius:6px;background:var(--well);margin-bottom:12px}
@@ -575,16 +577,21 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .cw-slide{position:relative}
 .cw-roomline{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--ink2)}
 .cw-roomline b{color:var(--ink);font-weight:650;font-variant-numeric:tabular-nums}
-.cw-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding-top:14px;border-top:1px solid var(--line)}
-.cw-stat{display:flex;flex-direction:column;gap:5px;min-width:0}
-.cw-stat em{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
+.cw-stats{display:flex;align-items:flex-end;gap:16px;padding-top:14px;border-top:1px solid var(--line)}
+.cw-stat{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 0}
+.cw-stat em{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
 .cw-stat b{font-size:17px;font-weight:650;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .cw-stat b small{font-size:10.5px;font-weight:600;color:var(--ink3);margin-left:4px;letter-spacing:.04em}
+.cw-term{flex:0 0 auto;align-items:flex-end}
 .cw-term .cseg{margin:0}
 @media (max-width:560px){
-  .cw-stats{grid-template-columns:1fr 1fr;gap:12px 10px}
-  .cw-term{grid-column:1/-1}
-  .cw-term .cseg{width:100%;justify-content:center}
+  .cw-stats{gap:10px}
+  .cw-stat em{font-size:9.5px;letter-spacing:.05em}
+  .cw-stat b{font-size:15px}
+  .cw-stat b small{display:none}
+  .cw-term em{display:none}
+  .cw-term .cseg{padding:2px;gap:1px}
+  .cw-term .segb{padding:5px 8px;font-size:11.5px;border-radius:7px}
 }
 @media (max-width:1040px){
   .try-in{grid-template-columns:1fr;gap:28px}
@@ -1053,7 +1060,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
   <div class="wrap">
     <div class="biz-head">
       <h2 class="rv">Why Auri, and not<br>a bank or a gold app.</h2>
-      <p class="sub rv d1">Banks lend you their money and score you for it. Gold apps park your metal in a drawer. Auri does neither.</p>
+      <p class="sub rv d1">Everything you can do with money in a bank account, you can do with gold in Auri. Borrow against it, spend it, send it abroad, even trade on it. The difference is that it stays gold, and the gold stays yours.</p>
     </div>
 
     <div class="biz-grid">
@@ -1067,6 +1074,15 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         </div>
         <div class="cap"><span class="t">We can't touch your gold.</span>
           <span class="p">It sits in a Swiss vault in your name, not on our books. If Auri disappeared tomorrow, your gold would still be yours.</span></div>
+      </div>
+
+      <!-- 2 · remittance, coming soon -->
+      <div class="bcard rv d1">
+        <div class="frame">
+          <img class="shot phone" src="../assets/shots/m-remit.webp" alt="Auri app — send gold to family abroad, paid out as gold or local cash" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="cap"><span class="t">Send it home, as gold or cash. <span class="soon-tag">Coming soon</span></span>
+          <span class="p">Send gold to family in another country in minutes. They can keep it as gold or take it as cash in their own currency, with nothing lost to a bank in between.</span></div>
       </div>
 
       <!-- 3 · Boost (leverage — amber/red risk-flagged) -->
@@ -1090,7 +1106,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <img class="shot" src="../assets/shots/b-card.webp" alt="Auri app — spend gold directly with the Auri card, any day" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="cap"><span class="t">A card that spends your gold.<span class="soon-tag">Coming soon</span></span>
-          <span class="p">Groceries on a Sunday, a flight at 2 a.m. Markets close on weekends; your money doesn't. The card and cross-border sending are coming soon.</span></div>
+          <span class="p">Groceries on a Sunday, a flight at 2 a.m. Markets close on weekends; your money doesn't. The card is coming soon.</span></div>
       </div>
     </div>
 
