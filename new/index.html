@@ -466,6 +466,15 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pstat .src .ar{font-size:12px;line-height:1}
 
 /* caption strip — the seal */
+.runson{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ro{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1px solid var(--wline);border-radius:14px;color:inherit;text-decoration:none;
+  background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+.ro:hover{border-color:rgba(242,233,212,.28);background:rgba(255,255,255,.04);text-decoration:none}
+.ro img{width:34px;height:34px;flex:none;border-radius:9px;object-fit:contain;background:#fff;padding:5px}
+.ro span{min-width:0} .ro b{display:block;font-size:14.5px;font-weight:650;color:var(--cream);letter-spacing:-.01em}
+.ro em{display:block;font-style:normal;font-size:12px;line-height:1.4;color:rgba(242,233,212,.55);margin-top:2px}
+@media (max-width:1040px){.runson{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.runson{grid-template-columns:1fr}}
 .proof-cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;
   font-size:12px;color:rgba(242,233,212,.52)}
 .proof-cap .cdot{width:4px;height:4px;border-radius:50%;background:rgba(242,233,212,.3)}
@@ -508,8 +517,6 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   box-shadow:0 1px 2px rgba(20,18,60,.04),0 18px 40px -24px rgba(20,18,60,.18)}
 .bcard .frame .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
 .bcard .skel,.bpill{display:none!important}
-.bcard .frame .shot.phone{object-fit:contain;object-position:center 28px;padding:0;background:var(--bg)}
-.bcard .frame .shot.phone{inset:auto 0 0 0;height:calc(100% - 22px);object-position:top center}
 .bcard .skel{position:absolute;left:24px;right:24px;bottom:0;top:24px;border-radius:12px 12px 0 0;
   background:var(--card);border:1px solid var(--line);border-bottom:none;padding:18px 18px 0;overflow:hidden}
 .bcard .skel i{display:block;height:11px;border-radius:6px;background:var(--well);margin-bottom:12px}
@@ -899,7 +906,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 <!-- ================= NAV ================= -->
 <nav class="nav on" id="nav">
   <div class="nav-in">
-    <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
+    <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L128 106L154 106L154 49ZM198 49L198 106L224 106L224 49ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM271 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 271 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L128 106L154 106L154 49ZM198 49L198 106L224 106L224 49ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM271 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 271 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
     <div class="nlinks">
       <a href="#demos">Product</a>
       <a href="#business">Why Auri</a>
@@ -1082,7 +1089,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <!-- 2 · remittance, coming soon -->
       <div class="bcard rv d1">
         <div class="frame">
-          <img class="shot phone" src="../assets/shots/m-remit.webp" alt="Auri app — send money home from your gold or cash balance" loading="lazy" onerror="this.style.display='none'">
+          <img class="shot" src="../assets/shots/b-remit-home.webp" alt="Auri app — send money home, paid from your gold or cash balance" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="cap"><span class="t">Send money home, straight from your gold. <span class="soon-tag">Coming soon</span></span>
           <span class="p">Cross-border remittance from your Auri balance. Pay it from the gold you hold or from your cash, and your family receives money in their own currency in minutes, at the mid-market rate.</span></div>
@@ -1197,7 +1204,17 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 
 
     </div>
-  </section>
+        <!-- GROUP C — what it runs on -->
+      <div class="pledger rv">
+        <div class="pl-head rails"><span class="dot"></span><span class="lbl">Runs on</span><span class="tail">the infrastructure under the hood</span></div>
+        <div class="runson">
+          <a class="ro" href="https://arbitrum.io" target="_blank" rel="noopener"><img src="../assets/logos/arbitrum.svg" alt=""><span><b>Arbitrum</b><em>the network every action settles on</em></span></a>
+          <a class="ro" href="https://gold.tether.to" target="_blank" rel="noopener"><img src="../assets/logos/tether-gold.svg" alt=""><span><b>Tether Gold</b><em>the gold, one token per ounce</em></span></a>
+          <a class="ro" href="https://morpho.org" target="_blank" rel="noopener"><img src="../assets/logos/morpho.png" alt=""><span><b>Morpho</b><em>the lending market behind loans</em></span></a>
+          <a class="ro" href="https://zerodev.app" target="_blank" rel="noopener"><img src="../assets/logos/zerodev.svg" alt=""><span><b>ZeroDev</b><em>your wallet, passkeys and gas-free actions</em></span></a>
+        </div>
+      </div>
+</section>
 
 <!-- ================= DEVELOPER / AGENTIC — the one dark surface ================= -->
 <section class="devx" id="developers">
@@ -1307,7 +1324,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand">
-          <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L154 49L154 104L128 104ZM198 49L224 49L224 104L198 104ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM272 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 272 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
+          <a class="brand" href="#top"><svg class="wm wm-l" viewBox="0 0 363 152" aria-label="auri" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L128 106L154 106L154 49ZM198 49L198 106L224 106L224 49ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM271 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 271 75ZM334 49L360 49L360 149L334 149ZM331 16A16 16 0 1 1 363 16A16 16 0 1 1 331 16ZM142 16Q232.5 14.398 323 11.5L323 20.5Q232.5 17.602 142 16Z"/></svg><svg class="wm wm-s" viewBox="0 0 363 152" aria-label="auri" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M0 99A53 53 0 1 1 106 99A53 53 0 1 1 0 99ZM26 99A27 27 0 1 0 80 99A27 27 0 1 0 26 99ZM80 49L106 49L106 149L80 149ZM128 49L128 106L154 106L154 49ZM198 49L198 106L224 106L224 49ZM128 104A48 48 0 0 0 224 104L198 104A22 22 0 0 1 154 104ZM246 49L272 49L272 149L246 149ZM271 49A46 46 0 0 1 318 95L292 95A20 20 0 0 0 271 75ZM334 49L360 49L360 149L334 149ZM330 17A17 17 0 1 1 364 17A17 17 0 1 1 330 17ZM150 17Q235.5 13.618 321 7.5L321 26.5Q235.5 20.382 150 17Z"/></svg></a>
           <p>Real gold, really yours. Spend it, send it, borrow against it. It never leaves your custody.</p>
         </div>
         <div class="foot-col">
