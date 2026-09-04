@@ -1576,7 +1576,7 @@ if(!RM&&matchMedia('(pointer:fine)').matches){
     function place(){ var on=document.querySelector('.drail.on'); if(mq.matches&&on){ on.insertAdjacentElement('afterend',code);} else { host.appendChild(code);} }
     place(); mq.addEventListener('change',place);
     new MutationObserver(function(){ var on=document.querySelector('.drail.on'); if(mq.matches&&on&&code.previousElementSibling!==on) place(); })
-      .observe(document.querySelector('.rails'),{attributes:true,attributeFilter:['class'],subtree:true});
+      .observe(host.querySelector('.rails'),{attributes:true,attributeFilter:['class'],subtree:true});
   })();
   var term=document.getElementById('devterm');
   var tabs=[].slice.call(document.querySelectorAll('.drail'));
