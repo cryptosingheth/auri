@@ -466,15 +466,16 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pstat .src .ar{font-size:12px;line-height:1}
 
 /* caption strip — the seal */
-.runson{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.ro{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1px solid var(--wline);border-radius:14px;color:inherit;text-decoration:none;
-  background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
-.ro:hover{border-color:rgba(242,233,212,.28);background:rgba(255,255,255,.04);text-decoration:none}
-.ro img{width:34px;height:34px;flex:none;border-radius:9px;object-fit:contain;background:#fff;padding:5px}
-.ro span{min-width:0} .ro b{display:block;font-size:14.5px;font-weight:650;color:var(--cream);letter-spacing:-.01em}
-.ro em{display:block;font-style:normal;font-size:12px;line-height:1.4;color:rgba(242,233,212,.55);margin-top:2px}
-@media (max-width:1040px){.runson{grid-template-columns:1fr 1fr}}
-@media (max-width:560px){.runson{grid-template-columns:1fr}}
+.runson{display:flex;align-items:center;flex-wrap:wrap;gap:16px 34px;margin-top:40px;padding-top:26px;border-top:1px solid var(--wline)}
+.ro-lbl{font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.55);margin-right:6px}
+.ro{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:rgba(242,233,212,.72);
+  text-decoration:none;transition:color .2s,opacity .2s}
+.ro i{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:#fff;flex:none}
+.ro img{width:18px;height:18px;object-fit:contain;display:block}
+.ro:hover{color:var(--cream);text-decoration:none}
+@media (min-width:1041px){.runson{justify-content:space-between}.runson .ro-lbl{margin-right:auto}}
+@media (max-width:1040px){.runson{gap:14px 28px}.ro-lbl{width:100%;margin:0 0 -2px}}
+@media (max-width:560px){.runson{gap:16px 0}.ro{flex:0 0 50%;font-size:14px}}
 .proof-cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;
   font-size:12px;color:rgba(242,233,212,.52)}
 .proof-cap .cdot{width:4px;height:4px;border-radius:50%;background:rgba(242,233,212,.3)}
@@ -1201,57 +1202,20 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           </div>
         </div>
       </div>
+      <!-- GROUP C — what it runs on: one quiet strip, marks on small white tiles -->
+      <div class="runson rv" aria-label="Infrastructure Auri runs on">
+        <span class="ro-lbl">Runs on</span>
+        <a class="ro" href="https://arbitrum.io" target="_blank" rel="noopener" title="The network every action settles on"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a>
+        <a class="ro" href="https://gold.tether.to" target="_blank" rel="noopener" title="The gold, one token per ounce"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a>
+        <a class="ro" href="https://morpho.org" target="_blank" rel="noopener" title="The lending market behind loans"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a>
+        <a class="ro" href="https://www.enso.build" target="_blank" rel="noopener" title="Routing for buys and sells"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a>
+        <a class="ro" href="https://www.privy.io" target="_blank" rel="noopener" title="Embedded wallets"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a>
+        <a class="ro" href="https://zerodev.app" target="_blank" rel="noopener" title="Smart accounts, passkeys and gas-free actions"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a>
+      </div>
 
 
     </div>
-        <!-- GROUP C — what it runs on -->
-      <div class="pledger rv">
-        <div class="pl-head rails"><span class="dot"></span><span class="lbl">Runs on</span><span class="tail">the infrastructure under the hood</span></div>
-        <div class="runson">
-          <a class="ro" href="https://arbitrum.io" target="_blank" rel="noopener"><img src="../assets/logos/arbitrum.svg" alt=""><span><b>Arbitrum</b><em>the network every action settles on</em></span></a>
-          <a class="ro" href="https://gold.tether.to" target="_blank" rel="noopener"><img src="../assets/logos/tether-gold.svg" alt=""><span><b>Tether Gold</b><em>the gold, one token per ounce</em></span></a>
-          <a class="ro" href="https://morpho.org" target="_blank" rel="noopener"><img src="../assets/logos/morpho.png" alt=""><span><b>Morpho</b><em>the lending market behind loans</em></span></a>
-          <a class="ro" href="https://zerodev.app" target="_blank" rel="noopener"><img src="../assets/logos/zerodev.svg" alt=""><span><b>ZeroDev</b><em>your wallet, passkeys and gas-free actions</em></span></a>
         </div>
-      </div>
-</section>
-
-<!-- ================= DEVELOPER / AGENTIC — the one dark surface ================= -->
-<section class="devx" id="developers">
-  <div class="wrap">
-    <div class="devx-head">
-      <h2 class="rv">Gold your code<br>can talk to.</h2>
-      <p class="sub rv d1">The same gold, driven by an AI agent, a script, or your own product. MCP, CLI and API are coming soon.</p>
-    </div>
-
-    <div class="devx-panel rv d1">
-      <div class="devx-in">
-        <div class="rails" role="tablist" aria-label="Ways to build on Auri">
-          <button class="drail on" type="button" role="tab" aria-selected="true" aria-controls="devterm">
-            <span class="rhead"><span class="rk">MCP</span><span class="soon">coming soon</span></span>
-            <span class="rt">Give your agent a gold account</span>
-            <span class="rd">Point Claude, Codex or any agent at Auri. It buys, borrows and sends within rules you set.</span>
-            <span class="rbar"></span>
-          </button>
-          <button class="drail" type="button" role="tab" aria-selected="false" aria-controls="devterm">
-            <span class="rhead"><span class="rk">CLI</span><span class="soon">coming soon</span></span>
-            <span class="rt">Your gold strategy, as code</span>
-            <span class="rd">Automate buys, repayments or a Boost from your shell. Repeatable and versioned.</span>
-            <span class="rbar"></span>
-          </button>
-          <button class="drail" type="button" role="tab" aria-selected="false" aria-controls="devterm">
-            <span class="rhead"><span class="rk">API</span><span class="soon">coming soon</span></span>
-            <span class="rt">Put gold inside your own product</span>
-            <span class="rd">One API to offer buy, hold, borrow and send in gold inside your own app. Webhooks, sandbox, production.</span>
-            <span class="rbar"></span>
-          </button>
-        </div>
-
-        <div class="codewrap">
-          <div class="cbar"><span class="dots"><i></i><i></i><i></i></span><span class="ctitle" id="ctitle">auri&nbsp;·&nbsp;<b>your agent</b></span></div>
-          <div class="code" id="devterm" role="tabpanel"></div>
-        </div>
-      </div>
     </div>
 
 
