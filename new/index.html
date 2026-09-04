@@ -560,9 +560,11 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
   background:radial-gradient(60% 80% at 80% 50%,rgba(133,33,82,.28),transparent 70%)}
 .try>*{position:relative}
 .try-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:56px;align-items:center}
-.try-copy h2{margin:14px 0 12px;font-size:clamp(30px,3.8vw,48px);letter-spacing:-.04em;line-height:1.04;color:var(--cream);font-weight:640}
-.try-copy p{font-size:16.5px;line-height:1.55;color:rgba(242,233,212,.62);max-width:420px}
-.try-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-a)}
+.try-state{margin:0;font-size:clamp(24px,2.7vw,36px);line-height:1.18;letter-spacing:-.03em;font-weight:600;color:var(--cream);max-width:560px}
+.try-state .dim{color:rgba(242,233,212,.34)}
+.try-state .lit{color:var(--cream)}
+.try-state .goldlit{background:linear-gradient(95deg,#F3E5BC,#D3B575);-webkit-background-clip:text;background-clip:text;color:transparent}
+.try-how{display:flex;align-items:center;gap:9px;margin:22px 0 0;font-size:14.5px;line-height:1.5;color:rgba(242,233,212,.6);max-width:460px}
 .trycard{background:#fff;border-radius:22px;padding:22px 24px 18px;color:var(--ink);
   box-shadow:0 1px 2px rgba(0,0,0,.2),0 30px 70px -30px rgba(0,0,0,.6)}
 .try-note{margin:14px 2px 0;font-size:11.5px;line-height:1.5;color:var(--ink3)}
@@ -576,7 +578,7 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 @keyframes nudge{0%,100%{transform:translate(0,-50%)}50%{transform:translate(-6px,-50%)}}
 @media (max-width:1040px){
   .try-in{grid-template-columns:1fr;gap:28px}
-  .try-copy p{max-width:none}
+  .try-state,.try-how{max-width:none}
 }
 @media (max-width:560px){
   .try{padding:7vh 0 8vh}
@@ -948,9 +950,8 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 <section class="try" id="calculator">
   <div class="wrap try-in">
     <div class="try-copy rv">
-      <span class="try-eyebrow"><span class="pulse" aria-hidden="true"></span>Live prices · no sign-up</span>
-      <h2>See what your gold could do.</h2>
-      <p>Type an amount. Drag the slider. Real gold price, real borrow rate.</p>
+      <h2 class="try-state"><span class="dim">Dollars and euros buy a little less every year.</span> <span class="lit">Gold holds its value. It just sits there.</span> <span class="dim">A bar in a vault can't buy coffee, cross a border or back a loan.</span> <span class="goldlit">Until now.</span></h2>
+      <p class="try-how"><span class="pulse" aria-hidden="true"></span>Type an amount, drag the slider. Live gold price, live borrow rate, no sign-up.</p>
     </div>
 
     <div class="trycard rv d1">
@@ -995,13 +996,6 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       </div>
       <p class="try-note">Illustration, not an offer. Your exact figures appear in the app before you confirm.</p>
     </div>
-  </div>
-</section>
-
-<!-- ================= WAKE ================= -->
-<section class="wake">
-  <div class="wrap">
-    <p class="rv">Your dollars buy a little less every year. <span class="lit">Gold holds its value. It just sits there.</span> A bar in a vault can't buy coffee, cross a border or back a loan. <span class="goldlit">Until now.</span></p>
   </div>
 </section>
 
@@ -1163,20 +1157,20 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <div class="pstats">
           <div class="pstat asset">
             <div class="pv"><span class="num" data-count="707747" data-xaut-oz>707,747</span></div>
-            <div class="unit">ounces of fine gold <span class="livedot" data-chain-live aria-label="read live from Ethereum"></span> <span class="asof" data-chain-asof>reading Ethereum…</span></div>
-            <div class="mean">Tokens in circulation, one per troy ounce.</div>
+            <div class="unit">ounces of fine gold</div>
+            <div class="mean">One token, one ounce. This is every ounce behind Tether Gold, all of it in Swiss vaults.</div>
             <a class="src" href="https://etherscan.io/token/0x68749665ff8d2d112fa859aa293f07a622782f38" target="_blank" rel="noopener">Token supply <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat asset">
             <div class="pv"><span class="num" data-count="22" data-xaut-t>22</span></div>
-            <div class="unit">tonnes of gold <span class="livedot" data-chain-live aria-label="derived from live supply"></span></div>
-            <div class="mean">The same gold, by weight.</div>
+            <div class="unit">tonnes of gold</div>
+            <div class="mean">Those ounces, weighed. Cast as London Good Delivery bars of about 12.5 kg each.</div>
             <a class="src" href="https://gold.tether.to/reports" target="_blank" rel="noopener">Reserves reports <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat asset">
             <div class="pv"><span class="num" data-count="1804" data-xaut-bars>1,804</span></div>
-            <div class="unit">numbered bars <span class="asof" data-bars-asof>Tether Gold · checked 4 Sep 2026</span></div>
-            <div class="mean">Serial-numbered, vaulted in Switzerland.</div>
+            <div class="unit">numbered bars</div>
+            <div class="mean">Every bar has a serial number and a weight, listed publicly. Yours is on that list.</div>
             <a class="src" href="https://gold.tether.to/reports" target="_blank" rel="noopener">Attestation <span class="ar" aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -1188,20 +1182,20 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
         <div class="pstats">
           <div class="pstat">
             <div class="pv"><span class="pre">$</span><span class="num" data-count="10" data-morpho-tvl>10</span><span class="suf" data-morpho-suf>B+</span></div>
-            <div class="unit">deposited on Morpho <span class="livedot" data-morpho-live aria-label="read live from Morpho"></span> <span class="asof" data-morpho-asof>reading Morpho…</span></div>
-            <div class="mean">The lending network Auri's loans run on.</div>
+            <div class="unit">deposited on Morpho</div>
+            <div class="mean">The lending network Auri's loans run on. The money you borrow comes from these deposits.</div>
             <a class="src" href="https://app.morpho.org/arbitrum/variable/0xed3f9a960d927791a354cc4549b1b44af9dd06c11566ea9d0bff66b8e4969610/xaut0-usdc" target="_blank" rel="noopener">Our market <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat">
             <div class="pv"><span class="num" data-count="25">25</span><span class="suf">+</span></div>
             <div class="unit">independent security reviews</div>
-            <div class="mean">Of Morpho's markets, by OpenZeppelin, Spearbit, ChainSecurity and Certora.</div>
+            <div class="mean">Morpho's code, checked by OpenZeppelin, Spearbit, ChainSecurity and Certora before Auri built on it.</div>
             <a class="src" href="https://docs.morpho.org/get-started/resources/audits/" target="_blank" rel="noopener">Audits <span class="ar" aria-hidden="true">↗</span></a>
           </div>
           <div class="pstat">
             <div class="pv"><span class="pre">$</span><span class="num">0</span></div>
             <div class="unit">held by Auri</div>
-            <div class="mean">Your gold lives in your own wallet.</div>
+            <div class="mean">Your gold and cash sit in a wallet only you control. Auri never holds them.</div>
             <a class="src" href="#faq">How custody works <span class="ar" aria-hidden="true">↗</span></a>
           </div>
         </div>
@@ -1866,25 +1860,20 @@ window.AURI = (function(){
   }
 
   async function readAll(){
-    const t = () => new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
     const oz = await xautOunces();
     if(oz){
       put('[data-xaut-oz]', nf(oz));
       put('[data-xaut-t]', nf(oz*OZ_T/1e6, 1));
-      put('[data-chain-asof]', 'Ethereum · ' + t());
       lit('[data-chain-live]', true);
     } else {
-      put('[data-chain-asof]', 'Ethereum · unavailable, last known');
       lit('[data-chain-live]', false);
     }
     const tvl = await morphoTvl();
     if(tvl){
       put('[data-morpho-tvl]', nf(tvl/1e9, 1));
       put('[data-morpho-suf]', 'B');
-      put('[data-morpho-asof]', 'Morpho · ' + t());
       lit('[data-morpho-live]', true);
     } else {
-      put('[data-morpho-asof]', 'Morpho · unavailable, last known');
       lit('[data-morpho-live]', false);
     }
   }
