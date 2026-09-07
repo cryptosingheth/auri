@@ -77,7 +77,7 @@ body{background:var(--night);color:var(--ink);font-family:var(--sans);font-size:
    snaps into place, so two short sections never collide on the same screen. proximity (NOT
    mandatory) keeps tall sections (business, faq…) freely scrollable instead of trapping.
    Short sections centre their content; tall ones just fill. scroll-padding clears the 66px nav. */
-.hero,.wake,.theatre,.biz,.proof,.devx,.faq,.cta{scroll-snap-align:start;min-height:100svh}
+.hero,.wake,.theatre,.biz,.proof,.secure,.devx,.faq,.cta{scroll-snap-align:start;min-height:100svh}
 .wake,.theatre,.proof,.devx,.faq,.cta{display:flex;flex-direction:column;justify-content:center}
 /* mobile: content reflows tall and stacks naturally — drop the forced fill + snap */
 @media (max-width:940px){
@@ -466,20 +466,24 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pstat .src .ar{font-size:12px;line-height:1}
 
 /* caption strip — the seal */
-.runs{background:var(--night);padding:26px 0 34px;overflow:hidden;border-top:1px solid var(--wline);border-bottom:1px solid var(--wline)}
-.runs-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
-.runs-lbl{font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.75)}
-.runs-sub{font-size:13px;color:rgba(242,233,212,.45)}
-.runs-track{display:flex;width:max-content;animation:runs 42s linear infinite}
-.runs:hover .runs-track{animation-play-state:paused}
-.runs-row{display:flex;align-items:center;gap:64px;padding-right:64px}
-.ru{display:inline-flex;align-items:center;gap:14px;font-size:19px;font-weight:600;letter-spacing:-.015em;color:rgba(242,233,212,.82);text-decoration:none;white-space:nowrap;transition:color .2s}
-.ru i{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#fff;flex:none;box-shadow:0 8px 20px -12px rgba(0,0,0,.6)}
-.ru img{width:28px;height:28px;object-fit:contain;display:block}
-.ru:hover{color:var(--cream);text-decoration:none}
-@keyframes runs{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media (max-width:760px){.runs{padding:22px 0 26px}.runs-row{gap:40px;padding-right:40px}.ru{font-size:16px;gap:11px}.ru i{width:38px;height:38px;border-radius:10px}.ru img{width:24px;height:24px}.runs-sub{display:none}}
-@media (prefers-reduced-motion:reduce){.runs-track{animation:none;width:auto;flex-wrap:wrap}.runs-row[aria-hidden="true"]{display:none}.runs-row{flex-wrap:wrap;gap:22px 40px;padding:0 30px}}
+.secure{background:var(--night);padding:12vh 0 10vh;color:var(--cream)}
+.sec-head{max-width:720px;margin-bottom:52px}
+.sec-head h2{font-size:clamp(34px,4.4vw,54px);letter-spacing:-.04em;line-height:1.02;color:var(--cream)}
+.sec-head .sub{margin-top:16px;font-size:16.5px;line-height:1.6;color:rgba(242,233,212,.66);max-width:600px}
+.pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 56px}
+.pillar{padding-top:22px;border-top:1px solid var(--wline)}
+.pn{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--gold-b);margin-bottom:14px}
+.pillar h3{margin:0 0 10px;font-size:21px;font-weight:640;letter-spacing:-.022em;line-height:1.2;color:var(--cream)}
+.pillar p{margin:0;font-size:15px;line-height:1.6;color:rgba(242,233,212,.66);max-width:52ch}
+.sec-runs{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 28px;margin-top:64px;padding-top:26px;border-top:1px solid var(--wline)}
+.sr-lbl{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.45)}
+.sr{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:rgba(242,233,212,.55);text-decoration:none;transition:color .2s}
+.sr i{display:inline-block;width:22px;height:22px;flex:none;background:currentColor;
+  -webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.sr i.lum{-webkit-mask-source-type:luminance;mask-mode:luminance}
+.sr:hover{color:var(--cream);text-decoration:none}
+@media (max-width:1040px){.pillars{grid-template-columns:1fr;gap:26px}.sec-runs{justify-content:flex-start;gap:16px 34px}.sr-lbl{width:100%}}
+@media (max-width:560px){.secure{padding:9vh 0 8vh}.sec-head{margin-bottom:34px}.sec-runs{gap:16px 0}.sr{flex:0 0 50%}}
 .proof-cap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;
   font-size:12px;color:rgba(242,233,212,.52)}
 .proof-cap .cdot{width:4px;height:4px;border-radius:50%;background:rgba(242,233,212,.3)}
@@ -517,8 +521,8 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .bcard{display:flex;flex-direction:column}
 /* frame bg MUST equal the screenshots' own edge colour (#F6F5F8 = --bg) so the 24px
    margins beside the inset shot are the SAME colour — no "strip of a different colour". */
-.bcard .frame{position:relative;border-radius:16px;overflow:hidden;border:0;
-  aspect-ratio:4/3;background:var(--bg);
+.bcard .frame{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(20,18,60,.12);
+  aspect-ratio:4/3;background:#fff;
   box-shadow:0 1px 2px rgba(20,18,60,.04),0 18px 40px -24px rgba(20,18,60,.18)}
 .bcard .frame .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
 .bcard .skel,.bpill{display:none!important}
@@ -917,6 +921,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <a href="#business">Why Auri</a>
       <a href="#calculator">Calculator</a>
       <a href="#trust">Proof</a>
+      <a href="#security">Security</a>
       <a href="#developers">Developers</a>
       <a href="#faq">FAQ</a>
       <a href="docs/index.html">Docs</a>
@@ -1209,12 +1214,41 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     </div>
   </section>
 
-<!-- ================= RUNS ON — the infrastructure, as a moving band ================= -->
-<section class="runs" aria-label="Infrastructure Auri runs on">
-  <div class="wrap runs-head"><span class="runs-lbl">Runs on</span><span class="runs-sub">the networks and tools under the hood</span></div>
-  <div class="runs-track" aria-hidden="false">
-    <div class="runs-row"><a class="ru" href="https://arbitrum.io" target="_blank" rel="noopener"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a><a class="ru" href="https://gold.tether.to" target="_blank" rel="noopener"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a><a class="ru" href="https://morpho.org" target="_blank" rel="noopener"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a><a class="ru" href="https://www.enso.build" target="_blank" rel="noopener"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a><a class="ru" href="https://www.privy.io" target="_blank" rel="noopener"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a><a class="ru" href="https://zerodev.app" target="_blank" rel="noopener"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a></div>
-    <div class="runs-row" aria-hidden="true"><a class="ru" href="https://arbitrum.io" target="_blank" rel="noopener"><i><img src="../assets/logos/arbitrum.svg" alt=""></i>Arbitrum</a><a class="ru" href="https://gold.tether.to" target="_blank" rel="noopener"><i><img src="../assets/logos/tether-gold.svg" alt=""></i>Tether Gold</a><a class="ru" href="https://morpho.org" target="_blank" rel="noopener"><i><img src="../assets/logos/morpho.png" alt=""></i>Morpho</a><a class="ru" href="https://www.enso.build" target="_blank" rel="noopener"><i><img src="../assets/logos/enso.svg" alt=""></i>Enso</a><a class="ru" href="https://www.privy.io" target="_blank" rel="noopener"><i><img src="../assets/logos/privy.svg" alt=""></i>Privy</a><a class="ru" href="https://zerodev.app" target="_blank" rel="noopener"><i><img src="../assets/logos/zerodev.svg" alt=""></i>ZeroDev</a></div>
+<!-- ================= SECURE BY DESIGN — inherited security, then what it runs on ================= -->
+<section class="secure" id="security">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="rv">Secure by design.</h2>
+      <p class="sub rv d1">You don't have to trust Auri with your gold. The way the product is built, we couldn't move it if we wanted to. Every layer underneath is run by a specialist and open to inspection.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar rv">
+        <span class="pn">01</span>
+        <h3>Your keys never leave your control.</h3>
+        <p>Your wallet is created for you and protected by your passkey. The key is split into encrypted pieces that are only ever brought together inside a locked-down secure enclave, on your instruction. Nobody at Auri can see it or use it.</p>
+      </div>
+      <div class="pillar rv d1">
+        <span class="pn">02</span>
+        <h3>Auri can only do what you allow.</h3>
+        <p>Every action runs through a smart account with permissions you set: which actions, up to how much, for how long. There is no permission that lets Auri take your gold, and the account code is public and independently audited.</p>
+      </div>
+      <div class="pillar rv d2">
+        <span class="pn">03</span>
+        <h3>Loans run on code that cannot be changed.</h3>
+        <p>Borrowing happens on Morpho, whose lending contracts are immutable and formally verified, have been through more than twenty-five independent security reviews, and carry a bug bounty of up to $2.5 million.</p>
+      </div>
+      <div class="pillar rv d3">
+        <span class="pn">04</span>
+        <h3>Gold you can check, on a chain you can check.</h3>
+        <p>Every ounce is an allocated, serial-numbered bar in a Swiss vault, attested each quarter by BDO Italia. Every transaction settles on Arbitrum and is secured by Ethereum, so your record of ownership doesn't depend on us.</p>
+      </div>
+    </div>
+
+    <div class="sec-runs rv" aria-label="Infrastructure Auri runs on">
+      <span class="sr-lbl">Runs on</span>
+      <a class="sr" href="https://arbitrum.io" target="_blank" rel="noopener"><i class="lum" style="--m:url(../assets/logos/arbitrum.svg)"></i>Arbitrum</a><a class="sr" href="https://gold.tether.to" target="_blank" rel="noopener"><i class="lum" style="--m:url(../assets/logos/tether-gold.svg)"></i>Tether Gold</a><a class="sr" href="https://morpho.org" target="_blank" rel="noopener"><i class="alpha" style="--m:url(../assets/logos/morpho-mono.png)"></i>Morpho</a><a class="sr" href="https://www.enso.build" target="_blank" rel="noopener"><i class="lum" style="--m:url(../assets/logos/enso.svg)"></i>Enso</a><a class="sr" href="https://www.privy.io" target="_blank" rel="noopener"><i class="alpha" style="--m:url(../assets/logos/privy.svg)"></i>Privy</a><a class="sr" href="https://zerodev.app" target="_blank" rel="noopener"><i class="alpha" style="--m:url(../assets/logos/zerodev.svg)"></i>ZeroDev</a>
+    </div>
   </div>
 </section>
 
