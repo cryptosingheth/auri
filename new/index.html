@@ -169,6 +169,7 @@ img,svg,video,canvas{display:block;max-width:100%}
 .hero h1 .l:nth-child(2) span{animation-delay:.12s}
 .hero h1 .goldword{background:linear-gradient(95deg,#F3E5BC,#D3B575 55%,#B98A2F);
   -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .l .goldword{display:inline}   /* the line-reveal makes inner spans block; the gold word stays inline on desktop */
 @keyframes rise{to{transform:none}}
 
 .hero-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-top:5vh;flex-wrap:wrap}
@@ -476,16 +477,6 @@ h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;letter-spacing:-.035em;font
 .pv-svg{display:block;width:100%;height:auto;font-family:var(--sans)}
 .pillar h3{margin:0 0 6px;font-size:19px;font-weight:640;letter-spacing:-.02em;line-height:1.2;color:var(--cream)}
 .pillar p{margin:0;font-size:14px;line-height:1.55;color:rgba(242,233,212,.62)}
-/* motion: shards gather into the enclave; toggles flick on; seals stamp; scan sweeps */
-.sh.s1{animation:shL 6s ease-in-out infinite}.sh.s2{animation:none}.sh.s3{opacity:.6}
-@keyframes shL{0%,15%{transform:translateX(0)}35%,65%{transform:translateX(62px)}85%,100%{transform:translateX(0)}}
-.enclave{animation:encl 6s ease-in-out infinite}@keyframes encl{0%,15%{opacity:.35}35%,65%{opacity:.9}85%,100%{opacity:.35}}
-.perm .knob{animation:knob 5s ease-in-out infinite}.perm.p2 .knob{animation-delay:.4s}.perm.p3 .knob{animation-delay:.8s}
-@keyframes knob{0%,10%{transform:translateX(-18px)}30%,80%{transform:translateX(0)}95%,100%{transform:translateX(-18px)}}
-.seal{transform-box:fill-box;transform-origin:center;animation:seal .7s ease-out both}.seal.b{animation-delay:.35s}.seal.c{animation-delay:.7s}.seal.d{animation-delay:1.05s}
-@keyframes seal{0%{opacity:0;transform:scale(1.5)}100%{opacity:1;transform:scale(1)}}
-.scan{animation:scan 3.2s ease-in-out infinite}@keyframes scan{0%{transform:translateY(0)}50%{transform:translateY(42px)}100%{transform:translateY(0)}}
-@media (prefers-reduced-motion:reduce){.sh.s1,.enclave,.perm .knob,.seal,.scan{animation:none}.perm .knob{transform:none}}
 .sec-runs{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 28px;margin-top:64px;padding-top:26px;border-top:1px solid var(--wline)}
 .sr-lbl{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,233,212,.45)}
 .sr{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:rgba(242,233,212,.55);text-decoration:none;transition:color .2s}
@@ -863,6 +854,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
 }
 @media (max-width:560px){
   .hero h1{font-size:clamp(40px,12vw,64px)}
+  .hero h1 .l .goldword{display:block}
   .hero-in{padding-top:104px;padding-bottom:7vh}
   .hero-meta{display:none}
   .hero-foot{margin-top:6vh}
@@ -962,9 +954,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
       <div class="hero-ctas">
         <a class="btn btn-plum btn-big" href="#cta" data-magnet>Wake your gold</a>
         <a class="btn btn-line btn-big" href="#demos">Watch it work</a>
-        <span class="gold-tick" aria-label="Gold price, July 2026">
-          <span class="gd"></span>GOLD <b data-gold-price>$4,054</b>&nbsp;/&nbsp;oz <span class="live" data-market-state>indicative</span>
-        </span>
+
       </div>
     </div>
   </div>
@@ -1104,7 +1094,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <img class="shot" src="../assets/shots/b-custody.webp" alt="Auri app — gold held in your own name, non-custodial Swiss vault" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="cap"><span class="t">We can't touch your gold.</span>
-          <span class="p">It sits in a Swiss vault in your name, not on our books. If Auri disappeared tomorrow, your gold would still be yours.</span></div>
+          <span class="p">Allocated bars in a Swiss vault, held in your name, not on our books. If Auri disappeared tomorrow, your gold would still be yours.</span></div>
       </div>
 
       <!-- 2 · remittance, coming soon -->
@@ -1125,7 +1115,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <img class="shot" src="../assets/shots/b-boost.webp" alt="Auri app — Boost, one-click gold leverage up to 5x with liquidation risk" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="cap"><span class="t">Boost, up to 5×.<span class="risk-tag">Higher risk</span></span>
-          <span class="p">One tap borrows more gold against the gold you already hold. Gains multiply, and so do losses, with a real risk of liquidation. Only for people who know what they're doing.</span></div>
+          <span class="p">One tap borrows more gold against the gold you hold. Gains multiply, and so do losses; if gold falls to the liquidation price the position closes. Only for people who know what they're doing.</span></div>
       </div>
 
       <!-- 4 · spend / 24-7 card -->
@@ -1137,7 +1127,7 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
           <img class="shot" src="../assets/shots/b-card.webp" alt="Auri app — spend gold directly with the Auri card, any day" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="cap"><span class="t">A card that spends your gold.<span class="soon-tag">Coming soon</span></span>
-          <span class="p">Groceries on a Sunday, a flight at 2 a.m. Markets close on weekends; your money doesn't. The card is coming soon.</span></div>
+          <span class="p">Tap, and a sliver of your gold converts on the spot, on a Sunday night or any other time, anywhere Visa runs. Coming soon.</span></div>
       </div>
     </div>
 
@@ -1234,49 +1224,659 @@ footer{background:var(--night);border-top:1px solid var(--wline);padding:56px 0 
     </div>
 
     <div class="pillars">
-      <div class="pillar rv"><div class="pv"><svg viewBox="0 0 360 200" class="pv-svg" aria-hidden="true">
-  <g class="shards">
-    <rect class="sh s1" x="48" y="86" width="52" height="28" rx="7" fill="none" stroke="#D3B575" stroke-width="2"/><text class="sh s1" x="74" y="105" font-size="11" fill="#D3B575" text-anchor="middle">1 / 3</text>
-    <rect class="sh s2" x="154" y="86" width="52" height="28" rx="7" fill="none" stroke="#D3B575" stroke-width="2"/><text class="sh s2" x="180" y="105" font-size="11" fill="#D3B575" text-anchor="middle">2 / 3</text>
-    <rect class="sh s3" x="260" y="86" width="52" height="28" rx="7" fill="none" stroke="#D3B575" stroke-width="2" stroke-dasharray="4 4"/><text class="sh s3" x="286" y="105" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="middle">3 / 3</text>
+      <div class="pillar rv"><div class="pv"><!-- STORY
+(a) REFERENCES LOOKED AT
+ 1. https://docs.privy.io/security/wallet-infrastructure/architecture — the source of record for our own stack. Best line to design
+    against: "Neither the auth share nor the enclave share in isolation provide any information or access to the wallet." Their flow
+    diagram draws the enclave as a closed box in the middle and everything else outside it; I stole that boundary wholesale.
+ 2. https://privy.io/blog/how-privy-embedded-wallets-work — the consumer-facing version of the same story. Good at naming each share by
+    WHERE IT LIVES (device / login / recovery) rather than by cryptography, which is what a saver can actually hold in their head.
+ 3. https://whitepaper.turnkey.com/architecture — clearest treatment of the passkey as the thing that authorises the enclave: the user
+    signs the request, the enclave verifies the signature, keys are "never reconstructed outside secure enclaves". Their diagrams draw an
+    explicit trusted/untrusted line — the reason my Auri box sits OUTSIDE the enclave rather than beside it.
+ 4. https://aws.amazon.com/blogs/web3/building-secure-verifiable-blockchain-key-management-on-aws-nitro-enclaves-at-turnkey/ — shows a
+    Nitro enclave as a sealed sub-box with a single narrow channel into it. That "few ports, no doors" shape is the enclave here.
+ 5. https://aws.amazon.com/ec2/nitro/nitro-enclaves/ — the three properties that justify drawing it as sealed at all: no persistent
+    storage, no interactive access, no external networking. Nothing rests inside; that is why the key is only shown mid-assembly.
+ 6. https://support.apple.com/en-us/102195 — how to say "passkey" without saying passkey: a face or a finger, and "no shared secret is
+    transmitted". The green biometric ring is the whole passkey idea in one glyph, which is what a five-second read needs.
+ 7. https://zengo.com/mpc-wallet/ — the best mass-market two-share picture anywhere: one share on your phone, one on the server, neither
+    can sign alone. Weakness I avoided: their shares are abstract blobs, so you never feel that the two make ONE thing.
+ 8. https://www.fireblocks.com/report/what-is-mpc — "no single point of compromise", and the useful discipline of drawing shares as
+    separate objects that never gather in one place. Enterprise-cold, but the honesty of the geometry is right.
+ 9. https://docs.dfns.co/core-concepts/architecture — shards held in separate enclaves with a policy layer bolted on top. Reminded me to
+    keep the policy/permissions story OUT of this pillar entirely, so this one drawing makes exactly one claim.
+ Rejected idea: the usual "shattered key" prop (a key exploding into confetti). It looks like loss, not safety, and it never shows where
+ the pieces go. A saver needs to see the pieces ARRIVE somewhere sealed and become whole again.
+
+(b) FIRST GLANCE (1 second)
+ Two small pieces of a key, on the left, being carried into one big sealed box where a whole key sits above a green fingerprint. On the
+ far right a second, almost empty box is cut off from that one by a plum "no entry" mark.
+
+(c) IN FIVE SECONDS
+ My key is not one secret in one place. One piece is on my phone, one is behind my login — both mine. They travel into a sealed hardware
+ box and are only put back together in there, and only when my face or fingerprint says so. Auri stands outside that box holding nothing,
+ and the line from the box to Auri is blocked. So there is no version of this where Auri, or anyone who breaks into Auri, has my key.
+
+(d) SUGGESTED CAPTION
+ Title (5 words): Your keys never leave you.
+ Sentence: Your key is split into shares — one on your device, one behind your login — and they are only ever put back together inside a
+ sealed enclave that opens with your passkey, so Auri never holds a share.
+-->
+<svg class="pv-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img"
+     aria-label="A wallet key split into two pieces: one on the user's device, one behind their login. Both travel into a sealed secure enclave where the key is recombined only when the user's passkey approves. Auri sits outside the enclave with no share and no access.">
+<style>
+  .s-keys-t{font-family:Geist,-apple-system,sans-serif;font-weight:500}
+  .s-keys-flow{stroke-dasharray:7 9;animation:s-keys-flow 2.4s linear infinite}
+  @keyframes s-keys-flow{to{stroke-dashoffset:-32}}
+  .s-keys-snap-a{animation:s-keys-snap-a .85s cubic-bezier(.22,.9,.28,1) both}
+  .s-keys-snap-b{animation:s-keys-snap-b .85s cubic-bezier(.22,.9,.28,1) both}
+  @keyframes s-keys-snap-a{from{transform:translateX(-30px);opacity:0}to{transform:translateX(0);opacity:1}}
+  @keyframes s-keys-snap-b{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+  .s-keys-halo{animation:s-keys-halo 5.4s ease-in-out infinite}
+  @keyframes s-keys-halo{0%,100%{opacity:.5}50%{opacity:1}}
+  .s-keys-spark{opacity:0;animation:s-keys-spark 3.2s ease-in-out .8s infinite}
+  @keyframes s-keys-spark{0%,100%{opacity:.25}45%{opacity:1}}
+  .s-keys-check{stroke-dasharray:16;stroke-dashoffset:16;animation:s-keys-draw .34s ease-out .66s both}
+  @keyframes s-keys-draw{to{stroke-dashoffset:0}}
+  .s-keys-pulse{transform-box:view-box;transform-origin:370px 282px;animation:s-keys-pulse 3.4s ease-out .9s infinite}
+  @keyframes s-keys-pulse{0%{transform:scale(1);opacity:.45}70%,100%{transform:scale(1.6);opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .s-keys-flow,.s-keys-snap-a,.s-keys-snap-b,.s-keys-halo,.s-keys-spark,.s-keys-check,.s-keys-pulse{animation:none}
+    .s-keys-snap-a,.s-keys-snap-b{transform:none;opacity:1}
+    .s-keys-check{stroke-dashoffset:0}
+    .s-keys-halo{opacity:.85}
+    .s-keys-spark{opacity:.6}
+    .s-keys-pulse{opacity:0}
+  }
+</style>
+<defs>
+  <g id="s-keys-half-a">
+    <circle cx="0" cy="0" r="17"/>
+    <circle cx="0" cy="0" r="7.5"/>
+    <path d="M14,-7 H56.5 Q60,-7 60,-3.5 V3.5 Q60,7 56.5,7 H14"/>
   </g>
-  <rect class="enclave" x="104" y="58" width="152" height="84" rx="14" fill="none" stroke="#F2E9D4" stroke-width="1.5" stroke-dasharray="5 5" opacity=".7"/>
-  <text x="180" y="50" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="middle" letter-spacing="1.5">SECURE ENCLAVE</text>
-  <g transform="translate(180 165)"><circle r="14" fill="none" stroke="#4ADE9E" stroke-width="1.5"/><path d="M-5 0l4 4 7-8" fill="none" stroke="#4ADE9E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
-  <text x="180" y="196" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="middle">your passkey</text>
-  <text x="336" y="196" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="end">never visible to Auri</text>
-</svg></div><h3>Your keys never leave you.</h3><p>Split into pieces and only ever assembled inside a secure enclave, with your passkey. Auri can't see them.</p></div>
-      <div class="pillar rv d1"><div class="pv"><svg viewBox="0 0 360 214" class="pv-svg" aria-hidden="true">
-  <g font-size="12.5" fill="#F2E9D4">
-    <g class="perm p1"><text x="24" y="42">Buy gold</text><text x="24" y="58" font-size="10.5" fill="rgba(242,233,212,.45)">up to $500 a week</text><rect x="290" y="36" width="40" height="22" rx="11" fill="#4ADE9E" opacity=".9"/><circle class="knob" cx="319" cy="47" r="8" fill="#0B0B12"/></g>
-    <g class="perm p2"><text x="24" y="90">Repay your loan</text><text x="24" y="106" font-size="10.5" fill="rgba(242,233,212,.45)">any amount, any time</text><rect x="290" y="84" width="40" height="22" rx="11" fill="#4ADE9E" opacity=".9"/><circle class="knob" cx="319" cy="95" r="8" fill="#0B0B12"/></g>
-    <g class="perm p3"><text x="24" y="138">Send cash to your bank</text><text x="24" y="154" font-size="10.5" fill="rgba(242,233,212,.45)">your own account only</text><rect x="290" y="132" width="40" height="22" rx="11" fill="#4ADE9E" opacity=".9"/><circle class="knob" cx="319" cy="143" r="8" fill="#0B0B12"/></g>
-    <g opacity=".55"><text x="24" y="186">Move your gold anywhere</text><rect x="290" y="180" width="40" height="22" rx="11" fill="none" stroke="rgba(242,233,212,.45)"/><g transform="translate(310 191)"><rect x="-5" y="-2" width="10" height="8" rx="1.5" fill="rgba(242,233,212,.45)"/><path d="M-3 -2v-2.5a3 3 0 0 1 6 0V-2" fill="none" stroke="rgba(242,233,212,.45)" stroke-width="1.5"/></g></g>
+  <g id="s-keys-half-b">
+    <path d="M64,-7 H128.5 Q132,-7 132,-3.5 V3.5 Q132,7 128.5,7 H64 Z"/>
+    <path d="M94,4 V15 Q94,19.5 98.5,19.5 H100.5 Q105,19.5 105,15 V4"/>
+    <path d="M113,4 V15 Q113,19.5 117.5,19.5 H119.5 Q124,19.5 124,15 V4"/>
   </g>
-  <line x1="24" y1="70" x2="336" y2="70" stroke="#F2E9D4" opacity=".08"/><line x1="24" y1="118" x2="336" y2="118" stroke="#F2E9D4" opacity=".08"/><line x1="24" y1="166" x2="336" y2="166" stroke="#F2E9D4" opacity=".08"/>
-</svg></div><h3>Auri does only what you allow.</h3><p>You set the permissions and the limits. There is no permission that lets us move your gold.</p></div>
-      <div class="pillar rv d2"><div class="pv"><svg viewBox="0 0 360 200" class="pv-svg" aria-hidden="true">
-  <rect x="96" y="34" width="168" height="112" rx="14" fill="none" stroke="#F2E9D4" stroke-width="1.5" opacity=".55"/>
-  <g stroke="#D3B575" stroke-width="3" stroke-linecap="round" opacity=".85"><line x1="116" y1="58" x2="186" y2="58"/><line x1="116" y1="76" x2="230" y2="76"/><line x1="116" y1="94" x2="164" y2="94"/><line x1="116" y1="112" x2="212" y2="112"/></g>
-  <g transform="translate(244 128)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#F2E9D4"/><path d="M-5 -3v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#F2E9D4" stroke-width="2"/></g>
-  <g transform="translate(48 60)"><g class="seal a"><rect x="-40" y="-11" width="80" height="22" rx="11" fill="none" stroke="#4ADE9E"/><text y="4" font-size="10" fill="#4ADE9E" text-anchor="middle" letter-spacing=".8">IMMUTABLE</text></g></g>
-  <g transform="translate(312 60)"><g class="seal b"><rect x="-44" y="-11" width="88" height="22" rx="11" fill="none" stroke="#4ADE9E"/><text y="4" font-size="10" fill="#4ADE9E" text-anchor="middle" letter-spacing=".8">VERIFIED</text></g></g>
-  <g transform="translate(48 126)"><g class="seal c"><rect x="-40" y="-11" width="80" height="22" rx="11" fill="none" stroke="#4ADE9E"/><text y="4" font-size="10" fill="#4ADE9E" text-anchor="middle" letter-spacing=".8">25+ AUDITS</text></g></g>
-  <g transform="translate(312 126)"><g class="seal d"><rect x="-44" y="-11" width="88" height="22" rx="11" fill="none" stroke="#4ADE9E"/><text y="4" font-size="10" fill="#4ADE9E" text-anchor="middle" letter-spacing=".8">$2.5M BOUNTY</text></g></g>
-  <text x="180" y="178" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="middle">the lending contracts, as deployed, forever</text>
-</svg></div><h3>Loans on code nobody can change.</h3><p>Immutable, formally verified, reviewed by 25+ auditors, with a $2.5M bug bounty behind it.</p></div>
-      <div class="pillar rv d3"><div class="pv"><svg viewBox="0 0 360 200" class="pv-svg" aria-hidden="true">
-  <defs><linearGradient id="bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAD9AE"/><stop offset="1" stop-color="#B98A2F"/></linearGradient></defs>
-  <path d="M112 62h136l14 40H98z" fill="url(#bar)"/><text x="180" y="88" font-size="10.5" fill="#3A2A08" text-anchor="middle" letter-spacing="1.2" font-weight="600">No. 1804 · 400 oz · 999.9</text>
-  <rect class="scan" x="96" y="60" width="168" height="1.5" fill="#4ADE9E" opacity=".55"/>
-  <g class="chain" fill="none" stroke="#F2E9D4" stroke-width="1.5" opacity=".7">
-    <rect x="52" y="140" width="52" height="30" rx="7"/><rect x="128" y="140" width="52" height="30" rx="7"/><rect x="204" y="140" width="52" height="30" rx="7"/><rect x="280" y="140" width="28" height="30" rx="7" stroke-dasharray="4 4"/>
-    <line x1="104" y1="155" x2="128" y2="155"/><line x1="180" y1="155" x2="204" y2="155"/><line x1="256" y1="155" x2="280" y2="155"/>
+  <radialGradient id="s-keys-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#F2E9D4" stop-opacity=".26"/>
+    <stop offset="1" stop-color="#F2E9D4" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="s-keys-seamglow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#4ADE9E" stop-opacity=".85"/>
+    <stop offset="1" stop-color="#4ADE9E" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<g transform="translate(0,-10)">
+
+<!-- ================= LEFT: the two shares the user holds ================= -->
+<rect x="32" y="96"  width="116" height="100" rx="16" fill="rgba(242,233,212,.035)" stroke="rgba(242,233,212,.16)" stroke-width="1.5"/>
+<rect x="32" y="232" width="116" height="100" rx="16" fill="rgba(242,233,212,.035)" stroke="rgba(242,233,212,.16)" stroke-width="1.5"/>
+
+<!-- device badge: a phone -->
+<g fill="none" stroke="rgba(242,233,212,.55)" stroke-width="1.5">
+  <rect x="82" y="111" width="16" height="24" rx="4"/>
+  <line x1="87" y1="115.5" x2="93" y2="115.5"/>
+</g>
+<!-- login badge: an account -->
+<g fill="none" stroke="rgba(242,233,212,.55)" stroke-width="1.5">
+  <circle cx="90" cy="252" r="5"/>
+  <path d="M81,268 a9,9 0 0 1 18,0"/>
+</g>
+
+<!-- share 1 : bow half, on the device -->
+<g transform="translate(73.2,158) scale(.78)" fill="none" stroke="#F2E9D4" stroke-width="1.923" stroke-linejoin="round">
+  <use href="#s-keys-half-a"/>
+</g>
+<!-- share 2 : bit half, behind the login -->
+<g transform="translate(13.6,286.9) scale(.78)" fill="none" stroke="#F2E9D4" stroke-width="1.923" stroke-linejoin="round">
+  <use href="#s-keys-half-b"/>
+</g>
+
+<text class="s-keys-t" x="90" y="216" text-anchor="middle" font-size="13" fill="rgba(242,233,212,.62)">Your device</text>
+<text class="s-keys-t" x="90" y="352" text-anchor="middle" font-size="13" fill="rgba(242,233,212,.62)">Your login</text>
+
+<!-- ================= the two shares travel in ================= -->
+<g fill="none" stroke="rgba(242,233,212,.5)" stroke-width="1.5" stroke-linecap="round">
+  <path class="s-keys-flow" d="M148,158 C190,158 200,170 236,170"/>
+  <path class="s-keys-flow" d="M148,292 C190,292 200,244 236,244"/>
+</g>
+<circle cx="236" cy="170" r="3.2" fill="#F2E9D4"/>
+<circle cx="236" cy="244" r="3.2" fill="#F2E9D4"/>
+
+<!-- ================= CENTRE: the sealed enclave ================= -->
+<rect x="236" y="72" width="268" height="272" rx="22" fill="rgba(242,233,212,.045)" stroke="#F2E9D4" stroke-width="1.5"/>
+<rect x="246" y="82" width="248" height="252" rx="15" fill="none" stroke="rgba(242,233,212,.12)" stroke-width="1"/>
+
+<!-- sealed hardware band -->
+<g stroke="rgba(242,233,212,.12)" stroke-width="1">
+  <line x1="258" y1="106" x2="347" y2="106"/>
+  <line x1="393" y1="106" x2="482" y2="106"/>
+</g>
+<g fill="none" stroke="rgba(242,233,212,.5)" stroke-width="1.5" stroke-linecap="round">
+  <rect x="359" y="95" width="22" height="22" rx="5"/>
+  <line x1="353" y1="101" x2="359" y2="101"/><line x1="353" y1="106" x2="359" y2="106"/><line x1="353" y1="111" x2="359" y2="111"/>
+  <line x1="381" y1="101" x2="387" y2="101"/><line x1="381" y1="106" x2="387" y2="106"/><line x1="381" y1="111" x2="387" y2="111"/>
+  <line x1="365" y1="89" x2="365" y2="95"/><line x1="375" y1="89" x2="375" y2="95"/>
+  <line x1="365" y1="117" x2="365" y2="123"/><line x1="375" y1="117" x2="375" y2="123"/>
+</g>
+<rect x="365" y="101" width="10" height="10" rx="2.5" fill="none" stroke="rgba(242,233,212,.3)" stroke-width="1"/>
+
+<!-- the key, recombined, only in here -->
+<ellipse class="s-keys-halo" cx="370" cy="179" rx="126" ry="48" fill="url(#s-keys-glow)"/>
+<g transform="translate(305.6,178.3)" fill="none" stroke="#F2E9D4" stroke-width="1.339" stroke-linejoin="round">
+  <g class="s-keys-snap-a"><use href="#s-keys-half-a"/></g>
+  <g class="s-keys-snap-b"><use href="#s-keys-half-b"/></g>
+</g>
+<g class="s-keys-spark">
+  <circle cx="375" cy="178.3" r="11" fill="url(#s-keys-seamglow)"/>
+  <line x1="375" y1="169.5" x2="375" y2="187.1" stroke="#4ADE9E" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+
+
+
+<!-- the passkey moment -->
+<g class="s-keys-pulse"><circle cx="370" cy="292" r="25" fill="none" stroke="#4ADE9E" stroke-width="1.5"/></g>
+<circle cx="370" cy="292" r="25" fill="rgba(74,222,158,.10)" stroke="#4ADE9E" stroke-width="1.5"/>
+<g fill="none" stroke="#4ADE9E" stroke-width="1.5" stroke-linecap="round">
+  <path d="M357,299 C357,282.5 383,282.5 383,299"/>
+  <path d="M362,300.5 C362,289.5 378,289.5 378,300.5"/>
+  <path d="M367,302 C367,295.5 373,295.5 373,302"/>
+</g>
+<circle cx="389" cy="310" r="9.5" fill="#4ADE9E"/>
+<path class="s-keys-check" d="M384.6,310 L387.7,313.2 L393.6,306.6" fill="none" stroke="#100A0E" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"/>
+
+<text class="s-keys-t" x="370" y="368" text-anchor="middle" font-size="13.5" font-weight="600" fill="#F2E9D4">Secure enclave</text>
+
+<!-- ================= RIGHT: Auri, outside, with nothing ================= -->
+<g stroke="#C4699A" stroke-width="1.5" stroke-linecap="round">
+  <line x1="504" y1="208" x2="519" y2="208" stroke-dasharray="4 5"/>
+  <line x1="563" y1="208" x2="578" y2="208" stroke-dasharray="4 5"/>
+</g>
+<circle cx="541" cy="208" r="20" fill="none" stroke="#C4699A" stroke-width="1.8"/>
+<line x1="527.4" y1="221.6" x2="554.6" y2="194.4" stroke="#C4699A" stroke-width="1.8" stroke-linecap="round"/>
+
+<rect x="578" y="164" width="112" height="88" rx="16" fill="none" stroke="rgba(242,233,212,.16)" stroke-width="1.5"/>
+<g fill="none" stroke="rgba(242,233,212,.45)" stroke-width="1.5">
+  <rect x="604" y="186" width="60" height="18" rx="5"/>
+  <rect x="604" y="212" width="60" height="18" rx="5"/>
+</g>
+<circle cx="613" cy="195" r="2" fill="rgba(242,233,212,.45)"/>
+<circle cx="613" cy="221" r="2" fill="rgba(242,233,212,.45)"/>
+
+<text class="s-keys-t" x="634" y="150" text-anchor="middle" font-size="13" fill="rgba(242,233,212,.62)">Auri</text>
+<text class="s-keys-t" x="634" y="276" text-anchor="middle" font-size="13" font-weight="600" fill="#C4699A">No access</text>
+</g>
+</svg></div><h3>Your keys never leave you.</h3><p>Your key is split into shares, one on your device and one behind your login, and they only meet inside a sealed enclave that opens with your passkey. Auri never holds one.</p></div>
+      <div class="pillar rv d1"><div class="pv"><!-- STORY
+REFERENCES LOOKED AT
+1. https://docs.zerodev.app/sdk/permissions/intro — Auri's own stack. States the model as
+   "Permission = 1 signer + N policies + 1 action", with call, gas, rate limit and timestamp policies.
+   Gave me the three honest axes to draw: which actions, how much, until when. Also the reason the key
+   is drawn as a key with a fixed number of teeth: a permission is composed, not toggled.
+2. https://docs.stripe.com/keys/restricted-api-keys — a resource per row, permission per column,
+   default None, "a key can do only what you give it permission to do". Best proof that the useful
+   picture is a LIST OF ROWS, and that an ungranted row must still be visible as a row. Its weakness is
+   that everything is a dropdown, so nothing is ever impossible; that is what I had to fix here.
+3. https://github.com/ethereum/ERCs/blob/master/ERCS/erc-7715.md — expiry as a first class constraint
+   carrying a timestamp, and the requirement that wallets show and let users revoke live grants.
+   Confirmed the expiry deserves its own visual and should live ON the key, not in a footnote.
+4. https://docs.metamask.io/smart-accounts-kit/concepts/advanced-permissions/ — human readable approval
+   screen: one sentence of scope, one amount, one date. Taught me the row label should be an action a
+   saver already says out loud ("Buy gold"), not a contract name.
+5. https://docs.lagoon.finance/curation-solutions/how-to/how-to-setup-safe-and-zodiac-roles-modifier —
+   Safe plus Zodiac Roles: a permission is target address, function, allowed arguments AND an amount cap
+   ("up to 50 gwei to a specific address"). The cap is part of the permission, so I put a capped meter
+   inside each granted row rather than in a separate legend.
+6. https://support.argent.xyz/hc/en-us/articles/360022693511-About-the-daily-transfer-limit — the daily
+   limit as the headline object, with a deliberate asymmetry (lowering it applies instantly, raising it
+   waits 24h). Reinforced that the limit should read as a wall, hence the hard end tick on every meter.
+7. https://plaid.com/blog/introducing-privacy-controls/ — data minimisation stated as a promise the
+   system enforces: unrequested accounts are never shared even when the bank returns them. The nearest
+   consumer finance parallel to "no policy can move your gold to Auri".
+8. https://plaid.com/docs/link/data-transparency-messaging-migration-guide/ — product specific disclosure
+   sits directly above the button, with a "Why is this needed" pane behind it. Kept me from stacking any
+   explanation into the graphic; the caption carries it instead.
+9. https://developer.apple.com/app-store/app-privacy-details/ — the privacy nutrition label: a fixed
+   grid every app is scored on, so a missing category is information rather than an omission. The reason
+   the fourth row is drawn at all instead of being left out.
+10. https://www.saasui.design/blog/saas-permissions-roles-ux-patterns — permission matrices stay legible
+   only with "unambiguous states for allowed / not allowed / partial rather than identical checkmarks".
+   Pushed me to make the denied row a different KIND of object, not a green tick turned grey.
+
+FIRST GLANCE (1 second)
+A key tagged "Auri" with three teeth. Three wires run from it into three green ticked rows. A fourth row
+sits below the line in plum, dashed and hollow, with no wire reaching it.
+
+IN FIVE SECONDS
+This is the whole list of what Auri's key can do, and every granted row is capped: a meter that stops at a
+wall you set, under a countdown ring on the key itself. The fourth row is not switched off, it is empty at
+both ends and nothing connects to it, because taking your gold is not a permission the account has to give.
+Three teeth, three rows. There is no fourth tooth.
+
+CAPTION
+Title: Auri does only what you allow.
+Sentence: Auri's server holds one key that you scoped yourself — a short list of actions, your spend limit,
+your expiry, revocable at any moment — and taking your gold is not a permission that exists on it.
+-->
+<svg class="pv-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" fill="none"
+     role="img" aria-label="A key tagged Auri with three teeth. Three wires run to three ticked rows, each with a capped spend meter: buy gold, send cash, card payments. Below a dividing line, a fourth plum row, take your gold, is dashed, empty at both ends, and no wire reaches it.">
+<style>
+.s-perm-t{font-family:Geist,-apple-system,sans-serif;fill:#F2E9D4}
+.s-perm-lbl{font-size:17px;font-weight:500;letter-spacing:-.004em}
+.s-perm-row{fill:#F2E9D4;fill-opacity:.045;stroke:#F2E9D4;stroke-opacity:.17;stroke-width:1.5}
+.s-perm-void{fill:#C4699A;fill-opacity:.055;stroke:#C4699A;stroke-opacity:.85;stroke-width:1.5;stroke-dasharray:7 6}
+.s-perm-no{fill:#C4699A;fill-opacity:.95}
+.s-perm-tag{fill:#C4699A;fill-opacity:.12;stroke:#C4699A;stroke-width:1.3}
+.s-perm-tag-t{font-size:13px;font-weight:600;fill:#C4699A;text-anchor:middle;letter-spacing:.01em}
+.s-perm-stem{fill:none;stroke:#C4699A;stroke-opacity:.5;stroke-width:1.3;stroke-linecap:round}
+.s-perm-key{fill:none;stroke:#F2E9D4;stroke-opacity:.58;stroke-width:1.5}
+.s-perm-shaft{fill:none;stroke:#F2E9D4;stroke-opacity:.58;stroke-width:3.5;stroke-linecap:round}
+.s-perm-tooth{fill:none;stroke:#F2E9D4;stroke-opacity:.58;stroke-width:3;stroke-linecap:round}
+.s-perm-track{fill:none;stroke:#F2E9D4;stroke-opacity:.15;stroke-width:3.5}
+.s-perm-arc{fill:none;stroke:#F2E9D4;stroke-opacity:.85;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:94.25;stroke-dashoffset:26}
+.s-perm-wire{fill:none;stroke:#4ADE9E;stroke-opacity:.4;stroke-width:1.5;stroke-linecap:round}
+.s-perm-node{fill:#4ADE9E;fill-opacity:.9}
+.s-perm-dead{fill:none;stroke:#C4699A;stroke-opacity:.8;stroke-width:1.5}
+.s-perm-glyph{fill:none;stroke:#F2E9D4;stroke-opacity:.75;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.s-perm-stripe{fill:none;stroke:#F2E9D4;stroke-opacity:.38;stroke-width:3.4}
+.s-perm-meter{fill:#F2E9D4;fill-opacity:.13}
+.s-perm-fill{fill:#4ADE9E;fill-opacity:.85}
+.s-perm-wall{fill:none;stroke:#F2E9D4;stroke-opacity:.45;stroke-width:1.6;stroke-linecap:round}
+.s-perm-ok{fill:#4ADE9E;fill-opacity:.13;stroke:#4ADE9E;stroke-width:1.5}
+.s-perm-tick{fill:none;stroke:#4ADE9E;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.s-perm-slot{fill:none;stroke:#C4699A;stroke-opacity:.75;stroke-width:1.5;stroke-dasharray:3.5 4.5}
+.s-perm-sep{fill:none;stroke:#F2E9D4;stroke-opacity:.1;stroke-width:1}
+.s-perm-arc{animation:s-perm-countdown 6s linear infinite}
+.s-perm-ants{animation:s-perm-march 7.8s linear infinite}
+.s-perm-spark{fill:none;stroke:#4ADE9E;stroke-opacity:.95;stroke-width:5.5;stroke-linecap:round;stroke-dasharray:.5 430;stroke-dashoffset:.5;animation:s-perm-run 3.4s linear infinite}
+.s-perm-s2{animation-delay:.38s}
+.s-perm-s3{animation-delay:.76s}
+@keyframes s-perm-countdown{0%{stroke-dashoffset:12}100%{stroke-dashoffset:68}}
+@keyframes s-perm-march{to{stroke-dashoffset:-52}}
+@keyframes s-perm-run{0%{stroke-dashoffset:.5}100%{stroke-dashoffset:-430}}
+@media (prefers-reduced-motion:reduce){
+  .s-perm-arc,.s-perm-ants{animation:none}
+  .s-perm-spark{animation:none;stroke-opacity:0}
+}
+</style>
+<defs>
+  <linearGradient id="s-perm-gold" x1="0" y1="88" x2="0" y2="103" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#EAD9AE"/><stop offset=".5" stop-color="#D3B575"/><stop offset="1" stop-color="#B98A2F"/>
+  </linearGradient>
+</defs>
+
+<!-- the key Auri's server holds: bounded by an expiry, cut with exactly three teeth -->
+<rect class="s-perm-tag" x="68" y="94" width="64" height="27" rx="13.5"/>
+<text class="s-perm-tag-t" x="100" y="112.5">Auri</text>
+<path class="s-perm-stem" d="M100,121 V138"/>
+<circle class="s-perm-key" cx="100" cy="168" r="30"/>
+<circle class="s-perm-track" cx="100" cy="168" r="15"/>
+<g transform="rotate(-90 100 168)"><circle class="s-perm-arc" cx="100" cy="168" r="15"/></g>
+<path class="s-perm-shaft" d="M130,168 H196"/>
+<path class="s-perm-tooth" d="M160,168 V180 M174,168 V180 M188,168 V180"/>
+
+<!-- three teeth, three wires -->
+<path class="s-perm-wire" d="M196,168 C216,168 220,96 244,96"/>
+<path class="s-perm-wire" d="M196,168 H244"/>
+<path class="s-perm-wire" d="M196,168 C216,168 220,240 244,240"/>
+<path class="s-perm-spark" d="M196,168 C216,168 220,96 244,96"/>
+<path class="s-perm-spark s-perm-s2" d="M196,168 H244"/>
+<path class="s-perm-spark s-perm-s3" d="M196,168 C216,168 220,240 244,240"/>
+<circle class="s-perm-node" cx="244" cy="96" r="3.6"/>
+<circle class="s-perm-node" cx="244" cy="168" r="3.6"/>
+<circle class="s-perm-node" cx="244" cy="240" r="3.6"/>
+
+<!-- nothing reaches past here -->
+<path class="s-perm-sep" d="M196,284 H656"/>
+
+<!-- granted: buy gold, capped -->
+<rect class="s-perm-row" x="244" y="68" width="412" height="56" rx="14"/>
+<path d="M265,102 L270,89 L294,89 L299,102 Z" fill="url(#s-perm-gold)"/>
+<text class="s-perm-t s-perm-lbl" x="316" y="102">Buy gold</text>
+<rect class="s-perm-meter" x="486" y="93" width="92" height="6" rx="3"/>
+<rect class="s-perm-fill" x="486" y="93" width="58" height="6" rx="3"/>
+<path class="s-perm-wall" d="M578,88 V104"/>
+<circle class="s-perm-ok" cx="618" cy="96" r="13"/>
+<path class="s-perm-tick" d="M611.5,96 L616,100.6 L624.5,91.3"/>
+
+<!-- granted: send cash, capped -->
+<rect class="s-perm-row" x="244" y="140" width="412" height="56" rx="14"/>
+<path class="s-perm-glyph" d="M269,177 L292,156 M283,155.5 H293 V165.5"/>
+<text class="s-perm-t s-perm-lbl" x="316" y="174">Send cash</text>
+<rect class="s-perm-meter" x="486" y="165" width="92" height="6" rx="3"/>
+<rect class="s-perm-fill" x="486" y="165" width="36" height="6" rx="3"/>
+<path class="s-perm-wall" d="M578,160 V176"/>
+<circle class="s-perm-ok" cx="618" cy="168" r="13"/>
+<path class="s-perm-tick" d="M611.5,168 L616,172.6 L624.5,163.3"/>
+
+<!-- granted: card payments, capped -->
+<rect class="s-perm-row" x="244" y="212" width="412" height="56" rx="14"/>
+<rect class="s-perm-glyph" x="267" y="230" width="31" height="21" rx="4.5"/>
+<path class="s-perm-stripe" d="M268,237.6 H297"/>
+<text class="s-perm-t s-perm-lbl" x="316" y="246">Card payments</text>
+<rect class="s-perm-meter" x="486" y="237" width="92" height="6" rx="3"/>
+<rect class="s-perm-fill" x="486" y="237" width="22" height="6" rx="3"/>
+<path class="s-perm-wall" d="M578,232 V248"/>
+<circle class="s-perm-ok" cx="618" cy="240" r="13"/>
+<path class="s-perm-tick" d="M611.5,240 L616,244.6 L624.5,235.3"/>
+
+<!-- not a permission that exists: empty at both ends, and its socket has no wire -->
+<rect class="s-perm-void s-perm-ants" x="244" y="296" width="412" height="56" rx="14"/>
+<circle class="s-perm-dead" cx="244" cy="324" r="3.6"/>
+<rect class="s-perm-slot" x="267" y="309" width="30" height="30" rx="8"/>
+<text class="s-perm-t s-perm-lbl s-perm-no" x="316" y="330">Take your gold</text>
+<circle class="s-perm-slot" cx="618" cy="324" r="13"/>
+</svg></div><h3>Auri does only what you allow.</h3><p>Auri's server holds one key you scoped yourself: a short list of actions, a spend limit, an expiry, revocable at any time. Taking your gold is not on it.</p></div>
+      <div class="pillar rv d2"><div class="pv"><!-- STORY
+REFERENCES LOOKED AT
+1. https://docs.morpho.org/get-started/resources/audits/ — one dense table, ~31 rows, four columns. The
+   argument IS the quantity; no logos, no badges. Taught me to render the audit count as many repeated
+   marks rather than a wall of security-firm logos a saver would not recognise.
+2. https://docs.morpho.org/learn/resources/risks/ — states plainly "core contracts are immutable" and names
+   the $2,500,000 bounty. Keeps immutability and market risk as separate claims; I kept them separate too.
+3. https://morpho.org/blog/morpho-institutional-grade-lending-infrastructure/ — "fully immutable and
+   governance-minimized ... will remain unchanged forever", and sizes the bounty against Apple's. Best
+   plain-language framing I found for a non-crypto reader: immutable = your product cannot be broken later.
+4. https://www.certora.com/ — "Move fast, break nothing"; proves properties across every possible path.
+   Explains it with a code/spec split screen, which is far too technical for a saver, so I compressed the
+   whole idea into one stamped seal on the document itself.
+5. https://immunefi.com/bug-bounty/ — a "MAX BOUNTY" column where a single large number does all the work
+   ($3M, $250k). Confirms the number should be bare type, not wrapped in an icon.
+6. https://blog.uniswap.org/uniswap-v3 — never says "padlock"; communicates immutability by consequence
+   (no party can pause it, reverse it, or change it later). Pushed me off lock imagery entirely.
+7. https://developers.uniswap.org/docs/get-started/concepts/how-uniswap-works — "core contracts are not
+   upgradeable ... no party can change protocol behavior retroactively". Source of the phrase "nobody".
+8. https://donjon.ledger.com/ — a shield plus a public Hall of Fame; reviewers framed as a collaborative
+   crowd, not one guardian. Reminded me the reviewers should read as many small marks, not one big shield.
+9. https://audits.sherlock.xyz/ — audit contests listed as many parallel independent reviewers working the
+   same code at once; reinforced "a row of many marks" over "a certificate".
+
+FIRST GLANCE (1 second)
+A heavy plate with the loan rules cut into its surface. A pen labelled "Auri" is pressing down on it from
+above and bouncing off. Under the plate, a long row of green ticks.
+
+IN FIVE SECONDS
+The rules of the loan are carved, not typed: the pen cannot mark them, and the pen belongs to Auri, so
+nobody can rewrite the deal after you take it — not the lender, not us. The green seal on the plate says the
+rules were mathematically proven; the 25 ticks below say 25+ independent teams checked them, and there is a
+$2.5M reward standing for anyone who can find a flaw. The plate never moves while the pen bounces.
+
+CAPTION
+Title: Loans on code nobody can change.
+Sentence: Your loan runs on Morpho's lending market, whose rules are carved in and cannot be edited by
+anyone — Auri included — after 25+ independent audits, formal proof and a $2.5M standing bug bounty.
+-->
+<svg class="pv-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" fill="none"
+     role="img" aria-label="Loan rules carved into an immutable plate. A pen labelled Auri presses on it and bounces off. A verification seal and a row of 25 checks: 25 plus independent audits and a 2.5 million dollar bounty.">
+<style>
+.s-loans-t{font-family:Geist,-apple-system,sans-serif;fill:#F2E9D4}
+.s-loans-face{fill:url(#s-loans-grad);stroke:#F2E9D4;stroke-opacity:.62;stroke-width:1.5}
+.s-loans-edge{fill:none;stroke:#F2E9D4;stroke-opacity:.17;stroke-width:1}
+.s-loans-rim{fill:#F2E9D4;fill-opacity:.11;stroke:none}
+.s-loans-bevel{fill:none;stroke:#F2E9D4;stroke-opacity:.9;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.s-loans-rim-e{fill:none;stroke:#F2E9D4;stroke-opacity:.4;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.s-loans-groove{fill:#000;fill-opacity:.36;stroke:#F2E9D4;stroke-opacity:.18;stroke-width:1}
+.s-loans-glint{fill:none;stroke:#F2E9D4;stroke-opacity:.44;stroke-width:1.25;stroke-linecap:round}
+.s-loans-h{font-size:13px;font-weight:600;letter-spacing:.2em;fill-opacity:.78}
+.s-loans-dash{fill:none;stroke:#4ADE9E;stroke-opacity:.34;stroke-width:1.2;stroke-dasharray:2 6.5}
+.s-loans-ring{fill:#4ADE9E;fill-opacity:.05;stroke:#4ADE9E;stroke-opacity:.88;stroke-width:1.5}
+.s-loans-check{fill:none;stroke:#4ADE9E;stroke-opacity:.95;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.s-loans-seal-t{font-size:11.5px;font-weight:550;fill:#4ADE9E;fill-opacity:.92;text-anchor:middle}
+.s-loans-pen-b{fill:#F2E9D4;fill-opacity:.07;stroke:#F2E9D4;stroke-opacity:.8;stroke-width:1.5;stroke-linejoin:round}
+.s-loans-grip{fill:none;stroke:#F2E9D4;stroke-opacity:.34;stroke-width:1.1;stroke-linecap:round}
+.s-loans-tag{fill:#C4699A;fill-opacity:.12;stroke:#C4699A;stroke-width:1.3}
+.s-loans-tag-t{font-family:Geist,-apple-system,sans-serif;font-size:13px;font-weight:600;fill:#C4699A;text-anchor:middle;letter-spacing:.01em}
+.s-loans-arc{fill:none;stroke:#C4699A;stroke-width:2.2;stroke-linecap:round}
+.s-loans-spark{fill:none;stroke:#C4699A;stroke-opacity:.75;stroke-width:1.6;stroke-linecap:round}
+.s-loans-tick{fill:none;stroke:#4ADE9E;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.s-loans-cap{font-size:13.5px;font-weight:450;fill-opacity:.55;text-anchor:middle}
+.s-loans-num{font-weight:650;fill-opacity:1;font-variant-numeric:tabular-nums}
+.s-loans-sep{fill-opacity:.26}
+.s-loans-pen{animation:s-loans-push 4s cubic-bezier(.36,0,.28,1) infinite}
+.s-loans-block{animation:s-loans-hit 4s ease-out infinite}
+@keyframes s-loans-push{0%,24%{transform:translateY(0)}42%{transform:translateY(6px)}54%{transform:translateY(-3.5px)}66%,100%{transform:translateY(0)}}
+@keyframes s-loans-hit{0%,30%{opacity:.42}44%{opacity:1}72%{opacity:.6}100%{opacity:.42}}
+@media (prefers-reduced-motion:reduce){.s-loans-pen,.s-loans-block{animation:none}}
+</style>
+<defs>
+  <linearGradient id="s-loans-grad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F2E9D4" stop-opacity=".085"/>
+    <stop offset="1" stop-color="#F2E9D4" stop-opacity=".018"/>
+  </linearGradient>
+  <path id="s-loans-mark" class="s-loans-tick" d="M0,0 l3.4,4 L9.6,-4"/>
+</defs>
+
+<!-- carved plate: the rules of the loan -->
+<path class="s-loans-rim" d="M168,282 L186,300 L534,300 L552,282 L552,298 L534,316 L186,316 L168,298 Z"/>
+<path class="s-loans-rim-e" d="M168,282 L168,298 L186,316 L534,316 L552,298 L552,282"/>
+<path class="s-loans-face" d="M186,124 L534,124 L552,142 L552,282 L534,300 L186,300 L168,282 L168,142 Z"/>
+<path class="s-loans-edge" d="M192,136 L528,136 L540,148 L540,276 L528,288 L192,288 L180,276 L180,148 Z"/>
+<path class="s-loans-bevel" d="M168,142 L186,124 L534,124 L552,142"/>
+<text class="s-loans-t s-loans-h" x="204" y="168">LOAN RULES</text>
+
+<rect class="s-loans-groove" x="204" y="186" width="196" height="12" rx="6"/>
+<path class="s-loans-glint" d="M208,196.5 H396"/>
+<rect class="s-loans-groove" x="222" y="210" width="150" height="12" rx="6"/>
+<path class="s-loans-glint" d="M226,220.5 H368"/>
+<rect class="s-loans-groove" x="222" y="234" width="178" height="12" rx="6"/>
+<path class="s-loans-glint" d="M226,244.5 H396"/>
+<rect class="s-loans-groove" x="204" y="258" width="120" height="12" rx="6"/>
+<path class="s-loans-glint" d="M208,268.5 H320"/>
+
+<!-- proven-correct seal, struck into the plate -->
+<circle class="s-loans-dash" cx="474" cy="216" r="40.5"/>
+<circle class="s-loans-ring" cx="474" cy="216" r="33"/>
+<path class="s-loans-check" d="M463,201 l7.5,8.4 L487,192"/>
+<text class="s-loans-t s-loans-seal-t" x="474" y="226">Formally</text>
+<text class="s-loans-t s-loans-seal-t" x="474" y="240">verified</text>
+
+<!-- Auri's pen, stopped -->
+<g class="s-loans-pen">
+  <rect class="s-loans-tag" x="316" y="26" width="88" height="28" rx="14"/>
+  <text class="s-loans-tag-t" x="360" y="44.5">Auri</text>
+  <rect class="s-loans-pen-b" x="350" y="54" width="20" height="34" rx="4"/>
+  <path class="s-loans-grip" d="M353,69 H367 M353,76 H367"/>
+  <path class="s-loans-pen-b" d="M350,88 L370,88 L360,107 Z"/>
+</g>
+<g class="s-loans-block">
+  <path class="s-loans-arc" d="M341,119 Q360,104 379,119"/>
+  <path class="s-loans-spark" d="M333,111 l-9,-6 M387,111 l9,-6 M327,122 l-11,-2 M393,122 l11,-2"/>
+</g>
+
+<!-- 25 independent reviews -->
+<use href="#s-loans-mark" x="175" y="344"/>
+<use href="#s-loans-mark" x="190" y="344"/>
+<use href="#s-loans-mark" x="205" y="344"/>
+<use href="#s-loans-mark" x="220" y="344"/>
+<use href="#s-loans-mark" x="235" y="344"/>
+<use href="#s-loans-mark" x="250" y="344"/>
+<use href="#s-loans-mark" x="265" y="344"/>
+<use href="#s-loans-mark" x="280" y="344"/>
+<use href="#s-loans-mark" x="295" y="344"/>
+<use href="#s-loans-mark" x="310" y="344"/>
+<use href="#s-loans-mark" x="325" y="344"/>
+<use href="#s-loans-mark" x="340" y="344"/>
+<use href="#s-loans-mark" x="355" y="344"/>
+<use href="#s-loans-mark" x="370" y="344"/>
+<use href="#s-loans-mark" x="385" y="344"/>
+<use href="#s-loans-mark" x="400" y="344"/>
+<use href="#s-loans-mark" x="415" y="344"/>
+<use href="#s-loans-mark" x="430" y="344"/>
+<use href="#s-loans-mark" x="445" y="344"/>
+<use href="#s-loans-mark" x="460" y="344"/>
+<use href="#s-loans-mark" x="475" y="344"/>
+<use href="#s-loans-mark" x="490" y="344"/>
+<use href="#s-loans-mark" x="505" y="344"/>
+<use href="#s-loans-mark" x="520" y="344"/>
+<use href="#s-loans-mark" x="535" y="344"/>
+
+<text class="s-loans-t s-loans-cap" x="360" y="380"><tspan class="s-loans-num">25+</tspan> independent audits<tspan class="s-loans-sep">   ·   </tspan><tspan class="s-loans-num">$2.5M</tspan> bounty</text>
+</svg></div><h3>Loans on code nobody can change.</h3><p>Your loan runs on Morpho's lending market. Its rules can't be edited by anyone, Auri included, after 25+ independent audits, a formal proof and a $2.5M standing bug bounty.</p></div>
+      <div class="pillar rv d3"><div class="pv"><!-- STORY
+REFERENCES LOOKED AT
+1. https://gold.tether.to/transparency  — the reserve side done properly: a wallet-address lookup that
+   returns the serial number, weight, purity and refinery of the specific bars behind your tokens, plus a
+   public bar list. Best idea borrowed: bars are NUMBERED objects, not an abstract quantity.
+2. https://gold.tether.to/reports — quarterly ISAE 3000 attestation opinions signed by BDO Italia, listed
+   as dated rows. Best idea: the auditor is named and the cadence is the headline, not fine print.
+3. https://www.kraken.com/proof-of-reserves — the clearest split anywhere between "the pool is real"
+   (accountant + Merkle root) and "YOUR line is in it" (your own Merkle Leaf ID, a Verify-yourself button).
+   This page is the direct source of the two-proof structure below.
+4. https://www.binance.com/en/proof-of-reserves — same two-layer split; a dark hash diagram for the pool,
+   then a plain four-step "Wallet -> Verification -> pick a date -> find your record" flow for the person.
+   Best idea: the personal proof is drawn as a highlighted row, not as cryptography.
+5. https://paxos.com/pax-gold/ — "VERIFY YOUR GOLD" + "Gold Allocation Look up": serial number, weight and
+   vault, retrieved by wallet address; monthly attestation reports sit in a separate block. Best idea:
+   vault proof and wallet proof are deliberately two different affordances on one page.
+6. https://www.circle.com/transparency — headline pair "In circulation" vs "Total Reserves", a named
+   third-party examiner, and a long dated archive of attestations. Best idea: reserve and record are
+   presented as two numbers that must agree, never as one claim.
+7. https://chain.link/proof-of-reserve — vocabulary for keeping offchain reserves and onchain supply as
+   separate, separately-sourced facts. Best idea: never draw an arrow implying one causes the other.
+8. https://docs.etherscan.io/ and https://arbiscan.io — the explorer row itself: dot, from, arrow, to,
+   amount, all public, one row per transfer. Best idea: the personal proof is literally a readable line
+   in a list everybody else can also read.
+
+FIRST GLANCE (1s)
+Two equal panels either side of a hairline. Left: a pile of gold bars inside a vault with a green audit
+stamp pressed over the corner. Right: a public list of transfers with one line lit up and a magnifying
+glass held over it showing gold and a green tick.
+
+IN 5 SECONDS
+There are TWO separate proofs and they cover two different things. The auditor's stamp covers the VAULT:
+allocated London Good Delivery bars, numbered (GD-0417 engraved on the bar), attested every quarter by
+BDO Italia. The magnifying glass covers YOU: your own balance and every transfer sits in a public record
+you can look up yourself. The divider and the mirrored layout say these are parallel proofs, not steps.
+Nothing flows from one panel to the other, because nothing does — BDO does not attest your buys, borrows
+or repayments, and the public record says nothing about what is in the vault.
+
+SUGGESTED CAPTION
+Title: Gold you can check yourself.
+Sentence: An independent auditor, BDO Italia, checks the numbered bars in the Swiss vault every quarter,
+and your own balance and every transfer sit in a public record that you can look up at any time.
+-->
+<svg class="pv-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img">
+  <defs>
+    <linearGradient id="s-gold-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EAD9AE"/><stop offset=".5" stop-color="#D3B575"/><stop offset="1" stop-color="#B98A2F"/>
+    </linearGradient>
+    <linearGradient id="s-gold-top" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7ECD4"/><stop offset="1" stop-color="#DEC58D"/>
+    </linearGradient>
+    <linearGradient id="s-gold-side" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C4A05E"/><stop offset="1" stop-color="#8E6520"/>
+    </linearGradient>
+    <radialGradient id="s-gold-glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#D3B575" stop-opacity=".22"/><stop offset="1" stop-color="#D3B575" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="s-gold-div" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2E9D4" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#F2E9D4" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#F2E9D4" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="s-gold-lensclip"><circle cx="588" cy="208" r="50"/></clipPath>
+    <g id="s-gold-ingot">
+      <path d="M0 0 L14 -11 L106 -11 L92 0 Z" fill="url(#s-gold-top)" stroke="rgba(242,233,212,.22)" stroke-width="1"/>
+      <path d="M92 0 L106 -11 L99 23 L85 34 Z" fill="url(#s-gold-side)" stroke="rgba(242,233,212,.18)" stroke-width="1"/>
+      <path d="M0 0 L92 0 L85 34 L7 34 Z" fill="url(#s-gold-front)" stroke="rgba(242,233,212,.22)" stroke-width="1"/>
+      <path d="M2 1.2 L90 1.2" stroke="rgba(255,251,238,.5)" stroke-width="1.2" fill="none"/>
+    </g>
+  </defs>
+
+  <style>
+    .s-gold-t{font-family:Geist,-apple-system,sans-serif}
+    .s-gold-cap{font-size:15.5px;font-weight:500;letter-spacing:.004em}
+    .s-gold-ser{font-size:11.5px;font-weight:650;letter-spacing:.09em;fill:rgba(38,24,4,.55)}
+    .s-gold-stamp{transform-box:view-box;transform-origin:306px 296px;
+      animation:s-gold-press .55s cubic-bezier(.2,.85,.3,1) .15s both}
+    @keyframes s-gold-press{
+      0%{opacity:0;transform:scale(1.3) rotate(-16deg)}
+      55%{opacity:1}
+      100%{opacity:1;transform:scale(1) rotate(0deg)}
+    }
+    .s-gold-tick{stroke-dasharray:48;stroke-dashoffset:0;animation:s-gold-draw .45s ease-out .55s both}
+    @keyframes s-gold-draw{from{stroke-dashoffset:48}to{stroke-dashoffset:0}}
+    @media (prefers-reduced-motion:reduce){
+      .s-gold-stamp{animation:none;opacity:1}
+      .s-gold-tick{animation:none;stroke-dashoffset:0}
+    }
+  </style>
+
+  <!-- the two proofs are parallel, never sequential: no arrow ever crosses this line -->
+  <rect x="359.25" y="112" width="1.5" height="220" fill="url(#s-gold-div)"/>
+
+  <!-- ============ PROOF ONE — the vault, attested ============ -->
+  <rect x="54" y="146" width="9" height="26" rx="3" fill="rgba(242,233,212,.24)"/>
+  <rect x="54" y="232" width="9" height="26" rx="3" fill="rgba(242,233,212,.24)"/>
+  <rect x="62" y="104" width="240" height="196" rx="18" fill="rgba(242,233,212,.025)" stroke="rgba(242,233,212,.38)" stroke-width="1.5"/>
+  <rect x="76" y="118" width="212" height="168" rx="12" fill="none" stroke="rgba(242,233,212,.17)" stroke-width="1"/>
+  <ellipse cx="178" cy="236" rx="122" ry="72" fill="url(#s-gold-glow)"/>
+  <line x1="92" y1="282" x2="272" y2="282" stroke="rgba(242,233,212,.14)" stroke-width="1.5"/>
+
+  <use href="#s-gold-ingot" transform="translate(78,236)"/>
+  <use href="#s-gold-ingot" transform="translate(174,236)"/>
+  <use href="#s-gold-ingot" transform="translate(133,197)"/>
+  <g stroke="rgba(44,28,6,.26)" stroke-width="1.4" stroke-linecap="round">
+    <line x1="94" y1="261" x2="116" y2="261"/><line x1="94" y1="266" x2="112" y2="266"/>
+    <line x1="190" y1="261" x2="212" y2="261"/><line x1="190" y1="266" x2="208" y2="266"/>
   </g>
-  <g font-size="9.5" fill="rgba(242,233,212,.45)" text-anchor="middle"><text x="78" y="159">buy</text><text x="154" y="159">borrow</text><text x="230" y="159">repay</text></g>
-  <text x="180" y="190" font-size="11" fill="rgba(242,233,212,.45)" text-anchor="middle">attested by BDO Italia · recorded on Arbitrum</text>
-  <g transform="translate(300 40)"><circle r="12" fill="none" stroke="#4ADE9E" stroke-width="1.5"/><path d="M-4 0l3 3 6-7" fill="none" stroke="#4ADE9E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
-</svg></div><h3>Gold you can check yourself.</h3><p>Serial-numbered bars attested every quarter, and every transaction on a public chain.</p></div>
+  <text class="s-gold-t s-gold-ser" x="143" y="220">GD-0417</text>
+
+  <g class="s-gold-stamp">
+    <g transform="rotate(-8 306 296)">
+      <circle cx="306" cy="296" r="32" fill="rgba(74,222,158,.09)" stroke="#4ADE9E" stroke-width="2.5"/>
+      <circle cx="306" cy="296" r="25.5" fill="none" stroke="rgba(74,222,158,.45)" stroke-width="1.2" stroke-dasharray="3 4.5"/>
+      <path d="M293 296 L302 306 L320 285" fill="none" stroke="#4ADE9E" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- ============ PROOF TWO — your own line in a public record ============ -->
+  <rect x="418" y="104" width="240" height="196" rx="18" fill="rgba(242,233,212,.025)" stroke="rgba(242,233,212,.38)" stroke-width="1.5"/>
+  <rect x="432" y="118" width="212" height="28" rx="14" fill="rgba(242,233,212,.04)" stroke="rgba(242,233,212,.18)" stroke-width="1"/>
+  <circle cx="450" cy="130" r="5" fill="none" stroke="rgba(242,233,212,.40)" stroke-width="1.5"/>
+  <line x1="453.8" y1="133.8" x2="458" y2="138" stroke="rgba(242,233,212,.40)" stroke-width="1.6" stroke-linecap="round"/>
+  <rect x="468" y="129" width="130" height="6" rx="3" fill="rgba(242,233,212,.17)"/>
+  <line x1="430" y1="158" x2="646" y2="158" stroke="rgba(242,233,212,.13)" stroke-width="1"/>
+
+  <g fill="rgba(242,233,212,.19)">
+    <circle cx="442" cy="174" r="4" fill="rgba(242,233,212,.26)"/>
+    <rect x="454" y="171" width="40" height="6" rx="3"/><rect x="516" y="171" width="40" height="6" rx="3"/><rect x="576" y="171" width="52" height="6" rx="3"/>
+    <circle cx="442" cy="238" r="4" fill="rgba(242,233,212,.26)"/>
+    <rect x="454" y="235" width="40" height="6" rx="3"/><rect x="516" y="235" width="40" height="6" rx="3"/><rect x="576" y="235" width="52" height="6" rx="3"/>
+    <circle cx="442" cy="270" r="4" fill="rgba(242,233,212,.26)"/>
+    <rect x="454" y="267" width="40" height="6" rx="3"/><rect x="516" y="267" width="40" height="6" rx="3"/><rect x="576" y="267" width="52" height="6" rx="3"/>
+  </g>
+  <g fill="none" stroke="rgba(242,233,212,.28)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M502 170 L507 174 L502 178"/><path d="M502 234 L507 238 L502 242"/><path d="M502 266 L507 270 L502 274"/>
+  </g>
+
+  <rect x="428" y="190" width="222" height="32" rx="9" fill="rgba(242,233,212,.11)" stroke="rgba(242,233,212,.18)" stroke-width="1"/>
+  <circle cx="442" cy="206" r="4.5" fill="url(#s-gold-front)"/>
+  <rect x="454" y="202" width="40" height="8" rx="4" fill="rgba(242,233,212,.62)"/>
+  <path d="M502 201 L508 206 L502 211" fill="none" stroke="rgba(242,233,212,.55)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="516" y="202" width="40" height="8" rx="4" fill="rgba(242,233,212,.62)"/>
+  <rect x="576" y="202" width="52" height="8" rx="4" fill="url(#s-gold-front)"/>
+
+  <line x1="623.4" y1="243.4" x2="648" y2="268" stroke="rgba(242,233,212,.58)" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="588" cy="208" r="50" fill="#100A0E" opacity=".94"/>
+  <circle cx="588" cy="208" r="50" fill="rgba(242,233,212,.05)"/>
+  <g clip-path="url(#s-gold-lensclip)">
+    <rect x="528" y="187" width="124" height="42" rx="12" fill="rgba(242,233,212,.07)"/>
+    <rect x="546" y="201" width="52" height="13" rx="6.5" fill="url(#s-gold-front)"/>
+  </g>
+  <path class="s-gold-tick" d="M604 209 L613 219 L633 193" fill="none" stroke="#4ADE9E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="588" cy="208" r="50" fill="none" stroke="rgba(242,233,212,.64)" stroke-width="3.2"/>
+
+  <!-- ============ captions ============ -->
+  <text class="s-gold-t s-gold-cap" x="182" y="338" text-anchor="middle"><tspan fill="rgba(242,233,212,.92)" font-weight="600">BDO Italia</tspan><tspan fill="rgba(242,233,212,.50)"> · quarterly</tspan></text>
+  <text class="s-gold-t s-gold-cap" x="538" y="338" text-anchor="middle"><tspan fill="rgba(242,233,212,.92)" font-weight="600">your balance</tspan><tspan fill="rgba(242,233,212,.50)"> · public record</tspan></text>
+</svg></div><h3>Gold you can check yourself.</h3><p>BDO Italia checks the numbered bars in the Swiss vault every quarter, and your own balance and every transfer sit in a public record you can look up any time.</p></div>
     </div>
 
     <div class="sec-runs rv" aria-label="Infrastructure Auri runs on">
